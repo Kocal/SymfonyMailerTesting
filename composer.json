@@ -33,6 +33,8 @@
     "symfony/mailer": "^4.4 || ^5.0"
   },
   "require-dev": {
+    "behat/behat": "^3.6",
+    "friends-of-behat/symfony-extension": "^2.1",
     "friendsofphp/php-cs-fixer": "^2.16",
     "phpspec/phpspec": "^6.1",
     "phpstan/phpstan": "^0.12.23",
@@ -53,6 +55,7 @@
     "psr-4": {
       "spec\\": "spec/",
       "Yproximite\\SymfonyMailerTesting\\Tests\\": "tests/",
+      "Yproximite\\SymfonyMailerTesting\\Tests\\Bridge\\Behat\\": "tests/Bridge/Behat/bootstrap/",
       "Yproximite\\SymfonyMailerTesting\\Fixtures\\": "fixtures/",
       "Yproximite\\SymfonyMailerTesting\\Fixtures\\Applications\\": "fixtures/applications/",
       "Yproximite\\SymfonyMailerTesting\\Fixtures\\Applications\\Symfony\\App\\": "fixtures/applications/Symfony/src/"
