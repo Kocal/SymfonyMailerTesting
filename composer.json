@@ -1,0 +1,56 @@
+{
+  "name": "yproximite/symfony-mailer-testing",
+  "description": "Test your emails with Behat and Cypress, when using the Symfony Mailer component.",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Hugo Alliaume",
+      "email": "hugo@yproximite.com"
+    }
+  ],
+  "config": {
+    "sort-packages": true
+  },
+  "scripts": {
+    "phpstan": "phpstan analyze --ansi",
+    "php-cs-fixer": "php-cs-fixer fix -v",
+    "php-cs-fixer@ci": "php-cs-fixer fix -v --diff --dry-run",
+    "phpunit": "phpunit",
+    "phpspec": "phpspec --ansi",
+    "behat": "behat --colors",
+    "auto": [],
+    "post-install-cmd": [
+      "@auto"
+    ],
+    "post-update-cmd": [
+      "@auto"
+    ]
+  },
+  "require": {
+    "php": "^7.3",
+    "ext-json": "*",
+    "symfony/http-client": "^4.4 || ^5.0",
+    "symfony/mailer": "^4.4 || ^5.0"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.16",
+    "phpspec/phpspec": "^6.1",
+    "phpstan/phpstan": "^0.12.23",
+    "phpstan/phpstan-phpunit": "^0.12.8",
+    "phpstan/phpstan-strict-rules": "^0.12.2",
+    "phpstan/phpstan-symfony": "^0.12.6",
+    "phpstan/phpstan-webmozart-assert": "^0.12.4",
+    "phpunit/phpunit": "^8.5.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Yproximite\\SymfonyMailerTesting\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "spec\\": "spec/",
+      "Yproximite\\SymfonyMailerTesting\\Tests\\": "tests/"
+    }
+  }
+}

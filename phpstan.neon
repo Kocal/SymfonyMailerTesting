@@ -1,0 +1,38 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/phpstan/phpstan-webmozart-assert/extension.neon
+    - vendor/phpstan/phpstan-symfony/extension.neon
+    - vendor/phpstan/phpstan-symfony/rules.neon
+
+parameters:
+    level: max
+
+    paths:
+        - src
+        - tests
+        # - spec wait for PHPStan 0.12 support (https://github.com/proget-hq/phpstan-phpspec)
+
+    excludes_analyse:
+        - tests/Bridge/Symfony/Application
+
+    symfony:
+        container_xml_path: 'tests/Bridge/Symfony/Application/var/cache/test/Yproximite_MailtrapTesting_Tests_Bridge_Symfony_Application_App_KernelTestDebugContainer.xml'
+
+    inferPrivatePropertyTypeFromConstructor: true
+
+    ignoreErrors:
+        # Wait for https://github.com/phpstan/phpstan/issues/2970 to be fixed
+        - message: '#Array \(array<string, string\|null>\) does not accept key string.#'
+          path: src/Message.php
+
+        - message: '#Call to static method PHPUnit\\Framework\\Assert::assertInstanceOf\(\) with .Yproximite…. and Yproximite\\MailtrapTesting\\(.*?) will always evaluate to true.#'
+          path: tests/Bridge/Symfony/*
+
+        # Should be fixed by Symfony
+        - '#Method Yproximite\\MailtrapTesting\\MailtrapHttpClient::request\(\) has parameter \$options with no value type specified in iterable type array.#'
+        - '#Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition::children\(\).#'
+
+        # Should be fixed by Behat
+        - '#Method Yproximite\\MailtrapTesting\\Tests\\Bridge\\Behat\\(.*?)Context::[a-zA-Z]+\(\) has parameter \$[a-z]+ with no value type specified in iterable type Behat\\Gherkin\\Node\\TableNode.#'

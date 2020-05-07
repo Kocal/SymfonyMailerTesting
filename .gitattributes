@@ -1,0 +1,8 @@
+ansible           export-ignore
+.php_cs           export-ignore
+.travis.yml       export-ignore
+Makefile          export-ignore
+phpstan.neon      export-ignore
+phpunit.xml       export-ignore
+Vagrantfile       export-ignore
+tests/Application export-ignore

@@ -1,0 +1,19 @@
+---
+
+# App
+- hosts: app
+  vars:
+      manala_ansible_galaxy_roles:
+          - manala.ansible_galaxy
+          - manala.skeleton
+  roles:
+      - manala.ansible_galaxy
+
+# Global
+- hosts: all
+  vars:
+      manala_ansible_galaxy_roles_path: "{{ playbook_dir }}/roles"
+      manala_ansible_galaxy_roles:
+          - manala.ansible_galaxy
+  roles:
+      - manala.ansible_galaxy
