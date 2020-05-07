@@ -5,4 +5,5 @@ Makefile          export-ignore
 phpstan.neon      export-ignore
 phpunit.xml       export-ignore
 Vagrantfile       export-ignore
-tests/Application export-ignore
+fixtures          export-ignore
+tests             export-ignore
