@@ -30,7 +30,8 @@
   },
   "require": {
     "php": "^7.3",
-    "symfony/mailer": "^4.4 || ^5.0"
+    "symfony/mailer": "^4.4 || ^5.0",
+    "webmozart/assert": "^1.8"
   },
   "require-dev": {
     "behat/behat": "^3.6",

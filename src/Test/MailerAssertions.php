@@ -4,6 +4,7 @@ namespace Yproximite\SymfonyMailerTesting\Test;
 
 use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mime\RawMessage;
+use Webmozart\Assert\Assert;
 use Yproximite\SymfonyMailerTesting\MailerLogger;
 
 class MailerAssertions
@@ -17,6 +18,14 @@ class MailerAssertions
 
     public function assertEmailCount(int $count, ?string $transport = null, string $message = ''): void
     {
+        $events = array_filter($this->mailerLogger->getEvents()->getEvents($transport), function (MessageEvent $messageEvent) {
+            return !$messageEvent->isQueued();
+        });
+
+        Assert::count($events, $count, $message ?: sprintf(
+            'Failing asserting that the Transport %shas sent "%%d" emails (%%d sent)',
+            $transport ? $transport.' ' : '',
+        ));
     }
 
     public function assertQueuedEmailCount(int $count, ?string $transport = null, string $message = ''): void
