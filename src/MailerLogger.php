@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yproximite\SymfonyMailerTesting;
 
 use Symfony\Component\Mailer\Event\MessageEvent;
@@ -15,7 +17,7 @@ class MailerLogger implements ResetInterface
         $this->events = new MessageEvents();
     }
 
-    public function reset()
+    public function reset(): void
     {
         $this->events = new MessageEvents();
     }

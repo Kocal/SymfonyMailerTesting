@@ -18,6 +18,10 @@ parameters:
         - fixtures/applications/Symfony
 
     symfony:
-        container_xml_path: 'fixtures/applications/Symfony/var/cache/dev/Yproximite_SymfonyMailerTesting_Fixtures_Applications_Symfony_App_KernelDevDebugContainer.xml'
+        container_xml_path: 'fixtures/applications/Symfony/var/cache/test/Yproximite_SymfonyMailerTesting_Fixtures_Applications_Symfony_App_KernelTestDebugContainer.xml'
 
     inferPrivatePropertyTypeFromConstructor: true
+
+    ignoreErrors:
+        # Should be fixed by Symfony
+        - '#Property Yproximite\\SymfonyMailerTesting\\Tests\\Bridge\\Symfony\\(.*?)::\$class has no typehint specified.#'

@@ -2,6 +2,5 @@ services:
     _defaults:
         autowire: true
         autoconfigure: true
-
-    Yproximite\SymfonyMailerTesting\Fixtures\Bridge\Behat\:
-        resource: '../../../Behat/bootstrap/*'
+    #Yproximite\SymfonyMailerTesting\Fixtures\Bridge\Behat\:
+    #    resource: '../../../Behat/bootstrap/*'

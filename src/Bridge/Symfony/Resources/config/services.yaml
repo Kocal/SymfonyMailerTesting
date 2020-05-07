@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Yproximite\SymfonyMailerTesting\MailerLogger: ~
+
+    Yproximite\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener: ~

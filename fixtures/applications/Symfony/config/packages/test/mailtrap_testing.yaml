@@ -1,9 +1,0 @@
-mailtrap_testing:
-    flysystem_storage: 'mailtrap_testing.storage'
-
-flysystem:
-    storages:
-        mailtrap_testing.storage:
-            adapter: 'local'
-            options:
-                directory: '%kernel.project_dir%/var/storage/mailtrap-testing'
