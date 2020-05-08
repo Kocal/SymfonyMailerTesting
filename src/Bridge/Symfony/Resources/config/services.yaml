@@ -5,8 +5,6 @@ services:
 
     Yproximite\SymfonyMailerTesting\MailerLogger: ~
 
-    Yproximite\SymfonyMailerTesting\Test\MailerAssertions: ~
-
     Yproximite\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener: ~
 
     # Behat

@@ -11,10 +11,10 @@ class MailerContext implements Context
     private $mailerLogger;
     private $mailerAssertions;
 
-    public function __construct(MailerLogger $mailerLogger, MailerAssertions $mailerAssertions)
+    public function __construct(MailerLogger $mailerLogger)
     {
         $this->mailerLogger     = $mailerLogger;
-        $this->mailerAssertions = $mailerAssertions;
+        $this->mailerAssertions = new MailerAssertions($mailerLogger);
     }
 
     /**
