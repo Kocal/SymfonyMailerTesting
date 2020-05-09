@@ -3,6 +3,11 @@ services:
         autowire: true
         autoconfigure: true
 
+    _instanceof:
+        Yproximite\SymfonyMailerTesting\MailerLoggerAwareInterface:
+            calls:
+                - [setMailerLogger, ['@Yproximite\SymfonyMailerTesting\MailerLogger']]
+
     Yproximite\SymfonyMailerTesting\MailerLogger: ~
 
     Yproximite\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener: ~
