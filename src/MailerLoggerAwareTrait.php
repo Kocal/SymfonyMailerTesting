@@ -11,9 +11,4 @@ trait MailerLoggerAwareTrait
     {
         $this->mailerLogger = $mailerLogger;
     }
-
-    public function getMailerLogger(): ?MailerLogger
-    {
-        return $this->mailerLogger;
-    }
 }

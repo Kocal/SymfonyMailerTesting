@@ -27,7 +27,15 @@ class EmailContext implements Context
             ->from($params['from'])
             ->to($params['to'])
             ->subject($params['subject'])
-            ->text($params['text']);
+            ->text($params['text'] ?? null)
+            ->html($params['html'] ?? null)
+        ;
+
+        if (array_key_exists('attachments', $params)) {
+            foreach (json_decode($params['attachments'], true, 5, JSON_THROW_ON_ERROR) as $attachment) {
+                $email->attach($attachment['body'], $attachment['name'] ?? null, $attachment['contentType'] ?? null);
+            }
+        }
 
         $this->mailer->send($email);
     }
