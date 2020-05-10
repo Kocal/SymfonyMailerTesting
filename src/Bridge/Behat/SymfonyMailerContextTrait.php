@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yproximite\SymfonyMailerTesting\Bridge\Behat;
 
 trait SymfonyMailerContextTrait
@@ -93,7 +95,6 @@ trait SymfonyMailerContextTrait
     {
         $this->mailerAssertions->assertEmailNotHasHeader($this->getSelectedMessageEvent()->getMessage(), $headerName);
     }
-
 
     /**
      * @Then this email header :headerName has value :value

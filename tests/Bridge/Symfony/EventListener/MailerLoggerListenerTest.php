@@ -16,7 +16,9 @@ class MailerLoggerListenerTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        static::bootKernel();
+        static::bootKernel([
+            'debug' => false,
+        ]);
     }
 
     public function testOnMessageSend(): void
