@@ -1,10 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yproximite\SymfonyMailerTesting\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Cache\CacheItemPoolInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Event\MessageEvent;
+use Symfony\Component\Mailer\Event\MessageEvents;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\RawMessage;
 use Yproximite\SymfonyMailerTesting\MailerLogger;
@@ -12,12 +17,17 @@ use Yproximite\SymfonyMailerTesting\Test\MailerAssertions;
 
 class MailerAssertionsTest extends TestCase
 {
+    /** @var CacheItemPoolInterface */
+    private $cache;
+    /** @var MailerLogger */
     private $mailerLogger;
+    /** @var MailerAssertions */
     private $mailerAssertions;
 
     protected function setUp(): void
     {
-        $this->mailerLogger     = new MailerLogger();
+        $this->cache            = new ArrayAdapter();
+        $this->mailerLogger     = new MailerLogger($this->cache);
         $this->mailerAssertions = new MailerAssertions($this->mailerLogger);
     }
 
@@ -37,6 +47,9 @@ class MailerAssertionsTest extends TestCase
         $this->addToAssertionCount(3);
     }
 
+    /**
+     * @return \Generator<array<mixed>>
+     */
     public function provideAssertEmailFailing(): \Generator
     {
         yield [
@@ -63,6 +76,8 @@ class MailerAssertionsTest extends TestCase
 
     /**
      * @dataProvider provideAssertEmailFailing
+     *
+     * @param array<MessageEvent> $messageEvents
      */
     public function testAssertEmailFailing(string $expectedExceptionMessage, int $count, array $messageEvents = [], ?string $transport = null): void
     {
@@ -90,6 +105,9 @@ class MailerAssertionsTest extends TestCase
         $this->addToAssertionCount(4);
     }
 
+    /**
+     * @return \Generator<array<mixed>>
+     */
     public function provideAssertQueuedEmailCountFailing(): \Generator
     {
         yield [
@@ -116,6 +134,8 @@ class MailerAssertionsTest extends TestCase
 
     /**
      * @dataProvider provideAssertQueuedEmailCountFailing
+     *
+     * @param array<MessageEvent> $messageEvents
      */
     public function testAssertQueuedEmailCountFailing(string $expectedExceptionMessage, int $count, array $messageEvents = [], ?string $transport = null): void
     {
@@ -392,6 +412,31 @@ class MailerAssertionsTest extends TestCase
         static::assertEquals($messageEvent4->getMessage(), $this->mailerAssertions->getMailerMessage(3));
         static::assertEquals($messageEvent3->getMessage(), $this->mailerAssertions->getMailerMessage(1, 'null://'));
         static::assertEquals($messageEvent4->getMessage(), $this->mailerAssertions->getMailerMessage(1, 'smtp://'));
+    }
+
+    public function testCache(): void
+    {
+        static::assertFalse($this->cache->hasItem('symfony_mailer_testing.message_events'));
+
+        // Add
+        $this->mailerLogger->add($messageEvent = $this->createMessageEvent($this->createEmail()));
+
+        static::assertTrue($this->cache->hasItem('symfony_mailer_testing.message_events'));
+
+        $messageEvents = $this->cache->getItem('symfony_mailer_testing.message_events')->get();
+
+        static::assertInstanceOf(MessageEvents::class, $messageEvents);
+        static::assertCount(1, $messageEvents->getEvents());
+        static::assertEquals([$messageEvent], $messageEvents->getEvents());
+
+        // Reset
+        $this->mailerLogger->reset();
+
+        static::assertTrue($this->cache->hasItem('symfony_mailer_testing.message_events'));
+
+        $messageEvents = $this->cache->getItem('symfony_mailer_testing.message_events')->get();
+        static::assertInstanceOf(MessageEvents::class, $messageEvents);
+        static::assertCount(0, $messageEvents->getEvents());
     }
 
     protected function createMessageEvent(RawMessage $message, string $transport = 'null://'): MessageEvent
