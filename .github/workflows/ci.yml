@@ -28,7 +28,7 @@ jobs:
               uses: shivammathur/setup-php@v1
               with:
                   php-version: ${{ env.PHP_VERSION_DEFAULT }}
-                  ini-values: date.timezone=${{ env.TZ }}, memory_limit=-1, session.gc_probability=0, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=20000, opcache.validate_timestamps=0, realpath_cache_size=4096K, realpath_cache_ttl=600
+                  ini-values: memory_limit=-1, session.gc_probability=0, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=20000, opcache.validate_timestamps=0, realpath_cache_size=4096K, realpath_cache_ttl=600
 
             - name: Install Node.js
               uses: actions/setup-node@v1
@@ -84,7 +84,7 @@ jobs:
               with:
                   php-version: ${{ matrix.config.PHP_VERSION }}
                   coverage: ${{ matrix.config.COVERAGE }}
-                  ini-values: date.timezone=${{ env.TZ }}, memory_limit=-1, session.gc_probability=0, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=20000, opcache.validate_timestamps=0, realpath_cache_size=4096K, realpath_cache_ttl=600
+                  ini-values: memory_limit=-1, session.gc_probability=0, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=20000, opcache.validate_timestamps=0, realpath_cache_size=4096K, realpath_cache_ttl=600
 
             - name: Install globally Symfony Flex
               run: composer global require --no-progress --no-scripts --no-plugins symfony/flex dev-master
@@ -125,7 +125,7 @@ jobs:
                   php-version: ${{ env.PHP_VERSION_DEFAULT }}
                   coverage: none
                   extensions: ctype, iconv, intl
-                  ini-values: date.timezone=${{ env.TZ }}, memory_limit=-1, session.gc_probability=0, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=20000, opcache.validate_timestamps=0, realpath_cache_size=4096K, realpath_cache_ttl=600
+                  ini-values: memory_limit=-1, session.gc_probability=0, opcache.enable=1, opcache.enable_cli=1, opcache.memory_consumption=256, opcache.max_accelerated_files=20000, opcache.validate_timestamps=0, realpath_cache_size=4096K, realpath_cache_ttl=600
 
             - name: Install Node.js
               uses: actions/setup-node@v1
@@ -140,7 +140,7 @@ jobs:
             - run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
             - run: symfony serve --daemon --no-tls
-              working-directory: tests/Application
+              working-directory: fixtures/applications/Symfony
 
             - name: Run Cypress
               if: always() # `symfony serve` can fails but the server seems to be still up, see https://github.com/symfony/cli/issues/212 and https://github.com/Yproximite/condictio/pull/912/commits/5eef5d3fc0c907e39c6fdc594eaaa339e75fee5f
