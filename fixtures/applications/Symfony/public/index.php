@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
-use Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\Kernel;
+use Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Kernel;
 
 require dirname(__DIR__).'/config/bootstrap.php';
 

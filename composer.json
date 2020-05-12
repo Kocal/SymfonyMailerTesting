@@ -30,6 +30,7 @@
   },
   "require": {
     "php": "^7.3",
+    "ext-json": "*",
     "symfony/mailer": "^4.4 || ^5.0",
     "webmozart/assert": "^1.8"
   },
@@ -37,6 +38,7 @@
     "behat/behat": "^3.6",
     "friends-of-behat/symfony-extension": "^2.1",
     "friendsofphp/php-cs-fixer": "^2.16",
+    "nyholm/psr7": "^1.2",
     "phpspec/phpspec": "^6.1",
     "phpstan/phpstan": "^0.12.23",
     "phpstan/phpstan-phpunit": "^0.12.8",
@@ -45,7 +47,8 @@
     "phpstan/phpstan-webmozart-assert": "^0.12.4",
     "phpunit/phpunit": "^8.5.2",
     "sensio/framework-extra-bundle": "^5.5",
-    "symfony/framework-bundle": "^4.4.1 || ^5.0"
+    "symfony/framework-bundle": "^4.4.1 || ^5.0",
+    "symfony/psr-http-message-bridge": "^2.0"
   },
   "autoload": {
     "psr-4": {

@@ -1,2 +1,0 @@
-#mailtrap_testing:
-#    resource: '@SymfonyMailerTestingBundle/Resources/config/routing.yaml'
