@@ -94,6 +94,13 @@ symfony_mailer_testing:
   resource: '@SymfonyMailerTestingBundle/Resources/config/routing.yaml'
 ```
 
+And finally you should add this module in your support file:
+
+```js
+// cypress/support/index.js
+import './vendor/yproximite/symfony-mailer-testing/src/Bridge/Cypress/support';
+```
+
 ## Usage
 
 ### Behat
@@ -119,7 +126,7 @@ Available steps:
 - `@Then this email header :headerName has not value :value`
 - `@Then this email contains address :headerName :address`
 
-Assertions `this email [...]` requires you to call `I select email #...` before.
+:warning: Assertions `this email [...]` requires you to call `I select email #...` before.
 
 Example:
 
@@ -138,4 +145,42 @@ Feature: Testing my feature
 
 ### Cypress
 
-TODO
+Since you have imported the support file, you can use the following commands:
+
+- `cy.resetMessageEvents()`
+- `cy.getMessageEvents()`
+
+But if you prefer, you can import the methods directly:
+
+```js
+import { resetMessageEvents, getMessageEvents } from './vendor/yproximite/symfony-mailer-testing/src/Bridge/Cypress';
+```
+
+Available assertions:
+
+- empty ATM :D
+
+Example of spec:
+
+```js
+// cypress/integration/your.spec.js
+describe('Your feature', function () {
+  beforeEach(function () {
+    // this is important to reset message events before each specsn your tests should be isolated.
+    // see https://docs.cypress.io/guides/references/best-practices.html
+    cy.resetMessageEvents();
+  });
+
+  specify('An email should be sent [...]', function () {
+    // do some actions that send an email ...
+
+    // then use `cy.getMessageEvents()`
+    cy.getMessageEvents().then((messageEvents) => {
+      expect(messageEvents.events).to.be.lengthOf(1); // 1 email sent or queued
+      expect(messageEvents.events[0].message.subject).to.equal('My email subject');
+      expect(messageEvents.events[0].message.from).to.equal(['john@example.com']);
+      // ...
+    });
+  });
+});
+```

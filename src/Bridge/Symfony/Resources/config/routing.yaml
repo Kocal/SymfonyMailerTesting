@@ -4,6 +4,6 @@ symfony_mailer_testing_reset:
     methods: POST
 
 symfony_mailer_testing_message_events_get:
-    path: /_symfony_mailer_testing/events
+    path: /_symfony_mailer_testing/message_events
     controller: Yproximite\SymfonyMailerTesting\Controller\MailerController::getEvents
     methods: GET

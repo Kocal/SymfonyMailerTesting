@@ -1,0 +1,4 @@
+{
+  "pluginsFile": "tests/Bridge/Cypress/plugins/index.js",
+  "baseUrl": "http://symfony-mailer-testing.vm:8000/"
+}

@@ -2,7 +2,6 @@
   "private": true,
   "version": "0.0.0-development",
   "description": "Test your emails with Behat and Cypress, when using the Symfony Mailer component.",
-  "main": "src/Bridge/Cypress/index.js",
   "repository": "https://github.com/Yproximite/MailtrapTesting.git",
   "author": "Hugo Alliaume <hugo@yproximite.com>",
   "license": "MIT",
