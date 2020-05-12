@@ -10,6 +10,9 @@ services:
 
     Yproximite\SymfonyMailerTesting\MailerLogger: ~
 
+    Yproximite\SymfonyMailerTesting\Normalizer\:
+        resource: '../../../../Normalizer/*'
+
     Yproximite\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener: ~
 
     # Behat
