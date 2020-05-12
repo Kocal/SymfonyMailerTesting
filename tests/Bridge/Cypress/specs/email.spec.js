@@ -1,29 +1,25 @@
-describe('I test an email', function () {
-  beforeEach(function () {
+function sendEmail({ subject } = {}) {
+  cy.request({
+    method: 'POST',
+    url: '/send-basic-email',
+    form: true,
+    body: {
+      subject,
+    },
+  });
+}
+
+describe('I test an email', function() {
+  beforeEach(function() {
     cy.resetMessageEvents();
   });
 
-  specify('Testing email', function () {
+  specify('I can test multiples emails', function() {
     const subject1 = `Email #1 sent from Cypress at ${new Date().toUTCString()}`;
     const subject2 = `Email #2 sent from Cypress at ${new Date().toUTCString()}`;
 
-    cy.request({
-      method: 'POST',
-      url: '/send-basic-email',
-      form: true,
-      body: {
-        subject: subject1,
-      },
-    });
-
-    cy.request({
-      method: 'POST',
-      url: '/send-basic-email',
-      form: true,
-      body: {
-        subject: subject2,
-      },
-    });
+    sendEmail({ subject: subject1 });
+    sendEmail({ subject: subject2 });
 
     cy.getMessageEvents().then((messageEvents) => {
       expect(messageEvents.events[0].message.subject).to.be.equal(subject1);
