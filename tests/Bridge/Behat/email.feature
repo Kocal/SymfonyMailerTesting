@@ -1,6 +1,6 @@
 Feature: Testing emails
 
-  Scenario: I can test how many emails has been sent
+  Scenario: I can test how many emails have been sent
     When I send an email:
       | from    | john@example.com  |
       | to      | carla@example.com |

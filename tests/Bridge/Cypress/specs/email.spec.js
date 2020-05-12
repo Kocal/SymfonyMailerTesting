@@ -14,6 +14,24 @@ describe('I test an email', function() {
     cy.resetMessageEvents();
   });
 
+  specify.only('I can test how many emails have been sent', function() {
+    cy.getMessageEvents().then(messageEvents => {
+      expect(messageEvents).to.have.sent(0).emails;
+      expect(messageEvents).to.have.queued(0).emails;
+      expect(messageEvents).transport('null://').to.have.sent(0).emails;
+      expect(messageEvents).transport('null://').to.have.queued(0).emails;
+    });
+
+    sendEmail({ subject: "Hello world!" });
+
+    cy.getMessageEvents().then(messageEvents => {
+      expect(messageEvents).to.have.sent(1).emails;
+      expect(messageEvents).to.have.queued(0).emails;
+      expect(messageEvents).transport('null://').to.have.sent(1).emails;
+      expect(messageEvents).transport('null://').to.have.queued(0).emails;
+    });
+  });
+
   specify('I can test multiples emails', function() {
     const subject1 = `Email #1 sent from Cypress at ${new Date().toUTCString()}`;
     const subject2 = `Email #2 sent from Cypress at ${new Date().toUTCString()}`;
