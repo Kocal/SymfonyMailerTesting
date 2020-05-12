@@ -56,8 +56,6 @@ jobs:
                     # Minimum supported dependencies with the latest and oldest PHP version
                     - PHP_VERSION: 7.3
                       COMPOSER_FLAGS: --prefer-stable --prefer-lowest
-                    - PHP_VERSION: 7.4
-                      COMPOSER_FLAGS: --prefer-stable --prefer-lowest
 
                     # Test the latest stable release
                     - PHP_VERSION: 7.3
