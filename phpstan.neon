@@ -25,3 +25,6 @@ parameters:
     ignoreErrors:
         # Should be fixed by Symfony
         - '#Property Yproximite\\SymfonyMailerTesting\\Tests\\Bridge\\Symfony\\(.*?)::\$class has no typehint specified.#'
+
+        # Should be fixed by behat
+        - '#with no value type specified in iterable type Behat\\Gherkin\\Node\\TableNode.$#'

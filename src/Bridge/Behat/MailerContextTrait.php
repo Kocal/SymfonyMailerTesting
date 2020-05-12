@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yproximite\SymfonyMailerTesting\Bridge\Behat;
 
 use Symfony\Component\Mailer\Event\MessageEvent;
@@ -13,29 +15,33 @@ trait MailerContextTrait
     use MailerLoggerAwareTrait;
     use SymfonyMailerContextTrait;
 
-    /** @var MailerAssertions|null */
+    /** @var MailerAssertions */
     private $mailerAssertions;
 
     /** @var MessageEvent|null */
-    private $selectedMessageEvent = null;
+    private $selectedMessageEvent;
 
     public function setMailerLogger(MailerLogger $mailerLogger): void
     {
-        $this->mailerLogger = $mailerLogger;
+        $this->mailerLogger     = $mailerLogger;
         $this->mailerAssertions = new MailerAssertions($mailerLogger);
     }
 
     /**
      * @BeforeScenario
      */
-    public function beforeScenario()
+    public function beforeScenario(): void
     {
         $this->mailerLogger->reset();
         $this->selectedMessageEvent = null;
     }
 
-    public function getSelectedMessageEvent(): ?MessageEvent
+    public function getSelectedMessageEvent(): MessageEvent
     {
+        if (null === $this->selectedMessageEvent) {
+            throw new \BadMethodCallException('No email selected, did you forget to call step "I select email #..."?');
+        }
+
         return $this->selectedMessageEvent;
     }
 
@@ -50,7 +56,7 @@ trait MailerContextTrait
         Assert::notNull($messageEvent, sprintf(
             'No email found at index "%d"%s.',
             $index,
-            $transport !== null ? sprintf(' for transport "%s"', $transport) : ''
+            null !== $transport ? sprintf(' for transport "%s"', $transport) : ''
         ));
 
         $this->selectedMessageEvent = $messageEvent;

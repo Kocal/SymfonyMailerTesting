@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Yproximite\SymfonyMailerTesting\Test;
 
 use Symfony\Component\Mailer\Event\MessageEvent;
@@ -25,7 +27,7 @@ trait SymfonyMailerAssertionsTrait
 
         Assert::count($events, $count, sprintf(
             $message ?? 'Failed asserting that the Transport %shas sent "%%d" emails (%%d sent).',
-            $transport !== null ? $transport.' ' : '',
+            null !== $transport ? $transport.' ' : '',
         ));
     }
 
@@ -37,7 +39,7 @@ trait SymfonyMailerAssertionsTrait
 
         Assert::count($events, $count, sprintf(
             $message ?? 'Failed asserting that the Transport %shas queued "%%d" emails (%%d queued).',
-            $transport !== null ? $transport.' ' : '',
+            null !== $transport ? $transport.' ' : '',
         ));
     }
 
@@ -51,49 +53,62 @@ trait SymfonyMailerAssertionsTrait
         Assert::false($event->isQueued(), $message ?? 'Failed asserting that the Email is not queued.');
     }
 
-    public function assertEmailAttachmentCount(Email $email, int $count, ?string $message = null): void
+    public function assertEmailAttachmentCount(RawMessage $email, int $count, ?string $message = null): void
     {
+        Assert::isInstanceOf($email, Email::class);
         Assert::count($email->getAttachments(), $count, $message ?? 'Failed asserting that the Email has sent "%d" attachment(s).');
     }
 
-    public function assertEmailTextBodyContains(Email $email, string $text, ?string $message = null): void
+    public function assertEmailTextBodyContains(RawMessage $email, string $text, ?string $message = null): void
     {
-        Assert::contains($email->getTextBody(), $text, $message ?? 'Failed asserting that the Email text body contains %2$s. Got %s.');
+        Assert::isInstanceOf($email, Email::class);
+        Assert::nullOrString($email->getTextBody());
+        Assert::contains($email->getTextBody() ?? '', $text, $message ?? 'Failed asserting that the Email text body contains %2$s. Got %s.');
     }
 
-    public function assertEmailTextBodyNotContains(Email $email, string $text, ?string $message = null): void
+    public function assertEmailTextBodyNotContains(RawMessage $email, string $text, ?string $message = null): void
     {
-        Assert::notContains($email->getTextBody(), $text, $message ?? 'Failed asserting that the Email text body not contains %2$s. Got %s.');
+        Assert::isInstanceOf($email, Email::class);
+        Assert::nullOrString($email->getTextBody());
+        Assert::notContains($email->getTextBody() ?? '', $text, $message ?? 'Failed asserting that the Email text body not contains %2$s. Got %s.');
     }
 
-    public function assertEmailHtmlBodyContains(Email $email, string $text, ?string $message = null): void
+    public function assertEmailHtmlBodyContains(RawMessage $email, string $text, ?string $message = null): void
     {
-        Assert::contains($email->getHtmlBody(), $text, $message ?? 'Failed asserting that the Email HTML body contains %2$s. Got %s.');
+        Assert::isInstanceOf($email, Email::class);
+        Assert::nullOrString($email->getHtmlBody());
+        Assert::contains($email->getHtmlBody() ?? '', $text, $message ?? 'Failed asserting that the Email HTML body contains %2$s. Got %s.');
     }
 
-    public function assertEmailHtmlBodyNotContains(Email $email, string $text, ?string $message = null): void
+    public function assertEmailHtmlBodyNotContains(RawMessage $email, string $text, ?string $message = null): void
     {
-        Assert::notContains($email->getHtmlBody(), $text, $message ?? 'Failed asserting that the Email HTML body not contains %2$s. Got %s.');
+        Assert::isInstanceOf($email, Email::class);
+        Assert::nullOrString($email->getHtmlBody());
+        Assert::notContains($email->getHtmlBody() ?? '', $text, $message ?? 'Failed asserting that the Email HTML body not contains %2$s. Got %s.');
     }
 
-    public function assertEmailHasHeader(Message $email, string $headerName, ?string $message = null): void
+    public function assertEmailHasHeader(RawMessage $email, string $headerName, ?string $message = null): void
     {
+        Assert::isInstanceOf($email, Message::class);
         Assert::true($email->getHeaders()->has($headerName), sprintf(
             $message ?? 'Failed asserting that the Email has header "%s".',
             $headerName
         ));
     }
 
-    public function assertEmailNotHasHeader(Message $email, string $headerName, ?string $message = null): void
+    public function assertEmailNotHasHeader(RawMessage $email, string $headerName, ?string $message = null): void
     {
+        Assert::isInstanceOf($email, Message::class);
         Assert::false($email->getHeaders()->has($headerName), sprintf(
             $message ?? 'Failed asserting that the Email has not header "%s".',
             $headerName
         ));
     }
 
-    public function assertEmailHeaderSame(Message $email, string $headerName, string $expectedValue, ?string $message = null): void
+    public function assertEmailHeaderSame(RawMessage $email, string $headerName, string $expectedValue, ?string $message = null): void
     {
+        Assert::isInstanceOf($email, Message::class);
+        Assert::notNull($email->getHeaders()->get($headerName));
         Assert::eq($value = $email->getHeaders()->get($headerName)->getBodyAsString(), $expectedValue, sprintf(
             $message ?? 'Failed asserting that the Email has header "%s" with value "%s" (value is "%s").',
             $headerName,
@@ -102,8 +117,10 @@ trait SymfonyMailerAssertionsTrait
         ));
     }
 
-    public function assertEmailHeaderNotSame(Message $email, string $headerName, string $expectedValue, ?string $message = null): void
+    public function assertEmailHeaderNotSame(RawMessage $email, string $headerName, string $expectedValue, ?string $message = null): void
     {
+        Assert::isInstanceOf($email, Message::class);
+        Assert::notNull($email->getHeaders()->get($headerName));
         Assert::notEq($value = $email->getHeaders()->get($headerName)->getBodyAsString(), $expectedValue, sprintf(
             $message ?? 'Failed asserting that the Email has header "%s" with a different value than "%s" (value is "%s").',
             $headerName,
@@ -112,13 +129,15 @@ trait SymfonyMailerAssertionsTrait
         ));
     }
 
-    public function assertEmailAddressContains(Email $email, string $headerName, string $expectedValue, ?string $message = null): void
+    public function assertEmailAddressContains(RawMessage $email, string $headerName, string $expectedValue, ?string $message = null): void
     {
-        $matches = (function () use ($email, $headerName, $expectedValue) {
+        Assert::isInstanceOf($email, Email::class);
+
+        $matches = (function () use ($email, $headerName, $expectedValue): bool {
             $header = $email->getHeaders()->get($headerName);
             if ($header instanceof MailboxHeader) {
                 return $expectedValue === $header->getAddress()->getAddress();
-            } else if ($header instanceof MailboxListHeader) {
+            } elseif ($header instanceof MailboxListHeader) {
                 foreach ($header->getAddresses() as $address) {
                     if ($expectedValue === $address->getAddress()) {
                         return true;
@@ -131,6 +150,7 @@ trait SymfonyMailerAssertionsTrait
             throw new \LogicException(sprintf('Unable to test a message address on a non-address header.'));
         })();
 
+        Assert::notNull($email->getHeaders()->get($headerName));
         Assert::true($matches, sprintf(
             $message ?? 'Failed asserting that the Email contains address "%s" with value "%s" (value is "%s").',
             $headerName,
