@@ -19,19 +19,19 @@ describe('I test an email', function () {
 
   specify('I can test how many emails have been sent', function () {
     cy.getMessageEvents().then((messageEvents) => {
-      expect(messageEvents).to.have.sentEmails(0);
-      expect(messageEvents).to.have.queuedEmails(0);
-      expect(messageEvents).transport('null://').to.have.sentEmails(0);
-      expect(messageEvents).transport('null://').to.have.queuedEmails(0);
+      expect(messageEvents).to.have.sentEmails.lengthOf(0);
+      expect(messageEvents).to.have.queuedEmails.lengthOf(0);
+      expect(messageEvents).transport('null://').to.have.sentEmails.lengthOf(0);
+      expect(messageEvents).transport('null://').to.have.queuedEmails.lengthOf(0);
     });
 
     sendEmail({ subject: 'Hello world!' });
 
     cy.getMessageEvents().then((messageEvents) => {
-      expect(messageEvents).to.have.sentEmails(1);
-      expect(messageEvents).to.have.queuedEmails(0);
-      expect(messageEvents).transport('null://').to.have.sentEmails(1);
-      expect(messageEvents).transport('null://').to.have.queuedEmails(0);
+      expect(messageEvents).to.have.sentEmails.lengthOf(1);
+      expect(messageEvents).to.have.queuedEmails.lengthOf(0);
+      expect(messageEvents).transport('null://').to.have.sentEmails.lengthOf(1);
+      expect(messageEvents).transport('null://').to.have.queuedEmails.lengthOf(0);
     });
   });
 
@@ -51,9 +51,9 @@ describe('I test an email', function () {
     });
 
     cy.getMessageEvents().then((messageEvents) => {
-      expect(messageEvents.events[0]).to.have.attachments.count(1);
-      expect(messageEvents.events[0]).to.have.attachments.named('attachment.txt').count(1);
-      expect(messageEvents.events[0]).to.have.attachments.named('foobar.txt').count(0);
+      expect(messageEvents.events[0]).to.have.attachments.lengthOf(1);
+      expect(messageEvents.events[0]).to.have.attachments.named('attachment.txt').lengthOf(1);
+      expect(messageEvents.events[0]).to.have.attachments.named('foobar.txt').lengthOf(0);
     });
   });
 

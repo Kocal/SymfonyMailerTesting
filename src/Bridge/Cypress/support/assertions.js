@@ -17,8 +17,8 @@ function assertions(_chai, utils) {
 
     this.assert(
       messageEvent.queued === false,
-      'Expected email to be sent, but is queued',
-      'Expected email to not be sent, but is sent'
+      'expected email to be sent, but is queued',
+      'expected email to not be sent, but is sent'
     );
   });
 
@@ -28,46 +28,32 @@ function assertions(_chai, utils) {
 
     this.assert(
       messageEvent.queued === true,
-      'Expected email to be queued, but is not queued',
-      'Expected email to not be queued, but is queued'
+      'expected email to be queued, but is not queued',
+      'expected email to not be queued, but is queued'
     );
   });
 
-  Assertion.addMethod('sentEmails', function (count) {
-    /** @var {SymfonyMailerTesting.MessageEvents} messageEvents */
-    const messageEvents = utils.flag(this, 'object');
-    const transport = utils.flag(this, 'transport');
-
-    const filteredMessageEvents = filterMessageEvents(messageEvents, {
-      transport,
-      queued: false,
-    });
-
-    this.assert(
-      count === filteredMessageEvents.length,
-      `expected ${transport ? `transport "${transport}" ` : ''} to have sent #{exp} emails, but got #{act}`,
-      `expected ${transport ? `transport "${transport}" ` : ''} to not have sent #{exp} emails, but got #{act}`,
-      count, // expected,
-      filteredMessageEvents.length // actual
+  Assertion.addProperty('sentEmails', function () {
+    utils.flag(this, 'queued', false);
+    utils.flag(
+      this,
+      'object',
+      filterMessageEvents(utils.flag(this, 'object'), {
+        transport: utils.flag(this, 'transport'),
+        queued: false,
+      })
     );
   });
 
-  Assertion.addMethod('queuedEmails', function (count) {
-    /** @var {SymfonyMailerTesting.MessageEvents} messageEvents */
-    const messageEvents = utils.flag(this, 'object');
-    const transport = utils.flag(this, 'transport');
-
-    const filteredMessageEvents = filterMessageEvents(messageEvents, {
-      transport,
-      queued: true,
-    });
-
-    this.assert(
-      count === filteredMessageEvents.length,
-      `expected ${transport ? `transport "${transport}" ` : ''} to have queued #{exp} emails, but got #{act}`,
-      `expected ${transport ? `transport "${transport}" ` : ''} to not have queued #{exp} emails, but got #{act}`,
-      count, // expected,
-      filteredMessageEvents.length // actual
+  Assertion.addProperty('queuedEmails', function () {
+    utils.flag(this, 'queued', true);
+    utils.flag(
+      this,
+      'object',
+      filterMessageEvents(utils.flag(this, 'object'), {
+        transport: utils.flag(this, 'transport'),
+        queued: true,
+      })
     );
   });
 
@@ -75,76 +61,103 @@ function assertions(_chai, utils) {
     utils.flag(this, 'attachments', true);
   });
 
-  Assertion.addChainableMethod(
-    'named',
-    function (name) {
-      utils.flag(this, 'named', name);
-    },
-    function (name) {
-      utils.flag(this, 'named', name);
-    }
-  );
-
-  Assertion.addChainableMethod(
-    'body',
-    function (type) {
-      utils.flag(this, 'body', type);
-    },
-    function (type) {
-      utils.flag(this, 'body', type);
-    }
-  );
-
-  Assertion.addMethod('count', function (count) {
-    /** @var {SymfonyMailerTesting.MessageEvent} */
-    const messageEvent = utils.flag(this, 'object');
-
-    if (utils.flag(this, 'attachments')) {
-      const name = utils.flag(this, 'named');
-      const filteredAttachments = filterAttachments(messageEvent, {
-        name,
-      });
-
-      this.assert(
-        count === filteredAttachments.length,
-        `expected email to have #{exp} attachment(s)${name ? ` named "${name}"` : ''}, but got #{act}`,
-        `expected email to not have #{exp} attachments(s)${name ? ` named "${name}"` : ''}, but got #{act}`,
-        count, // expected,
-        filteredAttachments.length // actual
-      );
-    }
+  Assertion.addChainableMethod('named', function (name) {
+    utils.flag(this, 'named', name);
   });
 
-  Assertion.overwriteChainableMethod(
-    'contains',
-    function (_super) {
-      return function (...args) {
-        /** @var {SymfonyMailerTesting.MessageEvent} messageEvent */
-        const messageEvent = utils.flag(this, 'object');
+  Assertion.addChainableMethod('body', function (type) {
+    utils.flag(this, 'body', type);
+  });
 
-        if (isMessageEvent(messageEvent)) {
-          const value = args[0];
-          const body = utils.flag(this, 'body');
-          const bodyContent = messageEvent.message[body].body;
+  function assertLength(_super) {
+    return function (...args) {
+      /** @var {SymfonyMailerTesting.MessageEvent} */
+      const messageEvent = utils.flag(this, 'object');
+
+      if (isMessageEvent(messageEvent)) {
+        const n = args[0];
+
+        if (typeof utils.flag(this, 'queued') !== 'undefined') {
+          const queued = utils.flag(this, 'queued');
+          const filteredMessageEvents = utils.flag(this, 'object');
+          const transport = utils.flag(this, 'transport');
 
           this.assert(
-            (bodyContent || '').includes(value),
-            `expected email ${body} body to contains #{exp}, but got #{act}`,
-            `expected email ${body} body to not contains #{exp}, but got #{act}`,
-            value,
-            bodyContent
+            n === filteredMessageEvents.length,
+            `expected ${transport ? `transport "${transport}" ` : ''} to have ${
+              queued ? 'queued' : 'sent'
+            } #{exp} emails, but got #{act}`,
+            `expected ${transport ? `transport "${transport}" ` : ''} to not have ${
+              queued ? 'queued' : 'sent'
+            } #{exp} emails, but got #{act}`,
+            n, // expected,
+            filteredMessageEvents.length // actual
           );
-        } else {
-          _super.apply(this, args);
+          return;
         }
-      };
-    },
-    function (_super) {
-      return function (...args) {
+
+        if (utils.flag(this, 'attachments')) {
+          const name = utils.flag(this, 'named');
+          const filteredAttachments = filterAttachments(messageEvent, {
+            name,
+          });
+
+          this.assert(
+            n === filteredAttachments.length,
+            `expected email to have #{exp} attachment(s)${name ? ` named "${name}"` : ''}, but got #{act}`,
+            `expected email to not have #{exp} attachments(s)${name ? ` named "${name}"` : ''}, but got #{act}`,
+            n, // expected,
+            filteredAttachments.length // actual
+          );
+        }
+      } else {
         _super.apply(this, args);
-      };
-    }
-  );
+      }
+    };
+  }
+
+  function assertLengthChainingBehavior(_super) {
+    return function (...args) {
+      _super.apply(this, args);
+    };
+  }
+
+  Assertion.overwriteChainableMethod('length', assertLength, assertLengthChainingBehavior);
+  Assertion.overwriteChainableMethod('lengthOf', assertLength, assertLengthChainingBehavior);
+
+  function assertInclude(_super) {
+    return function (...args) {
+      /** @var {SymfonyMailerTesting.MessageEvent} messageEvent */
+      const messageEvent = utils.flag(this, 'object');
+
+      if (isMessageEvent(messageEvent)) {
+        const value = args[0];
+        const body = utils.flag(this, 'body');
+        const bodyContent = messageEvent.message[body].body;
+
+        this.assert(
+          (bodyContent || '').includes(value),
+          `expected email ${body} body to contains #{exp}, but got #{act}`,
+          `expected email ${body} body to not contains #{exp}, but got #{act}`,
+          value,
+          bodyContent
+        );
+      } else {
+        _super.apply(this, args);
+      }
+    };
+  }
+
+  function assertIncludeChainingBehavior(_super) {
+    return function (...args) {
+      _super.apply(this, args);
+    };
+  }
+
+  Assertion.overwriteChainableMethod('include', assertInclude, assertIncludeChainingBehavior);
+  Assertion.overwriteChainableMethod('includes', assertInclude, assertIncludeChainingBehavior);
+  Assertion.overwriteChainableMethod('contain', assertInclude, assertIncludeChainingBehavior);
+  Assertion.overwriteChainableMethod('contains', assertInclude, assertIncludeChainingBehavior);
 }
 
 module.exports = assertions;
