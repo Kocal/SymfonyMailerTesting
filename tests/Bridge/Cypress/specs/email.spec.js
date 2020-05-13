@@ -16,19 +16,28 @@ describe('I test an email', function() {
 
   specify.only('I can test how many emails have been sent', function() {
     cy.getMessageEvents().then(messageEvents => {
-      expect(messageEvents).to.have.sent(0).emails;
-      expect(messageEvents).to.have.queued(0).emails;
-      expect(messageEvents).transport('null://').to.have.sent(0).emails;
-      expect(messageEvents).transport('null://').to.have.queued(0).emails;
+      expect(messageEvents).to.have.sentEmails(0);
+      expect(messageEvents).to.have.queuedEmails(0);
+      expect(messageEvents).transport('null://').to.have.sentEmails(0);
+      expect(messageEvents).transport('null://').to.have.queuedEmails(0);
     });
 
     sendEmail({ subject: "Hello world!" });
 
     cy.getMessageEvents().then(messageEvents => {
-      expect(messageEvents).to.have.sent(1).emails;
-      expect(messageEvents).to.have.queued(0).emails;
-      expect(messageEvents).transport('null://').to.have.sent(1).emails;
-      expect(messageEvents).transport('null://').to.have.queued(0).emails;
+      expect(messageEvents).to.have.sentEmails(1);
+      expect(messageEvents).to.have.queuedEmails(0);
+      expect(messageEvents).transport('null://').to.have.sentEmails(1);
+      expect(messageEvents).transport('null://').to.have.queuedEmails(0);
+    });
+  });
+
+  specify.only('I can test if email has been sent or queued', function() {
+    sendEmail({ subject: "Hello world!" });
+
+    cy.getMessageEvents().then(messageEvents => {
+      expect(messageEvents.events[0]).to.be.sent;
+      expect(messageEvents.events[0]).to.not.be.queued;
     });
   });
 
