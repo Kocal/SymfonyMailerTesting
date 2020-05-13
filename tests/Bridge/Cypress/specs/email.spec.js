@@ -1,4 +1,4 @@
-function sendEmail({ subject, attachments } = {}) {
+function sendEmail({ subject, attachments, text, html } = {}) {
   cy.request({
     method: 'POST',
     url: '/send-basic-email',
@@ -6,6 +6,8 @@ function sendEmail({ subject, attachments } = {}) {
     body: {
       subject,
       attachments,
+      text,
+      html,
     },
   });
 }
@@ -52,6 +54,21 @@ describe('I test an email', function () {
       expect(messageEvents.events[0]).to.have.attachments.count(1);
       expect(messageEvents.events[0]).to.have.attachments.named('attachment.txt').count(1);
       expect(messageEvents.events[0]).to.have.attachments.named('foobar.txt').count(0);
+    });
+  });
+
+  specify('I can test email text and html body', function () {
+    sendEmail({
+      subject: 'Hello world!',
+      text: 'My text',
+      html: '<b>My HTML</b>',
+    });
+
+    cy.getMessageEvents().then((messageEvents) => {
+      expect(messageEvents.events[0]).to.have.body('text').contains('My text');
+      expect(messageEvents.events[0]).to.have.body('text').not.contains('Foo bar');
+      expect(messageEvents.events[0]).to.have.body('html').contains('<b>My HTML</b>');
+      expect(messageEvents.events[0]).to.have.body('html').not.contains('<b>Foo bar</b>');
     });
   });
 

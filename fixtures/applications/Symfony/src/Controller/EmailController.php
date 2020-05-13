@@ -22,7 +22,9 @@ class EmailController extends AbstractController
             ->from('symfony-mailer-testing@example.com')
             ->to('john@example.com')
             ->subject($request->request->get('subject', 'Email sent from a Symfony application!'))
-            ->text('Hello world!');
+            ->text($request->request->get('text', 'Hello world!'))
+            ->html($request->request->get('html', '<b>Hello world!</b>'))
+        ;
 
         foreach ($request->request->get('attachments', []) as $attachment) {
             $email->attach($attachment['body'], $attachment['name'] ?? null, $attachment['contentType'] ?? null);

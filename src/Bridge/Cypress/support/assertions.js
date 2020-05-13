@@ -1,4 +1,4 @@
-const { filterMessageEvents, filterAttachments } = require('../../JavaScript');
+const { filterMessageEvents, filterAttachments, isMessageEvent } = require('../../JavaScript');
 
 /**
  * @param {Chai.ChaiStatic} _chai
@@ -85,6 +85,16 @@ function assertions(_chai, utils) {
     }
   );
 
+  Assertion.addChainableMethod(
+    'body',
+    function (type) {
+      utils.flag(this, 'body', type);
+    },
+    function (type) {
+      utils.flag(this, 'body', type);
+    }
+  );
+
   Assertion.addMethod('count', function (count) {
     /** @var {SymfonyMailerTesting.MessageEvent} */
     const messageEvent = utils.flag(this, 'object');
@@ -104,6 +114,37 @@ function assertions(_chai, utils) {
       );
     }
   });
+
+  Assertion.overwriteChainableMethod(
+    'contains',
+    function (_super) {
+      return function (...args) {
+        /** @var {SymfonyMailerTesting.MessageEvent} messageEvent */
+        const messageEvent = utils.flag(this, 'object');
+
+        if (isMessageEvent(messageEvent)) {
+          const value = args[0];
+          const body = utils.flag(this, 'body');
+          const bodyContent = messageEvent.message[body].body;
+
+          this.assert(
+            (bodyContent || '').includes(value),
+            `expected email ${body} body to contains #{exp}, but got #{act}`,
+            `expected email ${body} body to not contains #{exp}, but got #{act}`,
+            value,
+            bodyContent
+          );
+        } else {
+          _super.apply(this, args);
+        }
+      };
+    },
+    function (_super) {
+      return function (...args) {
+        _super.apply(this, args);
+      };
+    }
+  );
 }
 
 module.exports = assertions;

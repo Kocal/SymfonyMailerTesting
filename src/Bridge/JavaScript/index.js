@@ -24,4 +24,16 @@ function filterAttachments(messageEvent, { name } = {}) {
   });
 }
 
-module.exports = { filterMessageEvents, filterAttachments };
+/**
+ * @param {SymfonyMailerTesting.MessageEvent} messageEvent
+ * @return {boolean}
+ */
+function isMessageEvent(messageEvent) {
+  return (
+    Object.prototype.hasOwnProperty.call(messageEvent, 'message') &&
+    Object.prototype.hasOwnProperty.call(messageEvent, 'transport') &&
+    Object.prototype.hasOwnProperty.call(messageEvent, 'queued')
+  );
+}
+
+module.exports = { filterMessageEvents, filterAttachments, isMessageEvent };
