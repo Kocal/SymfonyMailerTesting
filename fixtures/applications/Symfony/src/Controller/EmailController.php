@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EmailController extends AbstractController
 {
     /**
-     * @Route("/send-basic-email", methods={"POST"})
+     * @Route("/send-basic-email", methods={"POST"}, defaults={"format": "json"})
      */
     public function sendBasicEmail(Request $request, MailerInterface $mailer): Response
     {
@@ -23,6 +23,10 @@ class EmailController extends AbstractController
             ->to('john@example.com')
             ->subject($request->request->get('subject', 'Email sent from a Symfony application!'))
             ->text('Hello world!');
+
+        foreach ($request->request->get('attachments', []) as $attachment) {
+            $email->attach($attachment['body'], $attachment['name'] ?? null, $attachment['contentType'] ?? null);
+        }
 
         $mailer->send($email);
 

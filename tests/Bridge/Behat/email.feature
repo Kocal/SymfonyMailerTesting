@@ -31,7 +31,7 @@ Feature: Testing emails
       | attachments | [{"body": "My attachment", "name": "attachment.txt"}] |
 
     Then I select email #0
-    And this email text body contains "Hi Carla!"
+    And this email has 1 attachment
 
   Scenario: I can test if emails text body contains
     When I send an email:
