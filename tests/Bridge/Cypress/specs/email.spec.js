@@ -57,7 +57,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify.only('I can test email subject', function () {
+  specify('I can test email subject', function () {
     sendEmail({ subject: 'Hello world!' });
 
     cy.getMessageEvents().then((messageEvents) => {
@@ -74,10 +74,15 @@ describe('I test an email', function () {
     });
 
     cy.getMessageEvents().then((messageEvents) => {
-      expect(messageEvents.events[0]).to.have.body('text').contains('My text');
+      expect(messageEvents.events[0]).to.have.body('text').eq('My text');
+      expect(messageEvents.events[0]).to.have.body('text').not.eq('Foo bar');
+      expect(messageEvents.events[0]).to.have.body('text').contains('text');
       expect(messageEvents.events[0]).to.have.body('text').not.contains('Foo bar');
-      expect(messageEvents.events[0]).to.have.body('html').contains('<b>My HTML</b>');
-      expect(messageEvents.events[0]).to.have.body('html').not.contains('<b>Foo bar</b>');
+
+      expect(messageEvents.events[0]).to.have.body('html').eq('<b>My HTML</b>');
+      expect(messageEvents.events[0]).to.have.body('html').not.eq('<b>Foo bar</b>');
+      expect(messageEvents.events[0]).to.have.body('html').contains('HTML</b>');
+      expect(messageEvents.events[0]).to.have.body('html').not.contains('bar</b>');
     });
   });
 
