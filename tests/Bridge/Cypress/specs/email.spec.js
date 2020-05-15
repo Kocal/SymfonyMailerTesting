@@ -94,11 +94,11 @@ describe('I test an email', function () {
     sendEmail({ subject: subject2 });
 
     cy.getMessageEvents().then((messageEvents) => {
-      expect(messageEvents.events[0].message.subject).to.be.equal(subject1);
-      expect(messageEvents.events[0].message.text.body).to.contain('Hello world!');
+      expect(messageEvents.events[0]).subject.to.be.equal(subject1);
+      expect(messageEvents.events[0]).body('text').to.contain('Hello world!');
 
-      expect(messageEvents.events[1].message.subject).to.be.equal(subject2);
-      expect(messageEvents.events[1].message.text.body).to.contain('Hello world!');
+      expect(messageEvents.events[1]).subject.to.be.equal(subject2);
+      expect(messageEvents.events[1]).body('text').to.contain('Hello world!');
     });
   });
 });

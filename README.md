@@ -147,8 +147,8 @@ Feature: Testing my feature
 
 Since you have imported the support file, you can use the following commands:
 
-- `cy.resetMessageEvents()`
-- `cy.getMessageEvents()`
+- `cy.resetMessageEvents()`: reset the Symfony Mailer logger
+- `cy.getMessageEvents()`: fetch emails sent by the Symfony Mailer
 
 But if you prefer, you can import the methods directly:
 
@@ -156,11 +156,7 @@ But if you prefer, you can import the methods directly:
 import { resetMessageEvents, getMessageEvents } from './vendor/yproximite/symfony-mailer-testing/src/Bridge/Cypress';
 ```
 
-Available assertions:
-
-- empty ATM :D
-
-Example of spec:
+#### Example
 
 ```js
 // cypress/integration/your.spec.js
@@ -176,11 +172,77 @@ describe('Your feature', function () {
 
     // then use `cy.getMessageEvents()`
     cy.getMessageEvents().then((messageEvents) => {
-      expect(messageEvents.events).to.be.lengthOf(1); // 1 email sent or queued
-      expect(messageEvents.events[0].message.subject).to.equal('My email subject');
-      expect(messageEvents.events[0].message.from).to.equal(['john@example.com']);
+      expect(messageEvents).to.have.sentEmails.lengthOf(1);
+      expect(messageEvents).to.have.queuedEmails.lengthOf(0);
+      expect(messageEvents.events[0]).to.have.subject.contains('Hello world!');
+      expect(messageEvents.events[0]).to.have.body('html').contains('<a href="...">My link</a>');
+      expect(messageEvents.events[0]).to.have.attachments.lengthOf(1);
       // ...
     });
   });
 });
+```
+
+#### Available assertions:
+
+##### `sentEmails` / `queuedEmails`
+
+Assert how many emails has been sent or queued. Can be scoped by transport (if using multiple Symfony Mailer).
+
+```js
+expect(messageEvents).to.have.sentEmails.lengthOf(1);
+expect(messageEvents).to.have.queuedEmails.lengthOf(0);
+
+// Scope to given transport
+expect(messageEvents).transport('null://').to.have.sentEmails.lengthOf(1);
+expect(messageEvents).transport('null://').to.have.queuedEmails.lengthOf(0);
+```
+
+##### `sent` / `queued`
+
+Assert if email has been sent or queued.
+
+```js
+expect(messageEvents.events[0]).to.be.sent;
+expect(messageEvents.events[0]).to.not.be.queued;
+```
+
+##### `attachments`
+
+Assert email's attachments.
+
+```js
+expect(messageEvents.events[0]).to.have.attachments.lengthOf(1);
+
+// Get attachment by name
+expect(messageEvents.events[0]).to.have.attachments.named('attachment.txt').lengthOf(1);
+expect(messageEvents.events[0]).to.have.attachments.named('foobar.txt').lengthOf(0);
+```
+
+##### `subject`
+
+Assert email's subject.
+
+```js
+expect(messageEvents.events[0]).to.have.subject.equal('Hello world!');
+expect(messageEvents.events[0]).to.have.subject.not.equals('Foo');
+
+expect(messageEvents.events[0]).to.have.subject.contains('Hello world!');
+expect(messageEvents.events[0]).to.have.subject.not.contains('Foo');
+```
+
+##### `body(type)`
+
+Assert email's text or HTML body.
+
+```js
+expect(messageEvents.events[0]).to.have.body('text').equal('Hello world!');
+expect(messageEvents.events[0]).to.have.body('text').contains('Hello');
+expect(messageEvents.events[0]).to.have.body('text').not.equal('Foo');
+expect(messageEvents.events[0]).to.have.body('text').not.contains('Foo');
+
+expect(messageEvents.events[0]).to.have.body('html').equal('<h1>Hello world!</h1>');
+expect(messageEvents.events[0]).to.have.body('html').contains('Hello world!');
+expect(messageEvents.events[0]).to.have.body('html').not.equal('Foo');
+expect(messageEvents.events[0]).to.have.body('html').not.contains('Foo');
 ```
