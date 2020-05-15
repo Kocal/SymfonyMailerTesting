@@ -69,6 +69,10 @@ function assertions(_chai, utils) {
     utils.flag(this, 'body', type);
   });
 
+  Assertion.addProperty('subject', function () {
+    utils.flag(this, 'subject', true);
+  });
+
   function assertLength(_super) {
     return function (...args) {
       /** @var {SymfonyMailerTesting.MessageEvent} */
@@ -82,14 +86,13 @@ function assertions(_chai, utils) {
           const filteredMessageEvents = utils.flag(this, 'object');
           const transport = utils.flag(this, 'transport');
 
+          const msg = `expected ${transport ? `transport "${transport}" ` : ''}`;
+          const verb = queued ? 'queued' : 'sent';
+
           this.assert(
             n === filteredMessageEvents.length,
-            `expected ${transport ? `transport "${transport}" ` : ''} to have ${
-              queued ? 'queued' : 'sent'
-            } #{exp} emails, but got #{act}`,
-            `expected ${transport ? `transport "${transport}" ` : ''} to not have ${
-              queued ? 'queued' : 'sent'
-            } #{exp} emails, but got #{act}`,
+            `${msg} to have ${verb} #{exp} emails, but got #{act}`,
+            `${msg} to not have ${verb} #{exp} emails, but got #{act}`,
             n, // expected,
             filteredMessageEvents.length // actual
           );
@@ -132,16 +135,28 @@ function assertions(_chai, utils) {
 
       if (isMessageEvent(messageEvent)) {
         const value = args[0];
+        const subject = utils.flag(this, 'subject');
         const body = utils.flag(this, 'body');
-        const bodyContent = messageEvent.message[body].body;
 
-        this.assert(
-          (bodyContent || '').includes(value),
-          `expected email ${body} body to contains #{exp}, but got #{act}`,
-          `expected email ${body} body to not contains #{exp}, but got #{act}`,
-          value,
-          bodyContent
-        );
+        if (subject) {
+          this.assert(
+            messageEvent.message.subject.includes(value),
+            `expected email subject to contains #{exp}, but got #{act}`,
+            `expected email subject to not contains #{exp}, but got #{act}`,
+            value,
+            subject
+          );
+        } else if (body) {
+          const bodyContent = messageEvent.message[body].body;
+
+          this.assert(
+            (bodyContent || '').includes(value),
+            `expected email ${body} body to contains #{exp}, but got #{act}`,
+            `expected email ${body} body to not contains #{exp}, but got #{act}`,
+            value,
+            bodyContent
+          );
+        }
       } else {
         _super.apply(this, args);
       }

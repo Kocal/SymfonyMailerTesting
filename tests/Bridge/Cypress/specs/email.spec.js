@@ -57,6 +57,15 @@ describe('I test an email', function () {
     });
   });
 
+  specify.only('I can test email subject', function () {
+    sendEmail({ subject: 'Hello world!' });
+
+    cy.getMessageEvents().then((messageEvents) => {
+      expect(messageEvents.events[0]).to.have.subject.contains('Hello world!');
+      expect(messageEvents.events[0]).to.have.subject.not.contains('Foo');
+    });
+  });
+
   specify('I can test email text and html body', function () {
     sendEmail({
       subject: 'Hello world!',
