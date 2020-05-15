@@ -1,7 +1,10 @@
 <?php
 
-namespace spec\Yproximite\SymfonyMailerTesting;
+declare(strict_types=1);
 
+namespace spec\Kocal\SymfonyMailerTesting;
+
+use Kocal\SymfonyMailerTesting\MailerLogger;
 use PhpSpec\ObjectBehavior;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
@@ -9,7 +12,6 @@ use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\RawMessage;
-use Yproximite\SymfonyMailerTesting\MailerLogger;
 
 class MailerLoggerSpec extends ObjectBehavior
 {

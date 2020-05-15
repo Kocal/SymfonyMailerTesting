@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Bridge\Behat;
+namespace Kocal\SymfonyMailerTesting\Bridge\Behat;
 
+use Kocal\SymfonyMailerTesting\MailerLogger;
+use Kocal\SymfonyMailerTesting\MailerLoggerAwareTrait;
+use Kocal\SymfonyMailerTesting\Test\MailerAssertions;
 use Symfony\Component\Mailer\Event\MessageEvent;
 use Webmozart\Assert\Assert;
-use Yproximite\SymfonyMailerTesting\MailerLogger;
-use Yproximite\SymfonyMailerTesting\MailerLoggerAwareTrait;
-use Yproximite\SymfonyMailerTesting\Test\MailerAssertions;
 
 trait MailerContextTrait
 {

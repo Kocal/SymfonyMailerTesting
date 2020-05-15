@@ -1,11 +1,11 @@
 {
-  "name": "yproximite/symfony-mailer-testing",
+  "name": "kocal/symfony-mailer-testing",
   "description": "Test your emails with Behat and Cypress, when using the Symfony Mailer component.",
   "license": "MIT",
   "authors": [
     {
       "name": "Hugo Alliaume",
-      "email": "hugo@yproximite.com"
+      "email": "kocal@live.fr"
     }
   ],
   "config": {
@@ -52,17 +52,17 @@
   },
   "autoload": {
     "psr-4": {
-      "Yproximite\\SymfonyMailerTesting\\": "src/"
+      "Kocal\\SymfonyMailerTesting\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "spec\\": "spec/",
-      "Yproximite\\SymfonyMailerTesting\\Tests\\": "tests/",
-      "Yproximite\\SymfonyMailerTesting\\Tests\\Bridge\\Behat\\": "tests/Bridge/Behat/bootstrap/",
-      "Yproximite\\SymfonyMailerTesting\\Fixtures\\": "fixtures/",
-      "Yproximite\\SymfonyMailerTesting\\Fixtures\\Applications\\": "fixtures/applications/",
-      "Yproximite\\SymfonyMailerTesting\\Fixtures\\Applications\\Symfony\\App\\": "fixtures/applications/Symfony/src/"
+      "Kocal\\SymfonyMailerTesting\\Tests\\": "tests/",
+      "Kocal\\SymfonyMailerTesting\\Tests\\Bridge\\Behat\\": "tests/Bridge/Behat/bootstrap/",
+      "Kocal\\SymfonyMailerTesting\\Fixtures\\": "fixtures/",
+      "Kocal\\SymfonyMailerTesting\\Fixtures\\Applications\\": "fixtures/applications/",
+      "Kocal\\SymfonyMailerTesting\\Fixtures\\Applications\\Symfony\\App\\": "fixtures/applications/Symfony/src/"
     }
   }
 }

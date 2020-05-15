@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Controller;
+namespace Kocal\SymfonyMailerTesting\Controller;
 
+use Kocal\SymfonyMailerTesting\MailerLogger;
+use Kocal\SymfonyMailerTesting\Normalizer\MessageEventsNormalizer;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Yproximite\SymfonyMailerTesting\MailerLogger;
-use Yproximite\SymfonyMailerTesting\Normalizer\MessageEventsNormalizer;
 
 class MailerController
 {

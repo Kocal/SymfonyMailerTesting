@@ -3,5 +3,5 @@ services:
         autowire: true
         autoconfigure: true
 
-    Yproximite\SymfonyMailerTesting\Tests\Bridge\Behat\:
+    Kocal\SymfonyMailerTesting\Tests\Bridge\Behat\:
         resource: '../../../../tests/Bridge/Behat/bootstrap/*'

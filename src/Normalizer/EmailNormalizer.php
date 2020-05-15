@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Normalizer;
+namespace Kocal\SymfonyMailerTesting\Normalizer;
 
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;

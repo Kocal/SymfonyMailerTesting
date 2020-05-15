@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting;
+namespace Kocal\SymfonyMailerTesting;
 
 interface MailerLoggerAwareInterface
 {

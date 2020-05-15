@@ -1,9 +1,9 @@
 symfony_mailer_testing_reset:
     path: /_symfony_mailer_testing/reset
-    controller: Yproximite\SymfonyMailerTesting\Controller\MailerController::reset
+    controller: Kocal\SymfonyMailerTesting\Controller\MailerController::reset
     methods: POST
 
 symfony_mailer_testing_message_events_get:
     path: /_symfony_mailer_testing/message_events
-    controller: Yproximite\SymfonyMailerTesting\Controller\MailerController::getEvents
+    controller: Kocal\SymfonyMailerTesting\Controller\MailerController::getEvents
     methods: GET

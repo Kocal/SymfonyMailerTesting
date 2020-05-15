@@ -4,20 +4,20 @@ services:
         autoconfigure: true
 
     _instanceof:
-        Yproximite\SymfonyMailerTesting\MailerLoggerAwareInterface:
+        Kocal\SymfonyMailerTesting\MailerLoggerAwareInterface:
             calls:
-                - [setMailerLogger, ['@Yproximite\SymfonyMailerTesting\MailerLogger']]
+                - [setMailerLogger, ['@Kocal\SymfonyMailerTesting\MailerLogger']]
 
-    Yproximite\SymfonyMailerTesting\MailerLogger: ~
+    Kocal\SymfonyMailerTesting\MailerLogger: ~
 
-    Yproximite\SymfonyMailerTesting\Normalizer\:
+    Kocal\SymfonyMailerTesting\Normalizer\:
         resource: '../../../../Normalizer/*'
 
-    Yproximite\SymfonyMailerTesting\Controller\:
+    Kocal\SymfonyMailerTesting\Controller\:
         resource: '../../../../Controller/*'
         tags: ['controller.service_arguments']
 
-    Yproximite\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener: ~
+    Kocal\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener: ~
 
     # Behat
-    Yproximite\SymfonyMailerTesting\Bridge\Behat\MailerContext: ~
+    Kocal\SymfonyMailerTesting\Bridge\Behat\MailerContext: ~

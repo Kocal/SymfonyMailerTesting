@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Bridge\Behat;
+namespace Kocal\SymfonyMailerTesting\Bridge\Behat;
 
-use Yproximite\SymfonyMailerTesting\MailerLoggerAwareInterface;
+use Kocal\SymfonyMailerTesting\MailerLoggerAwareInterface;
 
 interface MailerContextInterface extends MailerLoggerAwareInterface
 {

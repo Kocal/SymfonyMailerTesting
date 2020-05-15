@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\App;
+namespace Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\Config\Loader\LoaderInterface;

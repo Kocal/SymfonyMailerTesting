@@ -6,11 +6,11 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: fixtures/applications/Symfony/config/bootstrap.php
             kernel:
-                class: \Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Kernel
+                class: \Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Kernel
 
     suites:
         default:
             paths: ['%paths.base%/tests/Bridge/Behat']
             contexts:
-                - Yproximite\SymfonyMailerTesting\Bridge\Behat\MailerContext
-                - Yproximite\SymfonyMailerTesting\Tests\Bridge\Behat\EmailContext
+                - Kocal\SymfonyMailerTesting\Bridge\Behat\MailerContext
+                - Kocal\SymfonyMailerTesting\Tests\Bridge\Behat\EmailContext

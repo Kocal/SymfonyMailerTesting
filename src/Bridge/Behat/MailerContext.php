@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Bridge\Behat;
+namespace Kocal\SymfonyMailerTesting\Bridge\Behat;
 
 use Behat\Behat\Context\Context;
 

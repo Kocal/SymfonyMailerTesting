@@ -2,8 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Tests;
+namespace Kocal\SymfonyMailerTesting\Tests;
 
+use Kocal\SymfonyMailerTesting\MailerLogger;
+use Kocal\SymfonyMailerTesting\Test\MailerAssertions;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -12,8 +14,6 @@ use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mailer\Event\MessageEvents;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\RawMessage;
-use Yproximite\SymfonyMailerTesting\MailerLogger;
-use Yproximite\SymfonyMailerTesting\Test\MailerAssertions;
 
 class MailerAssertionsTest extends TestCase
 {

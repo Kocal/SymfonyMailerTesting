@@ -1,6 +1,6 @@
 # Symfony Mailer Testing
 
-![CI (master)](https://github.com/Yproximite/SymfonyMailerTesting/workflows/CI/badge.svg)
+![CI (master)](https://github.com/Kocal/SymfonyMailerTesting/workflows/CI/badge.svg)
 ![](https://img.shields.io/badge/php->%207.3-blue)
 ![](https://img.shields.io/badge/Symfony-%5E4.3%20%7C%7C%20%5E5.0-blue)
 
@@ -26,7 +26,7 @@ This testing library provides the same [PHPUnit assertions for Email Messages](h
 ## Installation
 
 ```console
-$ composer require yproximite/symfony-mailer-testing
+$ composer require kocal/symfony-mailer-testing
 ```
 
 This testing library try to be the more framework-agnostic possible.
@@ -44,7 +44,7 @@ Import the bundle:
 
 return [
     // ...
-    Yproximite\SymfonyMailerTesting\Bridge\Symfony\SymfonyMailerTestingBundle::class => ['test' => true],
+    Kocal\SymfonyMailerTesting\Bridge\Symfony\SymfonyMailerTestingBundle::class => ['test' => true],
 ];
 ```
 
@@ -64,7 +64,7 @@ default:
     default:
       contexts:
         # Import the context
-        - Yproximite\SymfonyMailerTesting\Bridge\Behat\MailerContext
+        - Kocal\SymfonyMailerTesting\Bridge\Behat\MailerContext
 ```
 
 If you want to add more assertions but can't extend from `MailerContext`, you can use the trait `MailerContextTrait`.
@@ -98,7 +98,7 @@ And finally you should add this module in your support file:
 
 ```js
 // cypress/support/index.js
-import './vendor/yproximite/symfony-mailer-testing/src/Bridge/Cypress/support';
+import './vendor/kocal/symfony-mailer-testing/src/Bridge/Cypress/support';
 ```
 
 ## Usage
@@ -153,7 +153,7 @@ Since you have imported the support file, you can use the following commands:
 But if you prefer, you can import the methods directly:
 
 ```js
-import { resetMessageEvents, getMessageEvents } from './vendor/yproximite/symfony-mailer-testing/src/Bridge/Cypress';
+import { resetMessageEvents, getMessageEvents } from './vendor/kocal/symfony-mailer-testing/src/Bridge/Cypress';
 ```
 
 #### Example

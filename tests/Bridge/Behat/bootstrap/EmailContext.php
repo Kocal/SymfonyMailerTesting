@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace Yproximite\SymfonyMailerTesting\Tests\Bridge\Behat;
+declare(strict_types=1);
+
+namespace Kocal\SymfonyMailerTesting\Tests\Bridge\Behat;
 
 use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\TableNode;

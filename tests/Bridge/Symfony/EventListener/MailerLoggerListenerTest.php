@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Tests\Bridge\Symfony\EventListener;
+namespace Kocal\SymfonyMailerTesting\Tests\Bridge\Symfony\EventListener;
 
+use Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Kernel;
+use Kocal\SymfonyMailerTesting\MailerLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Kernel;
-use Yproximite\SymfonyMailerTesting\MailerLogger;
 
 class MailerLoggerListenerTest extends KernelTestCase
 {

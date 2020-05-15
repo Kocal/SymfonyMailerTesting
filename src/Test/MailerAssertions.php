@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Test;
+namespace Kocal\SymfonyMailerTesting\Test;
 
-use Yproximite\SymfonyMailerTesting\MailerLogger;
+use Kocal\SymfonyMailerTesting\MailerLogger;
 
 class MailerAssertions
 {

@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Tests;
+namespace Kocal\SymfonyMailerTesting\Tests;
 
+use Kocal\SymfonyMailerTesting\Normalizer\EmailNormalizer;
+use Kocal\SymfonyMailerTesting\Normalizer\MessageEventNormalizer;
+use Kocal\SymfonyMailerTesting\Normalizer\MessageEventsNormalizer;
+use Kocal\SymfonyMailerTesting\Normalizer\MessageNormalizer;
+use Kocal\SymfonyMailerTesting\Normalizer\RawMessageNormalizer;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mailer\Event\MessageEvents;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\RawMessage;
-use Yproximite\SymfonyMailerTesting\Normalizer\EmailNormalizer;
-use Yproximite\SymfonyMailerTesting\Normalizer\MessageEventNormalizer;
-use Yproximite\SymfonyMailerTesting\Normalizer\MessageEventsNormalizer;
-use Yproximite\SymfonyMailerTesting\Normalizer\MessageNormalizer;
-use Yproximite\SymfonyMailerTesting\Normalizer\RawMessageNormalizer;
 
 class MessageEventsNormalizerTest extends TestCase
 {

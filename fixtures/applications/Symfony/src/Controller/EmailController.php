@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Controller;
+namespace Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

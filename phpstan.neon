@@ -16,15 +16,16 @@ parameters:
 
     excludes_analyse:
         - fixtures/applications/Symfony
+        - spec # wait for PHPStan 0.12 support (https://github.com/proget-hq/phpstan-phpspec)
 
     symfony:
-        container_xml_path: 'fixtures/applications/Symfony/var/cache/test/Yproximite_SymfonyMailerTesting_Fixtures_Applications_Symfony_App_KernelTestDebugContainer.xml'
+        container_xml_path: 'fixtures/applications/Symfony/var/cache/test/Kocal_SymfonyMailerTesting_Fixtures_Applications_Symfony_App_KernelTestDebugContainer.xml'
 
     inferPrivatePropertyTypeFromConstructor: true
 
     ignoreErrors:
         # Should be fixed by Symfony
-        - '#Property Yproximite\\SymfonyMailerTesting\\Tests\\Bridge\\Symfony\\(.*?)::\$class has no typehint specified.#'
+        - '#Property Kocal\\SymfonyMailerTesting\\Tests\\Bridge\\Symfony\\(.*?)::\$class has no typehint specified.#'
 
         # Should be fixed by behat
         - '#with no value type specified in iterable type Behat\\Gherkin\\Node\\TableNode.$#'

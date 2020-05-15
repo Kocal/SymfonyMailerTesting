@@ -141,7 +141,7 @@ jobs:
               working-directory: fixtures/applications/Symfony
 
             - name: Run Cypress
-              if: always() # `symfony serve` can fails but the server seems to be still up, see https://github.com/symfony/cli/issues/212 and https://github.com/Yproximite/condictio/pull/912/commits/5eef5d3fc0c907e39c6fdc594eaaa339e75fee5f
+              if: always() # `symfony serve` can fails but the server seems to be still up, see https://github.com/symfony/cli/issues/212 and https://github.com/Kocal/condictio/pull/912/commits/5eef5d3fc0c907e39c6fdc594eaaa339e75fee5f
               uses: cypress-io/github-action@v1
 
             - run: symfony server:stop

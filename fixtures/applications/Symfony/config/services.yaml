@@ -3,10 +3,10 @@ services:
         autowire: true
         autoconfigure: true
 
-    Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\:
+    Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
 
-    Yproximite\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Controller\:
+    Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Controller\:
         resource: '../src/Controller'
         tags: ['controller.service_arguments']
