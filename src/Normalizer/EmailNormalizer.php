@@ -15,13 +15,20 @@ use Symfony\Component\Mime\Part\DataPart;
  */
 class EmailNormalizer
 {
+    private $headersNormalizer;
+
+    public function __construct(HeadersNormalizer $headersNormalizer)
+    {
+        $this->headersNormalizer = $headersNormalizer;
+    }
+
     /**
      * @return array<string, mixed>
      */
     public function normalize(Email $email): array
     {
         return [
-            'headers'     => $email->getHeaders()->toArray(),
+            'headers'     => $this->headersNormalizer->normalize($email->getHeaders()),
             'from'        => array_map(function (Address $address): string { return $address->toString(); }, $email->getFrom()),
             'to'          => array_map(function (Address $address): string { return $address->toString(); }, $email->getTo()),
             'cc'          => array_map(function (Address $address): string { return $address->toString(); }, $email->getCc()),

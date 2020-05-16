@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Kocal\SymfonyMailerTesting\Tests;
 
 use Kocal\SymfonyMailerTesting\Normalizer\EmailNormalizer;
+use Kocal\SymfonyMailerTesting\Normalizer\HeadersNormalizer;
 use Kocal\SymfonyMailerTesting\Normalizer\MessageEventNormalizer;
 use Kocal\SymfonyMailerTesting\Normalizer\MessageEventsNormalizer;
 use Kocal\SymfonyMailerTesting\Normalizer\MessageNormalizer;
@@ -28,8 +29,8 @@ class MessageEventsNormalizerTest extends TestCase
         $this->normalizer = new MessageEventsNormalizer(
             new MessageEventNormalizer(
                 new RawMessageNormalizer(),
-                new MessageNormalizer(),
-                new EmailNormalizer(),
+                new MessageNormalizer(new HeadersNormalizer()),
+                new EmailNormalizer(new HeadersNormalizer()),
             ),
         );
     }
@@ -50,7 +51,7 @@ class MessageEventsNormalizerTest extends TestCase
         ));
         $messageEvents->add($this->createQueuedMessageEvent(
             (new Email())
-                ->subject('message 2')
+                ->subject('message 2 : test')
                 ->from('leo@example.com')
                 ->to('lea@example.com')
                 ->cc('lionel@example.com')
@@ -66,11 +67,11 @@ class MessageEventsNormalizerTest extends TestCase
                 [
                     'message'   => [
                         'headers'     => [
-                            'Subject: message 1',
-                            'From: john@example.com',
-                            'To: jeanne@example.com',
-                            'Cc: jack@example.com',
-                            'Bcc: jennifer@example.com',
+                            ['name' => 'Subject', 'body' => 'message 1'],
+                            ['name' => 'From', 'body' => 'john@example.com'],
+                            ['name' => 'To', 'body' => 'jeanne@example.com'],
+                            ['name' => 'Cc', 'body' => 'jack@example.com'],
+                            ['name' => 'Bcc', 'body' => 'jennifer@example.com'],
                         ],
                         'from'        => ['john@example.com'],
                         'to'          => ['jeanne@example.com'],
@@ -95,17 +96,17 @@ class MessageEventsNormalizerTest extends TestCase
                 [
                     'message'   => [
                         'headers'     => [
-                            'Subject: message 2',
-                            'From: leo@example.com',
-                            'To: lea@example.com',
-                            'Cc: lionel@example.com',
-                            'Bcc: lilou@example.com',
+                            ['name' => 'Subject', 'body' => 'message 2 : test'],
+                            ['name' => 'From', 'body' => 'leo@example.com'],
+                            ['name' => 'To', 'body' => 'lea@example.com'],
+                            ['name' => 'Cc', 'body' => 'lionel@example.com'],
+                            ['name' => 'Bcc', 'body' => 'lilou@example.com'],
                         ],
                         'from'        => ['leo@example.com'],
                         'to'          => ['lea@example.com'],
                         'cc'          => ['lionel@example.com'],
                         'bcc'         => ['lilou@example.com'],
-                        'subject'     => 'message 2',
+                        'subject'     => 'message 2 : test',
                         'text'        => [
                             'body'    => 'Text content',
                             'charset' => 'utf-8',

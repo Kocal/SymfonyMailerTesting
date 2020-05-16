@@ -13,15 +13,22 @@ use Symfony\Component\Mime\Message;
  */
 class MessageNormalizer
 {
+    private $headersNormalizer;
+
+    public function __construct(HeadersNormalizer $headersNormalizer)
+    {
+        $this->headersNormalizer = $headersNormalizer;
+    }
+
     /**
      * @return array<string, mixed>
      */
     public function normalize(Message $message): array
     {
         return [
-            'headers' => $message->getHeaders()->toArray(),
+            'headers' => $this->headersNormalizer->normalize($message->getHeaders()),
             'body'    => null === $message->getBody() ? null : [
-                'headers' => $message->getBody()->getHeaders()->toArray(),
+                'headers' => $this->headersNormalizer->normalize($message->getBody()->getHeaders()),
                 'body'    => $message->getBody()->bodyToString(),
             ],
         ];

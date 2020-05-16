@@ -24,15 +24,15 @@ declare namespace SymfonyMailerTesting {
   }
 
   interface Message {
-    headers: string[];
+    headers: Array<Header>;
     body: null | {
-      headers: string[];
+      headers: Array<Header>;
       body: string;
     };
   }
 
   interface Email {
-    headers: string[];
+    headers: Array<Header>;
     from: Array<Address>;
     to: Array<Address>;
     cc: Array<Address>;
@@ -47,6 +47,11 @@ declare namespace SymfonyMailerTesting {
       charset: string;
     };
     attachments: string[]
+  }
+
+  interface Header {
+    name: string;
+    body: string;
   }
 
   interface Address {
