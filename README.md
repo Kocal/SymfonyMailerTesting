@@ -246,3 +246,13 @@ expect(messageEvents.events[0]).to.have.body('html').contains('Hello world!');
 expect(messageEvents.events[0]).to.have.body('html').not.equal('Foo');
 expect(messageEvents.events[0]).to.have.body('html').not.contains('Foo');
 ```
+
+##### `header(name)`
+
+Assert email's headers
+
+```js
+expect(messageEvents.events[0]).to.have.header('From');
+expect(messageEvents.events[0]).to.have.header('From').eq('symfony-mailer-testing@example.com');
+expect(messageEvents.events[0]).to.not.have.header('Foobar');
+```

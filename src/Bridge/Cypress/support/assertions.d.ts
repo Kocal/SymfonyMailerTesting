@@ -12,6 +12,7 @@ declare namespace Chai {
     queued: Assertion;
     subject: Assertion;
     body(type: 'text' | 'html'): Assertion;
+    header(name: string): Assertion;
 
     // Message's attachments assertions
     attachments: Assertion

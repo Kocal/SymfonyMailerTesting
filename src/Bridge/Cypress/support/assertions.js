@@ -1,4 +1,4 @@
-const { filterMessageEvents, filterAttachments, isMessageEvent } = require('../../JavaScript');
+const { filterMessageEvents, filterAttachments, filterHeader, isMessageEvent } = require('../../JavaScript');
 
 /**
  * @param {Chai.ChaiStatic} _chai
@@ -73,6 +73,26 @@ function assertions(_chai, utils) {
     utils.flag(this, 'subject', true);
   });
 
+  Assertion.addChainableMethod(
+    'header',
+    function (name) {
+      /** @var {SymfonyMailerTesting.MessageEvent} */
+      const messageEvent = utils.flag(this, 'object');
+      const headerFiltered = filterHeader(messageEvent, { name });
+
+      utils.flag(this, 'header', name);
+
+      this.assert(
+        headerFiltered,
+        `expected email to have header "${name}"`,
+        `expected email to not have header "${name}"`
+      );
+    },
+    function () {
+      utils.flag(this, 'isChained', true);
+    }
+  );
+
   function assertLength(_super) {
     return function (...args) {
       /** @var {SymfonyMailerTesting.MessageEvent} */
@@ -142,6 +162,7 @@ function assertions(_chai, utils) {
       const value = args[0];
       const subject = utils.flag(this, 'subject');
       const body = utils.flag(this, 'body');
+      const headerName = utils.flag(this, 'header');
 
       if (subject) {
         this.assert(
@@ -151,7 +172,10 @@ function assertions(_chai, utils) {
           value,
           subject
         );
-      } else if (body) {
+        return;
+      }
+
+      if (body) {
         const bodyContent = messageEvent.message[body].body;
 
         this.assert(
@@ -160,6 +184,19 @@ function assertions(_chai, utils) {
           `expected email ${body} body to not equal #{exp}, but got #{act}`,
           value,
           bodyContent
+        );
+        return;
+      }
+
+      if (headerName) {
+        const headerFiltered = filterHeader(messageEvent, { name: headerName });
+
+        this.assert(
+          headerFiltered && headerFiltered.body === value,
+          `expected email to have header "${headerName}" with value equal to #{exp}, but got #{act}`,
+          `expected email to have header "${headerName}" with value not equal to #{exp}, but got #{act}`,
+          value,
+          headerFiltered.body
         );
       }
     };
@@ -182,6 +219,7 @@ function assertions(_chai, utils) {
       const value = args[0];
       const subject = utils.flag(this, 'subject');
       const body = utils.flag(this, 'body');
+      const headerName = utils.flag(this, 'header');
 
       if (subject) {
         this.assert(
@@ -191,7 +229,10 @@ function assertions(_chai, utils) {
           value,
           subject
         );
-      } else if (body) {
+        return;
+      }
+
+      if (body) {
         const bodyContent = messageEvent.message[body].body;
 
         this.assert(
@@ -200,6 +241,19 @@ function assertions(_chai, utils) {
           `expected email ${body} body to not contains #{exp}, but got #{act}`,
           value,
           bodyContent
+        );
+        return;
+      }
+
+      if (headerName) {
+        const headerFiltered = filterHeader(messageEvent, { name: headerName });
+
+        this.assert(
+          headerFiltered && headerFiltered.body === value,
+          `expected email to have header "${headerName}" with value equal to #{exp}, but got #{act}`,
+          `expected email to have header "${headerName}" with value not equal to #{exp}, but got #{act}`,
+          value,
+          headerFiltered.body
         );
       }
     };

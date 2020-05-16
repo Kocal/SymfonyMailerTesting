@@ -11,7 +11,6 @@ function filterMessageEvents(messageEvents, { transport, queued } = {}) {
 
 /**
  * @param {SymfonyMailerTesting.MessageEvent} messageEvent
- * @param {SymfonyMailerTesting.Transport} transport
  * @param {string?} name
  */
 function filterAttachments(messageEvent, { name } = {}) {
@@ -26,6 +25,14 @@ function filterAttachments(messageEvent, { name } = {}) {
 
 /**
  * @param {SymfonyMailerTesting.MessageEvent} messageEvent
+ * @param {string?} name
+ */
+function filterHeader(messageEvent, { name } = {}) {
+  return messageEvent.message.headers.find((header) => header.name.toLowerCase() === name.toLowerCase());
+}
+
+/**
+ * @param {SymfonyMailerTesting.MessageEvent} messageEvent
  * @return {boolean}
  */
 function isMessageEvent(messageEvent) {
@@ -36,4 +43,4 @@ function isMessageEvent(messageEvent) {
   );
 }
 
-module.exports = { filterMessageEvents, filterAttachments, isMessageEvent };
+module.exports = { filterMessageEvents, filterAttachments, filterHeader, isMessageEvent };

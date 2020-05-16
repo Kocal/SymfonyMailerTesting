@@ -86,6 +86,19 @@ describe('I test an email', function () {
     });
   });
 
+  specify('I can test email headers', function () {
+    sendEmail({ subject: 'Hello world!' });
+
+    cy.getMessageEvents().then((messageEvents) => {
+      expect(messageEvents.events[0]).to.have.header('From');
+      expect(messageEvents.events[0]).to.have.header('from');
+      expect(messageEvents.events[0]).to.have.header('From').eq('symfony-mailer-testing@example.com');
+      expect(messageEvents.events[0]).to.have.header('From').contains('symfony-mailer-testing@example.com');
+
+      expect(messageEvents.events[0]).to.not.have.header('Foobar');
+    });
+  });
+
   specify('I can test multiples emails', function () {
     const subject1 = `Email #1 sent from Cypress at ${new Date().toUTCString()}`;
     const subject2 = `Email #2 sent from Cypress at ${new Date().toUTCString()}`;

@@ -53,7 +53,7 @@ class MessageEventsNormalizerTest extends TestCase
             (new Email())
                 ->subject('message 2 : test')
                 ->from('leo@example.com')
-                ->to('lea@example.com')
+                ->to('lea@example.com', 'luna@example.com')
                 ->cc('lionel@example.com')
                 ->bcc('lilou@example.com')
                 ->text('Text content')
@@ -98,12 +98,12 @@ class MessageEventsNormalizerTest extends TestCase
                         'headers'     => [
                             ['name' => 'Subject', 'body' => 'message 2 : test'],
                             ['name' => 'From', 'body' => 'leo@example.com'],
-                            ['name' => 'To', 'body' => 'lea@example.com'],
+                            ['name' => 'To', 'body' => 'lea@example.com, luna@example.com'],
                             ['name' => 'Cc', 'body' => 'lionel@example.com'],
                             ['name' => 'Bcc', 'body' => 'lilou@example.com'],
                         ],
                         'from'        => ['leo@example.com'],
-                        'to'          => ['lea@example.com'],
+                        'to'          => ['lea@example.com', 'luna@example.com'],
                         'cc'          => ['lionel@example.com'],
                         'bcc'         => ['lilou@example.com'],
                         'subject'     => 'message 2 : test',
