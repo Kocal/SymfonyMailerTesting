@@ -94,7 +94,7 @@ symfony_mailer_testing:
   resource: '@SymfonyMailerTestingBundle/Resources/config/routing.yaml'
 ```
 
-And finally you should add this module in your support file:
+And finally, you should add this module in your support file:
 
 ```js
 // cypress/support/index.js
@@ -153,7 +153,7 @@ Since you have imported the support file, you can use the following commands:
 But if you prefer, you can import the methods directly:
 
 ```js
-import { resetMessageEvents, getMessageEvents } from './vendor/kocal/symfony-mailer-testing/src/Bridge/Cypress';
+import { resetMessageEvents, getMessageEvents } from '/path/to/vendor/kocal/symfony-mailer-testing/src/Bridge/Cypress';
 ```
 
 #### Example
