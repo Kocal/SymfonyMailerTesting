@@ -3,10 +3,6 @@
 /node_modules
 yarn-error.log
 
-# Binaries
-bin/*
-!bin/.gitkeep
-
 # PHP-CS-Fixer
 .php_cs.cache
 
