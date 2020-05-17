@@ -18,6 +18,8 @@
     "phpunit": "phpunit",
     "phpspec": "phpspec --ansi",
     "behat": "behat --colors",
+    "server-start": "APP_ENV=test ./bin/symfony server:start --no-tls --dir fixtures/applications/Symfony --daemon",
+    "server-stop": "APP_ENV=test ./bin/symfony server:stop --dir fixtures/applications/Symfony",
     "auto": [
       "cd fixtures/applications/Symfony && APP_ENV=test bin/console cache:clear"
     ],

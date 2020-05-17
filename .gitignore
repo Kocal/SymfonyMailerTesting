@@ -3,12 +3,6 @@
 /node_modules
 yarn-error.log
 
-# VM & Ansible
-.vagrant/
-ansible/*.retry
-ansible/roles/.downloads
-ansible/roles/manala.*
-
 # Binaries
 bin/*
 !bin/.gitkeep
