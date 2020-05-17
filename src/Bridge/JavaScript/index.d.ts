@@ -1,10 +1,10 @@
-export function filterMessageEvents(messageEvents: SymfonyMailerTesting.MessageEvents, { transport: string, queued: bool });
+declare function filterMessageEvents(messageEvents: SymfonyMailerTesting.MessageEvents, { transport: string, queued: bool });
 
-export function filterAttachments(messageEvent: SymfonyMailerTesting.MessageEvent, { name: string });
+declare function filterAttachments(messageEvent: SymfonyMailerTesting.MessageEvent, { name: string });
 
-export function filterHeader(messageEvent: SymfonyMailerTesting.MessageEvent, { name: string });
+declare function filterHeader(messageEvent: SymfonyMailerTesting.MessageEvent, { name: string });
 
-export function isMessageEvent(messageEvent: SymfonyMailerTesting.MessageEvent);
+declare function isMessageEvent(messageEvent: SymfonyMailerTesting.MessageEvent);
 
 declare namespace SymfonyMailerTesting {
   // the following types should match the return structures of the following PHP normalizers:

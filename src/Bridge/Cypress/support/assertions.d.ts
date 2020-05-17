@@ -13,6 +13,7 @@ declare namespace Chai {
     subject: Assertion;
     body(type: 'text' | 'html'): Assertion;
     header(name: string): Assertion;
+    address(address: string): Assertion;
 
     // Message's attachments assertions
     attachments: Assertion

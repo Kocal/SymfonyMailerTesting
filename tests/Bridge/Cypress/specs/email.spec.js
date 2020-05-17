@@ -99,6 +99,16 @@ describe('I test an email', function () {
     });
   });
 
+  specify('I can test email addresses', function () {
+    sendEmail({ subject: 'Hello world!' });
+
+    cy.getMessageEvents().then((messageEvents) => {
+      expect(messageEvents.events[0]).to.have.address('From').eq('symfony-mailer-testing@example.com');
+      expect(messageEvents.events[0]).to.have.address('From').contains('symfony-mailer-testing@example.com');
+      expect(messageEvents.events[0]).to.have.address('To').contains('john@example.com');
+    });
+  });
+
   specify('I can test multiples emails', function () {
     const subject1 = `Email #1 sent from Cypress at ${new Date().toUTCString()}`;
     const subject2 = `Email #2 sent from Cypress at ${new Date().toUTCString()}`;

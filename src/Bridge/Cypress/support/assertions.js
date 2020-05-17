@@ -73,25 +73,34 @@ function assertions(_chai, utils) {
     utils.flag(this, 'subject', true);
   });
 
-  Assertion.addChainableMethod(
-    'header',
-    function (name) {
-      /** @var {SymfonyMailerTesting.MessageEvent} */
-      const messageEvent = utils.flag(this, 'object');
-      const headerFiltered = filterHeader(messageEvent, { name });
+  Assertion.addChainableMethod('header', function (name) {
+    /** @var {SymfonyMailerTesting.MessageEvent} */
+    const messageEvent = utils.flag(this, 'object');
+    const headerFiltered = filterHeader(messageEvent, { name });
 
-      utils.flag(this, 'header', name);
+    utils.flag(this, 'header', name);
 
-      this.assert(
-        headerFiltered,
-        `expected email to have header "${name}"`,
-        `expected email to not have header "${name}"`
-      );
-    },
-    function () {
-      utils.flag(this, 'isChained', true);
-    }
-  );
+    this.assert(
+      headerFiltered,
+      `expected email to have header "${name}"`,
+      `expected email to not have header "${name}"`
+    );
+  });
+
+  Assertion.addChainableMethod('address', function (headerName) {
+    /** @var {SymfonyMailerTesting.MessageEvent} */
+    const messageEvent = utils.flag(this, 'object');
+    const headerFiltered = filterHeader(messageEvent, { name: headerName });
+
+    utils.flag(this, 'header', headerName);
+    utils.flag(this, 'forAddress', true);
+
+    this.assert(
+      headerFiltered,
+      `expected email to have address "${headerName}"`,
+      `expected email to not have address "${headerName}"`
+    );
+  });
 
   function assertLength(_super) {
     return function (...args) {
@@ -191,10 +200,18 @@ function assertions(_chai, utils) {
       if (headerName) {
         const headerFiltered = filterHeader(messageEvent, { name: headerName });
 
+        let messageSuccess = `expected email to have header "${headerName}" with value equal to #{exp}, but got #{act}`;
+        let messageFailure = `expected email to have header "${headerName}" with value not equal to #{exp}, but got #{act}`;
+
+        if (utils.flag(this, 'forAddress')) {
+          messageSuccess = `expected email to have address "${headerName}" with value equal to #{exp}, but got #{act}`;
+          messageFailure = `expected email to have address "${headerName}" with value not equal to #{exp}, but got #{act}`;
+        }
+
         this.assert(
           headerFiltered && headerFiltered.body === value,
-          `expected email to have header "${headerName}" with value equal to #{exp}, but got #{act}`,
-          `expected email to have header "${headerName}" with value not equal to #{exp}, but got #{act}`,
+          messageSuccess,
+          messageFailure,
           value,
           headerFiltered.body
         );
@@ -248,10 +265,18 @@ function assertions(_chai, utils) {
       if (headerName) {
         const headerFiltered = filterHeader(messageEvent, { name: headerName });
 
+        let messageSuccess = `expected email to have header "${headerName}" with value contains #{exp}, but got #{act}`;
+        let messageFailure = `expected email to have header "${headerName}" with value not contains #{exp}, but got #{act}`;
+
+        if (utils.flag(this, 'forAddress')) {
+          messageSuccess = `expected email to have address "${headerName}" with value contains to #{exp}, but got #{act}`;
+          messageFailure = `expected email to have address "${headerName}" with value not contains to #{exp}, but got #{act}`;
+        }
+
         this.assert(
           headerFiltered && headerFiltered.body === value,
-          `expected email to have header "${headerName}" with value equal to #{exp}, but got #{act}`,
-          `expected email to have header "${headerName}" with value not equal to #{exp}, but got #{act}`,
+          messageSuccess,
+          messageFailure,
           value,
           headerFiltered.body
         );
