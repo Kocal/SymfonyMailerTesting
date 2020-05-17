@@ -14,9 +14,6 @@ declare namespace Chai {
     body(type: 'text' | 'html'): Assertion;
     header(name: string): Assertion;
     address(address: string): Assertion;
-
-    // Message's attachments assertions
-    attachments: Assertion
-    named(name: string): Assertion;
+    attachments(name: string): Assertion
   }
 }

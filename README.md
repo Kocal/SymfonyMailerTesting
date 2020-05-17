@@ -212,11 +212,11 @@ expect(messageEvents.events[0]).to.not.be.queued;
 Assert email's attachments.
 
 ```js
-expect(messageEvents.events[0]).to.have.attachments.lengthOf(1);
+expect(messageEvents.events[0]).to.have.attachments.lengthOf(2);
 
 // Get attachment by name
-expect(messageEvents.events[0]).to.have.attachments.named('attachment.txt').lengthOf(1);
-expect(messageEvents.events[0]).to.have.attachments.named('foobar.txt').lengthOf(0);
+expect(messageEvents.events[0]).to.have.attachments('attachment.txt').lengthOf(1);
+expect(messageEvents.events[0]).to.have.attachments('foobar.txt').lengthOf(0);
 ```
 
 ##### `subject`

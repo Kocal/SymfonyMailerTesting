@@ -52,8 +52,8 @@ describe('I test an email', function () {
 
     cy.getMessageEvents().then((messageEvents) => {
       expect(messageEvents.events[0]).to.have.attachments.lengthOf(1);
-      expect(messageEvents.events[0]).to.have.attachments.named('attachment.txt').lengthOf(1);
-      expect(messageEvents.events[0]).to.have.attachments.named('foobar.txt').lengthOf(0);
+      expect(messageEvents.events[0]).to.have.attachments('attachment.txt').lengthOf(1);
+      expect(messageEvents.events[0]).to.have.attachments('foobar.txt').lengthOf(0);
     });
   });
 

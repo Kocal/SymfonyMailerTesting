@@ -57,12 +57,9 @@ function assertions(_chai, utils) {
     );
   });
 
-  Assertion.addProperty('attachments', function () {
+  Assertion.addChainableMethod('attachments', function (name) {
     utils.flag(this, 'attachments', true);
-  });
-
-  Assertion.addChainableMethod('named', function (name) {
-    utils.flag(this, 'named', name);
+    utils.flag(this, 'name', name);
   });
 
   Assertion.addChainableMethod('body', function (type) {
@@ -133,7 +130,7 @@ function assertions(_chai, utils) {
       }
 
       if (utils.flag(this, 'attachments')) {
-        const name = utils.flag(this, 'named');
+        const name = utils.flag(this, 'name');
         const filteredAttachments = filterAttachments(messageEvent, {
           name,
         });
