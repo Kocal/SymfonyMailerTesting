@@ -1,0 +1,16 @@
+default:
+    autoload:
+        '': '%paths.base%/tests/Bridge/Behat/bootstrap'
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: fixtures/applications/Symfony/config/bootstrap.php
+            kernel:
+                class: \Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Kernel
+
+    suites:
+        default:
+            paths: ['%paths.base%/tests/Bridge/Behat']
+            contexts:
+                - Kocal\SymfonyMailerTesting\Bridge\Behat\MailerContext
+                - Kocal\SymfonyMailerTesting\Tests\Bridge\Behat\EmailContext

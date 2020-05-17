@@ -1,0 +1,7 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Kocal\SymfonyMailerTesting\Tests\Bridge\Behat\:
+        resource: '../../../../tests/Bridge/Behat/bootstrap/*'

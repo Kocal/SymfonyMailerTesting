@@ -1,0 +1,23 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    _instanceof:
+        Kocal\SymfonyMailerTesting\MailerLoggerAwareInterface:
+            calls:
+                - [setMailerLogger, ['@Kocal\SymfonyMailerTesting\MailerLogger']]
+
+    Kocal\SymfonyMailerTesting\MailerLogger: ~
+
+    Kocal\SymfonyMailerTesting\Normalizer\:
+        resource: '../../../../Normalizer/*'
+
+    Kocal\SymfonyMailerTesting\Controller\:
+        resource: '../../../../Controller/*'
+        tags: ['controller.service_arguments']
+
+    Kocal\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener: ~
+
+    # Behat
+    Kocal\SymfonyMailerTesting\Bridge\Behat\MailerContext: ~

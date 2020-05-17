@@ -1,11 +1,11 @@
 {
-  "name": "yproximite/symfony-mailer-testing",
+  "name": "kocal/symfony-mailer-testing",
   "description": "Test your emails with Behat and Cypress, when using the Symfony Mailer component.",
   "license": "MIT",
   "authors": [
     {
       "name": "Hugo Alliaume",
-      "email": "hugo@yproximite.com"
+      "email": "kocal@live.fr"
     }
   ],
   "config": {
@@ -18,7 +18,11 @@
     "phpunit": "phpunit",
     "phpspec": "phpspec --ansi",
     "behat": "behat --colors",
-    "auto": [],
+    "server-start": "APP_ENV=test ./bin/symfony server:start --no-tls --dir fixtures/applications/Symfony --daemon",
+    "server-stop": "APP_ENV=test ./bin/symfony server:stop --dir fixtures/applications/Symfony",
+    "auto": [
+      "cd fixtures/applications/Symfony && APP_ENV=test bin/console cache:clear"
+    ],
     "post-install-cmd": [
       "@auto"
     ],
@@ -29,28 +33,38 @@
   "require": {
     "php": "^7.3",
     "ext-json": "*",
-    "symfony/http-client": "^4.4 || ^5.0",
-    "symfony/mailer": "^4.4 || ^5.0"
+    "symfony/mailer": "^4.4 || ^5.0",
+    "webmozart/assert": "^1.8"
   },
   "require-dev": {
+    "behat/behat": "^3.6",
+    "friends-of-behat/symfony-extension": "^2.1",
     "friendsofphp/php-cs-fixer": "^2.16",
+    "nyholm/psr7": "^1.2",
     "phpspec/phpspec": "^6.1",
     "phpstan/phpstan": "^0.12.23",
     "phpstan/phpstan-phpunit": "^0.12.8",
     "phpstan/phpstan-strict-rules": "^0.12.2",
     "phpstan/phpstan-symfony": "^0.12.6",
     "phpstan/phpstan-webmozart-assert": "^0.12.4",
-    "phpunit/phpunit": "^8.5.2"
+    "phpunit/phpunit": "^8.5.2",
+    "sensio/framework-extra-bundle": "^5.5",
+    "symfony/framework-bundle": "^4.4.1 || ^5.0",
+    "symfony/psr-http-message-bridge": "^2.0"
   },
   "autoload": {
     "psr-4": {
-      "Yproximite\\SymfonyMailerTesting\\": "src/"
+      "Kocal\\SymfonyMailerTesting\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
       "spec\\": "spec/",
-      "Yproximite\\SymfonyMailerTesting\\Tests\\": "tests/"
+      "Kocal\\SymfonyMailerTesting\\Tests\\": "tests/",
+      "Kocal\\SymfonyMailerTesting\\Tests\\Bridge\\Behat\\": "tests/Bridge/Behat/bootstrap/",
+      "Kocal\\SymfonyMailerTesting\\Fixtures\\": "fixtures/",
+      "Kocal\\SymfonyMailerTesting\\Fixtures\\Applications\\": "fixtures/applications/",
+      "Kocal\\SymfonyMailerTesting\\Fixtures\\Applications\\Symfony\\App\\": "fixtures/applications/Symfony/src/"
     }
   }
 }
