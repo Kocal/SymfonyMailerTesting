@@ -439,6 +439,60 @@ class MailerAssertionsTest extends TestCase
         static::assertCount(0, $messageEvents->getEvents());
     }
 
+    public function testAssertEmailSubjectSame(): void
+    {
+        $email = $this->createEmail()->subject('Hello world!');
+
+        $this->mailerAssertions->assertEmailSubjectSame($email, 'Hello world!');
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAssertEmailSubjectSameFailing(): void
+    {
+        $this->expectDeprecationMessage('Failed asserting that the Email subject with value same as "Goodbye world!". Got "Hello world!".');
+
+        $email = $this->createEmail()->subject('Hello world!');
+
+        $this->mailerAssertions->assertEmailSubjectSame($email, 'Goodbye world!');
+    }
+
+    public function testAssertEmailSubjectContains(): void
+    {
+        $email = $this->createEmail()->subject('Hello world!');
+
+        $this->mailerAssertions->assertEmailSubjectContains($email, 'Hello');
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAssertEmailSubjectContainsFailing(): void
+    {
+        $this->expectDeprecationMessage('Failed asserting that the Email subject contains "Goodbye". Got "Hello world!".');
+
+        $email = $this->createEmail()->subject('Hello world!');
+
+        $this->mailerAssertions->assertEmailSubjectContains($email, 'Goodbye');
+    }
+
+    public function testAssertEmailSubjectMatches(): void
+    {
+        $email = $this->createEmail()->subject('Hello world!');
+
+        $this->mailerAssertions->assertEmailSubjectMatches($email, '/^[A-Z]ello/');
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAssertEmailSubjectMatchesFailing(): void
+    {
+        $this->expectDeprecationMessage('Failed asserting that the Email subject matches pattern "/^[A-Z]oodbye/". Got "Hello world!".');
+
+        $email = $this->createEmail()->subject('Hello world!');
+
+        $this->mailerAssertions->assertEmailSubjectMatches($email, '/^[A-Z]oodbye/');
+    }
+
     protected function createMessageEvent(RawMessage $message, string $transport = 'null://'): MessageEvent
     {
         return new MessageEvent($message, Envelope::create($message), $transport);

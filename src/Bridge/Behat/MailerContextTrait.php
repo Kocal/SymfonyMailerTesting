@@ -61,4 +61,28 @@ trait MailerContextTrait
 
         $this->selectedMessageEvent = $messageEvent;
     }
+
+    /**
+     * @Then this email subject has value :text
+     */
+    public function assertEmailSubjectSame(string $text): void
+    {
+        $this->mailerAssertions->assertEmailSubjectSame($this->getSelectedMessageEvent()->getMessage(), $text);
+    }
+
+    /**
+     * @Then this email subject contains :text
+     */
+    public function assertEmailSubjectContains(string $text): void
+    {
+        $this->mailerAssertions->assertEmailSubjectContains($this->getSelectedMessageEvent()->getMessage(), $text);
+    }
+
+    /**
+     * @Then this email subject matches :regex
+     */
+    public function assertEmailSubjectMatches(string $regex): void
+    {
+        $this->mailerAssertions->assertEmailSubjectMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+    }
 }

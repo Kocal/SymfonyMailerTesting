@@ -125,6 +125,9 @@ Available steps:
 - `@Then this email header :headerName has value :value`
 - `@Then this email header :headerName has not value :value`
 - `@Then this email contains address :headerName :address`
+- `@Then this email subject has value :text`
+- `@Then this email subject contains :text`
+- `@Then this email subject matches :regex`
 
 :warning: Assertions `this email [...]` requires you to call `I select email #...` before.
 
