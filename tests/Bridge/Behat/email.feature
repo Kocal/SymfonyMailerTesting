@@ -78,3 +78,15 @@ Feature: Testing emails
     Then I select email #0
     And this email contains address "From" "john@example.com"
     And this email contains address "to" "carla@example.com"
+
+  Scenario: I can test email subject
+    When I send an email:
+      | from    | john@example.com  |
+      | to      | carla@example.com |
+      | subject | Hello             |
+      | text    | Hi Carla!         |
+
+    Then I select email #0
+    And this email subject has value "Hello"
+    And this email subject contains "Hell"
+    And this email subject matches "/^[a-zA-Z]+$/"
