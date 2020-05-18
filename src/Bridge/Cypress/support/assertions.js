@@ -175,8 +175,8 @@ function assertions(_chai, utils) {
           messageEvent.message.subject === value,
           `expected email subject to equal #{exp}, but got #{act}`,
           `expected email subject to not equal #{exp}, but got #{act}`,
-          value,
-          subject
+          value, // expected
+          messageEvent.message.subject // actual
         );
         return;
       }
@@ -188,8 +188,8 @@ function assertions(_chai, utils) {
           (bodyContent || '') === value,
           `expected email ${body} body to equal #{exp}, but got #{act}`,
           `expected email ${body} body to not equal #{exp}, but got #{act}`,
-          value,
-          bodyContent
+          value, // expected
+          bodyContent // actual
         );
         return;
       }
@@ -209,8 +209,8 @@ function assertions(_chai, utils) {
           headerFiltered && headerFiltered.body === value,
           messageSuccess,
           messageFailure,
-          value,
-          headerFiltered.body
+          value, // expected
+          headerFiltered.body // actual
         );
       }
     };
@@ -240,8 +240,8 @@ function assertions(_chai, utils) {
           messageEvent.message.subject.includes(value),
           `expected email subject to contains #{exp}, but got #{act}`,
           `expected email subject to not contains #{exp}, but got #{act}`,
-          value,
-          subject
+          value, // expected
+          messageEvent.message.subject // actual
         );
         return;
       }
@@ -253,8 +253,8 @@ function assertions(_chai, utils) {
           (bodyContent || '').includes(value),
           `expected email ${body} body to contains #{exp}, but got #{act}`,
           `expected email ${body} body to not contains #{exp}, but got #{act}`,
-          value,
-          bodyContent
+          value, // expected
+          bodyContent // actual
         );
         return;
       }
@@ -274,8 +274,8 @@ function assertions(_chai, utils) {
           headerFiltered && headerFiltered.body === value,
           messageSuccess,
           messageFailure,
-          value,
-          headerFiltered.body
+          value, // expected
+          headerFiltered.body // actual
         );
       }
     };
