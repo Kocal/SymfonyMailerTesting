@@ -98,7 +98,7 @@ And finally, you should add this module in your support file:
 
 ```js
 // cypress/support/index.js
-import './vendor/kocal/symfony-mailer-testing/src/Bridge/Cypress/support';
+import '/path/to/vendor/kocal/symfony-mailer-testing/src/Bridge/Cypress/support';
 ```
 
 ## Usage
