@@ -26,7 +26,7 @@ This testing library provides the same [PHPUnit assertions for Email Messages](h
 ## Installation
 
 ```console
-$ composer require kocal/symfony-mailer-testing
+$ composer require --dev kocal/symfony-mailer-testing
 ```
 
 This testing library try to be the more framework-agnostic possible.
