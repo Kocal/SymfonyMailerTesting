@@ -79,7 +79,7 @@ trait MailerContextTrait
     }
 
     /**
-     * @Then this email subject matches :text
+     * @Then this email subject matches :regex
      */
     public function assertEmailSubjectMatches(string $regex): void
     {
