@@ -98,7 +98,7 @@ jobs:
               run: composer phpunit -- ${{ matrix.config.PHPUNIT_FLAGS }}
 
             - name: Run phpspec
-              run: composer phpspec
+              run: composer phpspec run
 
             - name: Run Behat
               run: composer behat
