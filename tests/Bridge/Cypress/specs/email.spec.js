@@ -1,10 +1,12 @@
-function sendEmail({ subject, attachments, text, html } = {}) {
+function sendEmail({ subject, from, to, attachments, text, html } = {}) {
   cy.request({
     method: 'POST',
     url: '/send-basic-email',
     form: true,
     body: {
       subject,
+      from,
+      to,
       attachments,
       text,
       html,
@@ -100,7 +102,7 @@ describe('I test an email', function () {
   });
 
   specify('I can test email addresses', function () {
-    sendEmail({ subject: 'Hello world!' });
+    sendEmail({ subject: 'Hello world!', to: 'John <john@example.com>' });
 
     cy.getMessageEvents().then((messageEvents) => {
       expect(messageEvents.events[0]).to.have.address('From').eq('symfony-mailer-testing@example.com');
