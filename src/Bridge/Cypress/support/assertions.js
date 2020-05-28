@@ -271,7 +271,7 @@ function assertions(_chai, utils) {
         }
 
         this.assert(
-          headerFiltered && headerFiltered.body === value,
+          headerFiltered && headerFiltered.body.includes(value),
           messageSuccess,
           messageFailure,
           value, // expected
