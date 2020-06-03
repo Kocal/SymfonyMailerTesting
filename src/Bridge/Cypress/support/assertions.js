@@ -291,6 +291,60 @@ function assertions(_chai, utils) {
   Assertion.overwriteChainableMethod('includes', assertInclude, assertIncludeChainingBehavior);
   Assertion.overwriteChainableMethod('contain', assertInclude, assertIncludeChainingBehavior);
   Assertion.overwriteChainableMethod('contains', assertInclude, assertIncludeChainingBehavior);
+
+  function assertMatch(_super) {
+    return function (...args) {
+      /** @var {SymfonyMailerTesting.MessageEvent} messageEvent */
+      const messageEvent = utils.flag(this, 'object');
+
+      if (!isMessageEvent(messageEvent)) {
+        _super.apply(this, args);
+        return;
+      }
+
+      const regex = args[0];
+      const subject = utils.flag(this, 'subject');
+      const body = utils.flag(this, 'body');
+      const headerName = utils.flag(this, 'header');
+
+      if (subject) {
+        this.assert(
+          regex.exec(messageEvent.message.subject),
+          `expected email subject to match ${regex}`,
+          `expected email subject to not match ${regex}`
+        );
+        return;
+      }
+
+      if (body) {
+        const bodyContent = messageEvent.message[body].body;
+
+        this.assert(
+          regex.exec(bodyContent || ''),
+          `expected email ${body} body to match ${regex}`,
+          `expected email ${body} body to not match ${regex}`
+        );
+        return;
+      }
+
+      if (headerName) {
+        const headerFiltered = filterHeader(messageEvent, { name: headerName });
+
+        let messageSuccess = `expected email to have header "${headerName}" matching ${regex}`;
+        let messageFailure = `expected email to have header "${headerName}" not matching ${regex}`;
+
+        if (utils.flag(this, 'forAddress')) {
+          messageSuccess = `expected email to have address "${headerName}" to matching ${regex}`;
+          messageFailure = `expected email to have address "${headerName}" to not matching ${regex}`;
+        }
+
+        this.assert(headerFiltered && regex.exec(headerFiltered.body), messageSuccess, messageFailure);
+      }
+    };
+  }
+
+  Assertion.overwriteMethod('match', assertMatch);
+  Assertion.overwriteMethod('matches', assertMatch);
 }
 
 module.exports = assertions;

@@ -63,8 +63,14 @@ describe('I test an email', function () {
     sendEmail({ subject: 'Hello world!' });
 
     cy.getMessageEvents().then((messageEvents) => {
+      expect(messageEvents.events[0]).to.have.subject.equal('Hello world!');
+      expect(messageEvents.events[0]).to.have.subject.not.equal('Foo');
+
       expect(messageEvents.events[0]).to.have.subject.contains('Hello world!');
       expect(messageEvents.events[0]).to.have.subject.not.contains('Foo');
+
+      expect(messageEvents.events[0]).to.have.subject.match(/^Hello/);
+      expect(messageEvents.events[0]).to.have.subject.not.match(/^Bye/);
     });
   });
 
@@ -80,11 +86,15 @@ describe('I test an email', function () {
       expect(messageEvents.events[0]).to.have.body('text').not.eq('Foo bar');
       expect(messageEvents.events[0]).to.have.body('text').contains('text');
       expect(messageEvents.events[0]).to.have.body('text').not.contains('Foo bar');
+      expect(messageEvents.events[0]).to.have.body('text').match(/text$/);
+      expect(messageEvents.events[0]).to.have.body('text').not.match(/foo/);
 
       expect(messageEvents.events[0]).to.have.body('html').eq('<b>My HTML</b>');
       expect(messageEvents.events[0]).to.have.body('html').not.eq('<b>Foo bar</b>');
       expect(messageEvents.events[0]).to.have.body('html').contains('HTML</b>');
       expect(messageEvents.events[0]).to.have.body('html').not.contains('bar</b>');
+      expect(messageEvents.events[0]).to.have.body('html').match(/HTML/);
+      expect(messageEvents.events[0]).to.have.body('html').not.match(/text/);
     });
   });
 
@@ -96,8 +106,14 @@ describe('I test an email', function () {
       expect(messageEvents.events[0]).to.have.header('from');
       expect(messageEvents.events[0]).to.have.header('From').eq('symfony-mailer-testing@example.com');
       expect(messageEvents.events[0]).to.have.header('From').contains('symfony-mailer-testing@example.com');
+      expect(messageEvents.events[0])
+        .to.have.header('From')
+        .matches(/[a-z-]+@example.com/);
 
       expect(messageEvents.events[0]).to.not.have.header('Foobar');
+      expect(messageEvents.events[0])
+        .to.have.header('From')
+        .not.matches(/[0-9-]+@example.com/);
     });
   });
 
@@ -108,6 +124,9 @@ describe('I test an email', function () {
       expect(messageEvents.events[0]).to.have.address('From').eq('symfony-mailer-testing@example.com');
       expect(messageEvents.events[0]).to.have.address('From').contains('symfony-mailer-testing@example.com');
       expect(messageEvents.events[0]).to.have.address('To').contains('john@example.com');
+      expect(messageEvents.events[0])
+        .to.have.header('From')
+        .matches(/[a-z-]+@example.com/);
     });
   });
 
