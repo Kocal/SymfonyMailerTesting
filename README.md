@@ -252,7 +252,7 @@ expect(messageEvents.events[0]).to.have.body('text').contains('Hello');
 expect(messageEvents.events[0]).to.have.body('text').not.contains('Foo');
 
 expect(messageEvents.events[0]).to.have.body('text').match('[a-z]+');
-expect(messageEvents.events[0]).to.have.body('text').not.match('[a-z]+');"
+expect(messageEvents.events[0]).to.have.body('text').not.match('[a-z]+');
 
 // Body "HTML"
 expect(messageEvents.events[0]).to.have.body('html').equal('<h1>Hello world!</h1>');
