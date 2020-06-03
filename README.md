@@ -234,6 +234,9 @@ expect(messageEvents.events[0]).to.have.subject.not.equals('Foo');
 
 expect(messageEvents.events[0]).to.have.subject.contains('Hello world!');
 expect(messageEvents.events[0]).to.have.subject.not.contains('Foo');
+
+expect(messageEvents.events[0]).to.have.subject.match(/^Hello /);
+expect(messageEvents.events[0]).to.have.subject.not.match(/^Goodbye/);
 ```
 
 ##### `body(type)`
@@ -241,15 +244,25 @@ expect(messageEvents.events[0]).to.have.subject.not.contains('Foo');
 Assert email's text or HTML body.
 
 ```js
+// Body "text"
 expect(messageEvents.events[0]).to.have.body('text').equal('Hello world!');
-expect(messageEvents.events[0]).to.have.body('text').contains('Hello');
 expect(messageEvents.events[0]).to.have.body('text').not.equal('Foo');
+
+expect(messageEvents.events[0]).to.have.body('text').contains('Hello');
 expect(messageEvents.events[0]).to.have.body('text').not.contains('Foo');
 
+expect(messageEvents.events[0]).to.have.body('text').match('[a-z]+');
+expect(messageEvents.events[0]).to.have.body('text').not.match('[a-z]+');
+
+// Body "HTML"
 expect(messageEvents.events[0]).to.have.body('html').equal('<h1>Hello world!</h1>');
-expect(messageEvents.events[0]).to.have.body('html').contains('Hello world!');
 expect(messageEvents.events[0]).to.have.body('html').not.equal('Foo');
+
+expect(messageEvents.events[0]).to.have.body('html').contains('Hello world!');
 expect(messageEvents.events[0]).to.have.body('html').not.contains('Foo');
+
+expect(messageEvents.events[0]).to.have.body('html').match('[a-z]+');
+expect(messageEvents.events[0]).to.have.body('html').not.match('[a-z]+');
 ```
 
 ##### `header(name)`
@@ -258,8 +271,17 @@ Assert email's headers.
 
 ```js
 expect(messageEvents.events[0]).to.have.header('From');
-expect(messageEvents.events[0]).to.have.header('From').eq('symfony-mailer-testing@example.com');
 expect(messageEvents.events[0]).to.not.have.header('Foobar');
+
+expect(messageEvents.events[0]).to.have.header('From').equal('symfony-mailer-testing@example.com');
+expect(messageEvents.events[0]).to.have.header('From').not.equal('foo@example.com');
+
+expect(messageEvents.events[0])
+  .to.have.header('From')
+  .match(/[a-z]+@example.com/);
+expect(messageEvents.events[0])
+  .to.have.header('From')
+  .not.match(/[a-z0-9]+@example.com/);
 ```
 
 ##### `address(type)`
@@ -268,6 +290,11 @@ Assert email's address.
 
 ```js
 expect(messageEvents.events[0]).to.have.address('From');
-expect(messageEvents.events[0]).to.have.address('From').eq('symfony-mailer-testing@example.com');
 expect(messageEvents.events[0]).to.not.have.address('Foobar');
+
+expect(messageEvents.events[0]).to.have.address('From').equal('symfony-mailer-testing@example.com');
+expect(messageEvents.events[0]).to.have.address('From').not.equal('foo@example.com');
+
+expect(messageEvents.events[0]).to.have.address('From').match(/[a-z]+@example.com/);
+expect(messageEvents.events[0]).to.have.address('From').not.match(/[a-z0-9]+@example.com);
 ```
