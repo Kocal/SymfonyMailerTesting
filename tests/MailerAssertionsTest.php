@@ -529,6 +529,42 @@ class MailerAssertionsTest extends TestCase
         $this->mailerAssertions->assertEmailSubjectMatches($email, '/^[A-Z]oodbye/');
     }
 
+    public function testAssertEmailAttachmentNameSame(): void
+    {
+        $email = $this->createEmail()->attach('Hello world!', 'message.txt');
+
+        $this->mailerAssertions->assertEmailAttachmentNameSame($email, 'message.txt');
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAssertEmailAttachmentNameSameFailing(): void
+    {
+        $this->expectDeprecationMessage('Failed asserting that the Email has an attachment with name "not message.txt".');
+
+        $email = $this->createEmail()->attach('Hello world!', 'message.txt');
+
+        $this->mailerAssertions->assertEmailAttachmentNameSame($email, 'not message.txt');
+    }
+
+    public function testAssertEmailAttachmentNameMatches(): void
+    {
+        $email = $this->createEmail()->attach('Hello world!', 'message.txt');
+
+        $this->mailerAssertions->assertEmailAttachmentNameMatches($email, '/^message/');
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAssertEmailAttachmentNameMatchesFailing(): void
+    {
+        $this->expectDeprecationMessage('Failed asserting that the Email has an attachment with name matching pattern "/^not message/".');
+
+        $email = $this->createEmail()->attach('Hello world!', 'message.txt');
+
+        $this->mailerAssertions->assertEmailAttachmentNameMatches($email, '/^not message/');
+    }
+
     protected function createMessageEvent(RawMessage $message, string $transport = 'null://'): MessageEvent
     {
         return new MessageEvent($message, Envelope::create($message), $transport);

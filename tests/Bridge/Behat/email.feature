@@ -32,6 +32,8 @@ Feature: Testing emails
 
     Then I select email #0
     And this email has 1 attachment
+    And this email has attachment named "attachment.txt"
+    And this email has attachment name matching "#^attachment#"
 
   Scenario: I can test if emails text body contains
     When I send an email:
