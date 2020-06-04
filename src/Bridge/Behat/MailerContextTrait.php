@@ -117,4 +117,20 @@ trait MailerContextTrait
     {
         $this->mailerAssertions->assertEmailHtmlBodyNotMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
+
+    /**
+     * @Then this email has attachment named :name
+     */
+    public function thisEmailHasAttachmentNamed(string $name): void
+    {
+        $this->mailerAssertions->assertEmailAttachmentNameSame($this->getSelectedMessageEvent()->getMessage(), $name);
+    }
+
+    /**
+     * @Then this email has attachment name matching :regex
+     */
+    public function thisEmailHasAttachmentNameMatching(string $regex): void
+    {
+        $this->mailerAssertions->assertEmailAttachmentNameMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+    }
 }
