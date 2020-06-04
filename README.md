@@ -25,6 +25,16 @@ This testing library provides the same [PHPUnit assertions for Email Messages](h
 - `assertEmailHeaderNotSame`
 - `assertEmailAddressContains`
 
+With additional assertions:
+
+- `assertEmailSubjectSame`
+- `assertEmailSubjectContains`
+- `assertEmailSubjectMatches`
+- `assertEmailTextBodyMatches`
+- `assertEmailTextBodyNotMatches`
+- `assertEmailHtmlBodyMatches`
+- `assertEmailHtmlBodyNotMatches`
+
 ## Installation
 
 ```console
@@ -118,10 +128,12 @@ Available steps:
 - `@Then this email is queued`
 - `@Then this email is not queued`
 - `@Then this email has :count attachment(s)`
-- `@Then this email text body contains :text`
-- `@Then this email text body not contains :text`
+- `@Then this email text body matches :regex`
+- `@Then this email text body not matches :regex`
 - `@Then this email HTML body contains :text`
 - `@Then this email HTML body not contains :text`
+- `@Then this email HTML body matches :regex`
+- `@Then this email HTML body not matches :regex`
 - `@Then this email has header :headerName`
 - `@Then this email has no header :headerName`
 - `@Then this email header :headerName has value :value`

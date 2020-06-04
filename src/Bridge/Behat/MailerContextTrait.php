@@ -85,4 +85,36 @@ trait MailerContextTrait
     {
         $this->mailerAssertions->assertEmailSubjectMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
+
+    /**
+     * @Then this email text body matches :regex
+     */
+    public function thisEmailTextBodyMatches(string $regex): void
+    {
+        $this->mailerAssertions->assertEmailTextBodyMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+    }
+
+    /**
+     * @Then this email text body not matches :regex
+     */
+    public function thisEmailTextBodyNotMatches(string $regex): void
+    {
+        $this->mailerAssertions->assertEmailTextBodyNotMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+    }
+
+    /**
+     * @Then this email HTML body matches :regex
+     */
+    public function thisEmailHtmlBodyMatches(string $regex): void
+    {
+        $this->mailerAssertions->assertEmailHtmlBodyMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+    }
+
+    /**
+     * @Then this email HTML body not matches :regex
+     */
+    public function thisEmailHtmlBodyNotMatches(string $regex): void
+    {
+        $this->mailerAssertions->assertEmailHtmlBodyNotMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+    }
 }

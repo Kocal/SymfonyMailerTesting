@@ -43,6 +43,8 @@ Feature: Testing emails
     Then I select email #0
     And this email text body contains "Hi Carla!"
     And this email text body not contains "Bye Carla!"
+    And this email text body matches "#Hi [a-zA-Z]+!#"
+    And this email text body not matches "#Bye [a-zA-Z]+!#"
 
   Scenario: I can test if emails HTML body contains
     When I send an email:
@@ -54,6 +56,8 @@ Feature: Testing emails
     Then I select email #0
     And this email HTML body contains "<b>Hi Carla!</b>"
     And this email HTML body not contains "Bye Carla!"
+    And this email HTML body matches "#Hi [a-zA-Z]+!#"
+    And this email HTML body not matches "#Bye [a-zA-Z]+!#"
 
   Scenario: I can test emails headers
     When I send an email:
