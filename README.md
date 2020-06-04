@@ -25,6 +25,16 @@ This testing library provides the same [PHPUnit assertions for Email Messages](h
 - `assertEmailHeaderNotSame`
 - `assertEmailAddressContains`
 
+With additional assertions:
+
+- `assertEmailSubjectSame`
+- `assertEmailSubjectContains`
+- `assertEmailSubjectMatches`
+- `assertEmailTextBodyMatches`
+- `assertEmailTextBodyNotMatches`
+- `assertEmailHtmlBodyMatches`
+- `assertEmailHtmlBodyNotMatches`
+
 ## Installation
 
 ```console

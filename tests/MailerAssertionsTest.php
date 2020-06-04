@@ -228,6 +228,42 @@ class MailerAssertionsTest extends TestCase
         $this->mailerAssertions->assertEmailTextBodyNotContains($email, 'world');
     }
 
+    public function testAssertEmailTextBodyMatches(): void
+    {
+        $email = $this->createEmail()->text('Hello world');
+
+        $this->mailerAssertions->assertEmailTextBodyMatches($email, '/world/');
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAssertEmailTextBodyMatchesFailing(): void
+    {
+        $this->expectExceptionMessage('Failed asserting that the Email text body matches pattern "/moon/". Got "Hello world".');
+
+        $email = $this->createEmail()->text('Hello world');
+
+        $this->mailerAssertions->assertEmailTextBodyMatches($email, '/moon/');
+    }
+
+    public function testAssertEmailTextBodyNotMatches(): void
+    {
+        $email = $this->createEmail()->text('Hello world');
+
+        $this->mailerAssertions->assertEmailTextBodyNotMatches($email, '/moon/');
+
+        $this->addToAssertionCount(1);
+    }
+
+    public function testAssertEmailTextBodyNotMatchesFailing(): void
+    {
+        $this->expectExceptionMessage('Failed asserting that the Email text body not matches pattern "/world/". Got "Hello world".');
+
+        $email = $this->createEmail()->text('Hello world');
+
+        $this->mailerAssertions->assertEmailTextBodyNotMatches($email, '/world/');
+    }
+
     public function testAssertEmailHtmlBodyContains(): void
     {
         $email = $this->createEmail()->html('<b>Hello world</b>');
