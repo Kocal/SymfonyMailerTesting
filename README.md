@@ -34,6 +34,8 @@ With additional assertions:
 - `assertEmailTextBodyNotMatches`
 - `assertEmailHtmlBodyMatches`
 - `assertEmailHtmlBodyNotMatches`
+- `assertEmailAttachmentNameSame`
+- `assertEmailAttachmentNameMatches`
 
 ## Installation
 

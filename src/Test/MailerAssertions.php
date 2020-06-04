@@ -6,6 +6,7 @@ namespace Kocal\SymfonyMailerTesting\Test;
 
 use Kocal\SymfonyMailerTesting\MailerLogger;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\RawMessage;
 use Webmozart\Assert\Assert;
 
@@ -42,7 +43,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailTextBodyMatches(RawMessage $email, string $regex, ?string $message=null): void
+    public function assertEmailTextBodyMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getTextBody());
@@ -53,7 +54,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailTextBodyNotMatches(RawMessage $email, string $regex, ?string $message=null): void
+    public function assertEmailTextBodyNotMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getTextBody());
@@ -64,7 +65,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailHtmlBodyMatches(RawMessage $email, string $regex, ?string $message=null): void
+    public function assertEmailHtmlBodyMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getHtmlBody());
@@ -75,7 +76,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailHtmlBodyNotMatches(RawMessage $email, string $regex, ?string $message=null): void
+    public function assertEmailHtmlBodyNotMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getHtmlBody());
@@ -83,6 +84,48 @@ class MailerAssertions
             $message ?? 'Failed asserting that the Email HTML body not matches pattern "%s". Got "%s".',
             $regex,
             $email->getHtmlBody()
+        ));
+    }
+
+    public function assertEmailAttachmentNameSame(RawMessage $email, string $attachmentName, ?string $message = null): void
+    {
+        Assert::isInstanceOf($email, Email::class);
+
+        $matches = (function () use ($email, $attachmentName): bool {
+            /** @var DataPart $attachment */
+            foreach ($email->getAttachments() as $attachment) {
+                if ($attachmentName === $attachment->getPreparedHeaders()->getHeaderParameter('Content-Disposition', 'filename')) {
+                    return true;
+                }
+            }
+
+            return false;
+        })();
+
+        Assert::true($matches, sprintf(
+            $message ?? 'Failed asserting that the Email has an attachment with name "%s".',
+            $attachmentName,
+        ));
+    }
+
+    public function assertEmailAttachmentNameMatches(RawMessage $email, string $attachmentNamePattern, ?string $message = null): void
+    {
+        Assert::isInstanceOf($email, Email::class);
+
+        $matches = (function () use ($email, $attachmentNamePattern): bool {
+            /** @var DataPart $attachment */
+            foreach ($email->getAttachments() as $attachment) {
+                if (1 === preg_match($attachmentNamePattern, $attachment->getPreparedHeaders()->getHeaderParameter('Content-Disposition', 'filename') ?? '')) {
+                    return true;
+                }
+            }
+
+            return false;
+        })();
+
+        Assert::true($matches, sprintf(
+            $message ?? 'Failed asserting that the Email has an attachment with name matching pattern "%s".',
+            $attachmentNamePattern,
         ));
     }
 }
