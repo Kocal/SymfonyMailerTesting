@@ -6,10 +6,12 @@ namespace spec\Kocal\SymfonyMailerTesting;
 
 use Kocal\SymfonyMailerTesting\MailerLogger;
 use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
 use Psr\Cache\CacheItemInterface;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Mailer\Envelope;
 use Symfony\Component\Mailer\Event\MessageEvent;
+use Symfony\Component\Mailer\Event\MessageEvents;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\RawMessage;
 
@@ -17,7 +19,10 @@ class MailerLoggerSpec extends ObjectBehavior
 {
     public function let(CacheItemPoolInterface $cache, CacheItemInterface $cacheItem)
     {
-        $cache->getItem('symfony_mailer_testing.message_events')->shouldBeCalled()->willReturn($cacheItem);
+        $cacheItem->isHit()->shouldBeCalled()->willReturn(true);
+        $cacheItem->get()->shouldBeCalled()->willReturn(new MessageEvents());
+
+        $cache->getItem('symfony_mailer_testing.message_events')->shouldBeCalled()->willReturn($cacheItem->getWrappedObject());
 
         $this->beConstructedWith($cache);
     }
@@ -35,8 +40,10 @@ class MailerLoggerSpec extends ObjectBehavior
             $transport = 'acme_transport'
         );
 
+        $cacheItem->set(Argument::type(MessageEvents::class))->shouldBeCalled();
+        $cache->save($cacheItem->getWrappedObject())->shouldBeCalled();
+
         $this->add($messageEvent);
-        $cache->save($cacheItem)->shouldHaveBeenCalled();
 
         $this->getEvents()->getEvents()->shouldBe([$messageEvent]);
         $this->getEvents()->getMessages()->shouldBe([$message]);
