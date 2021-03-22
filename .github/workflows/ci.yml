@@ -89,7 +89,7 @@ jobs:
 
             - name: Limit to specific Symfony version
               if: matrix.config.SYMFONY_VERSION
-              run: echo "::set-env name=SYMFONY_REQUIRE::${{ matrix.config.SYMFONY_VERSION }}"
+              run: echo "SYMFONY_REQUIRE=${{ matrix.config.SYMFONY_VERSION }}" >> $GITHUB_ENV
 
             - name: Install composer dependencies
               run: composer update ${{ matrix.config.COMPOSER_FLAGS }} --prefer-dist --no-interaction --no-progress
