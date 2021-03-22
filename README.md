@@ -85,6 +85,8 @@ If you want to add more assertions but can't extend from `MailerContext`, you ca
 
 #### With Cypress
 
+##### Installing a PSR-7 implementation
+
 First, you need to install a PSR-7 implementation, e.g. [nyholm/psr7](https://github.com/Nyholm/psr7) :
 
 ```console
@@ -100,6 +102,8 @@ $ composer require --dev symfony/psr-http-message-bridge
 
 Those dependencies will make sure that the PSR-7 compatible [`MailerController.php`](./src/MailerController.php) will be compatible with Symfony.
 
+##### Configuring Symfony
+
 Then you have to import the routes:
 
 ```yaml
@@ -108,7 +112,22 @@ symfony_mailer_testing:
   resource: '@SymfonyMailerTestingBundle/Resources/config/routing.yaml'
 ```
 
-And finally, you should add this module in your support file:
+And configure the firewall to disallow the firewall on `/_symfony_mailer_testing`:
+
+```diff
+    firewalls:
+        dev:
+-            pattern: ^/(_(profiler|wdt)|css|images|js)/
++            pattern: ^/(_(profiler|wdt|symfony_mailer_testing)|css|images|js)/
+            security: false
+
+    access_control:
++        - { path: ^/_symfony_mailer_testing, role: IS_AUTHENTICATED_ANONYMOUSLY }
+```
+
+##### Configuring Cypress
+
+Finally, you should add this module in your support file:
 
 ```js
 // cypress/support/index.js
@@ -181,7 +200,7 @@ import { resetMessageEvents, getMessageEvents } from '/path/to/vendor/kocal/symf
 // cypress/integration/your.spec.js
 describe('Your feature', function () {
   beforeEach(function () {
-    // this is important to reset message events before each specsn your tests should be isolated.
+    // this is important to reset message events before each specs, your tests should be isolated.
     // see https://docs.cypress.io/guides/references/best-practices.html
     cy.resetMessageEvents();
   });
