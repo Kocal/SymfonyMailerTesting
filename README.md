@@ -87,14 +87,40 @@ If you want to add more assertions but can't extend from `MailerContext`, you ca
 
 ##### Installing a PSR-7 implementation
 
-You can install `symfony/psr7-pack` which will install:
+You can install `symfony/psr7-pack` which will install all you need:
 
 - [nyholm/psr7](https://github.com/Nyholm/psr7) for the PSR-7 implementation
 - [symfony/psr-http-message-bridge](https://github.com/symfony/psr-http-message-bridge) for the Symfony integration
 
-Those dependencies will make sure that the PSR-7 compatible controllers provided by SymfonyMailerTesting will be compatible with Symfony.
+Those dependencies will make sure that the PSR-7 compatible controllers provided by SymfonyMailerTesting will be working with Symfony.
 
 ##### Configuring Symfony
+
+You must configuring the Symfony PSR HTTP Message Bridge. 
+The following file is automatically created by Symfony Flex but services `Symfony\Bridge\PsrHttpMessage\ArgumentValueResolver\PsrServerRequestResolver`
+and `Symfony\Bridge\PsrHttpMessage\EventListener\PsrResponseListener` are not enabled by default, **you must enable those services**:
+```yaml
+# config/packages/psr_http_message_bridge.yaml
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory'
+
+    Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory'
+
+    Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory: null
+    Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: null
+
+    # Uncomment the following line to allow controllers to receive a
+    # PSR-7 server request object instead of an HttpFoundation request
+    Symfony\Bridge\PsrHttpMessage\ArgumentValueResolver\PsrServerRequestResolver: null
+
+    # Uncomment the following line to allow controllers to return a
+    # PSR-7 response object instead of an HttpFoundation response
+    Symfony\Bridge\PsrHttpMessage\EventListener\PsrResponseListener: null
+```
 
 Then you have to import the routes:
 
@@ -104,7 +130,7 @@ symfony_mailer_testing:
   resource: '@SymfonyMailerTestingBundle/Resources/config/routing.yaml'
 ```
 
-And configure the firewall to disallow the firewall on `/_symfony_mailer_testing`:
+And disable the firewall and access control on `/_symfony_mailer_testing`:
 
 ```diff
     firewalls:
