@@ -123,6 +123,7 @@ jobs:
                   node-version: ${{ env.NODE_VERSION }}
 
             - run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+            - run: composer require symfony/psr7-pack
 
             - run: composer server-start
 
