@@ -32,6 +32,7 @@ jobs:
                   node-version: ${{ env.NODE_VERSION }}
 
             - run: composer install --prefer-dist --no-interaction --no-progress
+            - run: composer require symfony/psr7-pack # To make PHPStan and me happy, it prevent me to write stubs for PHPStan
 
             - run: composer validate --strict
 
