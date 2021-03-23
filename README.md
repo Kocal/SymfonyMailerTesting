@@ -87,20 +87,12 @@ If you want to add more assertions but can't extend from `MailerContext`, you ca
 
 ##### Installing a PSR-7 implementation
 
-First, you need to install a PSR-7 implementation, e.g. [nyholm/psr7](https://github.com/Nyholm/psr7) :
+You can install `symfony/psr7-pack` which will install:
 
-```console
-$ composer require nyholm/psr7
-```
+- [nyholm/psr7](https://github.com/Nyholm/psr7) for the PSR-7 implementation
+- [symfony/psr-http-message-bridge](https://github.com/symfony/psr-http-message-bridge) for the Symfony integration
 
-Then you need to install the [Sensio FrameworkExtraBundle](https://github.com/sensiolabs/SensioFrameworkExtraBundle) and [Symfony PSR-7 Bridge](https://github.com/symfony/psr-http-message-bridge):
-
-```console
-$ composer require sensio/framework-extra-bundle
-$ composer require --dev symfony/psr-http-message-bridge
-```
-
-Those dependencies will make sure that the PSR-7 compatible [`MailerController.php`](./src/MailerController.php) will be compatible with Symfony.
+Those dependencies will make sure that the PSR-7 compatible controllers provided by SymfonyMailerTesting will be compatible with Symfony.
 
 ##### Configuring Symfony
 
