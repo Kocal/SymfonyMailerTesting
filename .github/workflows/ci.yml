@@ -32,6 +32,9 @@ jobs:
                   node-version: ${{ env.NODE_VERSION }}
 
             - run: composer install --prefer-dist --no-interaction --no-progress
+            - run: cp .github/psr_http_message_bridge.yaml fixtures/applications/Symfony/config/packages
+            - run: cp .github/nyholm_psr7.yaml fixtures/applications/Symfony/config/packages
+            - run: composer require symfony/psr7-pack # To make PHPStan and me happy, it prevent me to write stubs for PHPStan
 
             - run: composer validate --strict
 
@@ -123,6 +126,9 @@ jobs:
                   node-version: ${{ env.NODE_VERSION }}
 
             - run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+            - run: cp .github/psr_http_message_bridge.yaml fixtures/applications/Symfony/config/packages
+            - run: cp .github/nyholm_psr7.yaml fixtures/applications/Symfony/config/packages
+            - run: composer require symfony/psr7-pack
 
             - run: composer server-start
 

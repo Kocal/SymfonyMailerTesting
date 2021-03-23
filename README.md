@@ -87,22 +87,68 @@ If you want to add more assertions but can't extend from `MailerContext`, you ca
 
 ##### Installing a PSR-7 implementation
 
-First, you need to install a PSR-7 implementation, e.g. [nyholm/psr7](https://github.com/Nyholm/psr7) :
+You can install `symfony/psr7-pack` which will install all you need:
 
-```console
-$ composer require nyholm/psr7
-```
+- [nyholm/psr7](https://github.com/Nyholm/psr7) for the PSR-7 implementation
+- [symfony/psr-http-message-bridge](https://github.com/symfony/psr-http-message-bridge) for the Symfony integration
 
-Then you need to install the [Sensio FrameworkExtraBundle](https://github.com/sensiolabs/SensioFrameworkExtraBundle) and [Symfony PSR-7 Bridge](https://github.com/symfony/psr-http-message-bridge):
-
-```console
-$ composer require sensio/framework-extra-bundle
-$ composer require --dev symfony/psr-http-message-bridge
-```
-
-Those dependencies will make sure that the PSR-7 compatible [`MailerController.php`](./src/MailerController.php) will be compatible with Symfony.
+Those dependencies will make sure that the PSR-7 compatible controllers provided by SymfonyMailerTesting will be working with Symfony.
 
 ##### Configuring Symfony
+
+You must configuring the Symfony PSR HTTP Message Bridge and the PSR-7 integration. 
+
+The following files are automatically created by Symfony Flex but can require some configuration: 
+- `config/packages/psr_http_message_bridge.yaml`, **ensure services `Symfony\Bridge\PsrHttpMessage\ArgumentValueResolver\PsrServerRequestResolver`
+  and `Symfony\Bridge\PsrHttpMessage\EventListener\PsrResponseListener` are enabled**:
+```yaml
+# config/packages/psr_http_message_bridge.yaml
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    Symfony\Bridge\PsrHttpMessage\HttpFoundationFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory'
+
+    Symfony\Bridge\PsrHttpMessage\HttpMessageFactoryInterface: '@Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory'
+
+    Symfony\Bridge\PsrHttpMessage\Factory\HttpFoundationFactory: null
+    Symfony\Bridge\PsrHttpMessage\Factory\PsrHttpFactory: null
+
+    # Uncomment the following line to allow controllers to receive a
+    # PSR-7 server request object instead of an HttpFoundation request
+    Symfony\Bridge\PsrHttpMessage\ArgumentValueResolver\PsrServerRequestResolver: null
+
+    # Uncomment the following line to allow controllers to return a
+    # PSR-7 response object instead of an HttpFoundation response
+    Symfony\Bridge\PsrHttpMessage\EventListener\PsrResponseListener: null
+```
+- `config/packages/nyholm_psr7.yaml`:
+```yaml
+# config/packages/nyholm_psr7.yaml
+services:
+    # Register nyholm/psr7 services for autowiring with PSR-17 (HTTP factories)
+    Psr\Http\Message\RequestFactoryInterface: '@nyholm.psr7.psr17_factory'
+    Psr\Http\Message\ResponseFactoryInterface: '@nyholm.psr7.psr17_factory'
+    Psr\Http\Message\ServerRequestFactoryInterface: '@nyholm.psr7.psr17_factory'
+    Psr\Http\Message\StreamFactoryInterface: '@nyholm.psr7.psr17_factory'
+    Psr\Http\Message\UploadedFileFactoryInterface: '@nyholm.psr7.psr17_factory'
+    Psr\Http\Message\UriFactoryInterface: '@nyholm.psr7.psr17_factory'
+
+    # Register nyholm/psr7 services for autowiring with HTTPlug factories
+    Http\Message\MessageFactory: '@nyholm.psr7.httplug_factory'
+    Http\Message\RequestFactory: '@nyholm.psr7.httplug_factory'
+    Http\Message\ResponseFactory: '@nyholm.psr7.httplug_factory'
+    Http\Message\StreamFactory: '@nyholm.psr7.httplug_factory'
+    Http\Message\UriFactory: '@nyholm.psr7.httplug_factory'
+
+    nyholm.psr7.psr17_factory:
+        class: Nyholm\Psr7\Factory\Psr17Factory
+
+    nyholm.psr7.httplug_factory:
+        class: Nyholm\Psr7\Factory\HttplugFactory
+```
+
 
 Then you have to import the routes:
 
@@ -112,7 +158,7 @@ symfony_mailer_testing:
   resource: '@SymfonyMailerTestingBundle/Resources/config/routing.yaml'
 ```
 
-And configure the firewall to disallow the firewall on `/_symfony_mailer_testing`:
+And disable the firewall and access control on `/_symfony_mailer_testing`:
 
 ```diff
     firewalls:
