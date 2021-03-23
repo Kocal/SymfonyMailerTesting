@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Kocal\SymfonyMailerTesting\Bridge\Symfony\DependencyInjection;
 
+use Kocal\SymfonyMailerTesting\Controller\MailerController;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -19,5 +20,9 @@ class SymfonyMailerTestingExtension extends Extension
         );
 
         $loader->load('services.yaml');
+
+        if (!class_exists(\Psr\Http\Message\ResponseInterface::class)) {
+            $container->removeDefinition(MailerController::class);
+        }
     }
 }
