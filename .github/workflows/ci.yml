@@ -59,6 +59,7 @@ jobs:
                     # Test the latest stable release
                     - PHP_VERSION: 7.3
                     - PHP_VERSION: 7.4
+                    - PHP_VERSION: 8.0
                       COVERAGE: true
                       PHPUNIT_FLAGS: -v --coverage-text
 
@@ -66,7 +67,11 @@ jobs:
                     - PHP_VERSION: 7.4
                       SYMFONY_VERSION: 4.4.* # Last 4.x version
                     - PHP_VERSION: 7.4
-                      SYMFONY_VERSION: 5.0.* # Last 5.x version
+                      SYMFONY_VERSION: 5.* # Last 5.x version
+                    - PHP_VERSION: 8.0
+                      SYMFONY_VERSION: 4.4.* # Last 4.x version
+                    - PHP_VERSION: 8.0
+                      SYMFONY_VERSION: 5.* # Last 5.x version
 
                     # Latest commit to master (disabled until GitHub Actions support allowed_failures)
                     # - PHP_VERSION: 7.4

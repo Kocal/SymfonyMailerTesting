@@ -31,14 +31,14 @@
     ]
   },
   "require": {
-    "php": "^7.3",
+    "php": "^7.3 || ^8.0",
     "ext-json": "*",
     "symfony/mailer": "^4.4 || ^5.0",
     "webmozart/assert": "^1.8"
   },
   "require-dev": {
     "behat/behat": "^3.6",
-    "friends-of-behat/symfony-extension": "^2.1",
+    "friends-of-behat/symfony-extension": "^2.2",
     "friendsofphp/php-cs-fixer": "^2.16",
     "phpspec/phpspec": "^6.1",
     "phpstan/phpstan": "^0.12.23",
