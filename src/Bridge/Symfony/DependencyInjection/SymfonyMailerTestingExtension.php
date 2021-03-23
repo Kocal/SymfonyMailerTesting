@@ -21,7 +21,7 @@ class SymfonyMailerTestingExtension extends Extension
 
         $loader->load('services.yaml');
 
-        if (!class_exists(\Psr\Http\Message\ResponseInterface::class)) {
+        if (!interface_exists(\Psr\Http\Message\ResponseInterface::class)) {
             $container->removeDefinition(MailerController::class);
         }
     }
