@@ -25,11 +25,12 @@ class MailerAssertions
     {
         // By doing this, we can import and use methods from \Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait
         static::$container  = new Container();
-        static::$container->set('mailer.message_logger_listener', $mailerLogger);
+        static::$container->set('mailer.logger_message_listener', $mailerLogger); // Symfony <5.2
+        static::$container->set('mailer.message_logger_listener', $mailerLogger); // Symfony >=5.2
     }
 
     /**
-     * @param ...$arguments mixed
+     * @param mixed $arguments
      */
     public static function assertThat(...$arguments): void
     {
