@@ -51,7 +51,7 @@ trait MailerContextTrait
      */
     public function iSelectEmail(int $index = 0, ?string $transport = null): void
     {
-        $messageEvent = $this->mailerAssertions->getMailerEvent($index, $transport);
+        $messageEvent = $this->mailerAssertions::getMailerEvent($index, $transport);
 
         Assert::notNull($messageEvent, sprintf(
             'No email found at index "%d"%s.',
@@ -67,7 +67,7 @@ trait MailerContextTrait
      */
     public function assertEmailSubjectSame(string $text): void
     {
-        $this->mailerAssertions->assertEmailSubjectSame($this->getSelectedMessageEvent()->getMessage(), $text);
+        $this->mailerAssertions::assertEmailSubjectSame($this->getSelectedMessageEvent()->getMessage(), $text);
     }
 
     /**
@@ -75,7 +75,7 @@ trait MailerContextTrait
      */
     public function assertEmailSubjectContains(string $text): void
     {
-        $this->mailerAssertions->assertEmailSubjectContains($this->getSelectedMessageEvent()->getMessage(), $text);
+        $this->mailerAssertions::assertEmailSubjectContains($this->getSelectedMessageEvent()->getMessage(), $text);
     }
 
     /**
@@ -83,7 +83,7 @@ trait MailerContextTrait
      */
     public function assertEmailSubjectMatches(string $regex): void
     {
-        $this->mailerAssertions->assertEmailSubjectMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+        $this->mailerAssertions::assertEmailSubjectMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
 
     /**
@@ -91,7 +91,7 @@ trait MailerContextTrait
      */
     public function thisEmailTextBodyMatches(string $regex): void
     {
-        $this->mailerAssertions->assertEmailTextBodyMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+        $this->mailerAssertions::assertEmailTextBodyMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
 
     /**
@@ -99,7 +99,7 @@ trait MailerContextTrait
      */
     public function thisEmailTextBodyNotMatches(string $regex): void
     {
-        $this->mailerAssertions->assertEmailTextBodyNotMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+        $this->mailerAssertions::assertEmailTextBodyNotMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
 
     /**
@@ -107,7 +107,7 @@ trait MailerContextTrait
      */
     public function thisEmailHtmlBodyMatches(string $regex): void
     {
-        $this->mailerAssertions->assertEmailHtmlBodyMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+        $this->mailerAssertions::assertEmailHtmlBodyMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
 
     /**
@@ -115,7 +115,7 @@ trait MailerContextTrait
      */
     public function thisEmailHtmlBodyNotMatches(string $regex): void
     {
-        $this->mailerAssertions->assertEmailHtmlBodyNotMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+        $this->mailerAssertions::assertEmailHtmlBodyNotMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
 
     /**
@@ -123,7 +123,7 @@ trait MailerContextTrait
      */
     public function thisEmailHasAttachmentNamed(string $name): void
     {
-        $this->mailerAssertions->assertEmailAttachmentNameSame($this->getSelectedMessageEvent()->getMessage(), $name);
+        $this->mailerAssertions::assertEmailAttachmentNameSame($this->getSelectedMessageEvent()->getMessage(), $name);
     }
 
     /**
@@ -131,6 +131,6 @@ trait MailerContextTrait
      */
     public function thisEmailHasAttachmentNameMatching(string $regex): void
     {
-        $this->mailerAssertions->assertEmailAttachmentNameMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
+        $this->mailerAssertions::assertEmailAttachmentNameMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
 }

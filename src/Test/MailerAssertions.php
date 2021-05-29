@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Kocal\SymfonyMailerTesting\Test;
 
 use Kocal\SymfonyMailerTesting\MailerLogger;
+use PHPUnit\Framework\TestCase;
+use Psr\Container\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mime\Part\DataPart;
 use Symfony\Component\Mime\RawMessage;
@@ -12,28 +16,41 @@ use Webmozart\Assert\Assert;
 
 class MailerAssertions
 {
-    use SymfonyMailerAssertionsTrait;
+    use MailerAssertionsTrait;
 
-    private $mailerLogger;
+    /** @var ContainerInterface */
+    private static $container;
 
     public function __construct(MailerLogger $mailerLogger)
     {
-        $this->mailerLogger = $mailerLogger;
+        // By doing this, we can import and use methods from \Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait
+        static::$container  = new Container();
+        static::$container->set('mailer.message_logger_listener', $mailerLogger);
     }
 
-    public function assertEmailSubjectSame(RawMessage $email, string $text, ?string $message = null): void
+    /**
+     * @param ...$arguments mixed
+     */
+    public static function assertThat(...$arguments): void
+    {
+        // As we don't extend from TestCase/KernelTestCase/WebTestCase, we re-implement self::assertThat
+        // needed by Symfony's MailerAssertionsTrait.
+        TestCase::assertThat(...$arguments);
+    }
+
+    public static function assertEmailSubjectSame(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::same($email->getSubject() ?? '', $text, $message ?? 'Failed asserting that the Email subject with value same as %2$s. Got %s.');
     }
 
-    public function assertEmailSubjectContains(RawMessage $email, string $text, ?string $message = null): void
+    public static function assertEmailSubjectContains(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::contains($email->getSubject() ?? '', $text, $message ?? 'Failed asserting that the Email subject contains %2$s. Got %s.');
     }
 
-    public function assertEmailSubjectMatches(RawMessage $email, string $regex, ?string $message = null): void
+    public static function assertEmailSubjectMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::regex($email->getSubject() ?? '', $regex, sprintf(
@@ -43,7 +60,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailTextBodyMatches(RawMessage $email, string $regex, ?string $message = null): void
+    public static function assertEmailTextBodyMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getTextBody());
@@ -54,7 +71,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailTextBodyNotMatches(RawMessage $email, string $regex, ?string $message = null): void
+    public static function assertEmailTextBodyNotMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getTextBody());
@@ -65,7 +82,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailHtmlBodyMatches(RawMessage $email, string $regex, ?string $message = null): void
+    public static function assertEmailHtmlBodyMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getHtmlBody());
@@ -76,7 +93,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailHtmlBodyNotMatches(RawMessage $email, string $regex, ?string $message = null): void
+    public static function assertEmailHtmlBodyNotMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
         Assert::nullOrString($email->getHtmlBody());
@@ -87,7 +104,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailAttachmentNameSame(RawMessage $email, string $attachmentName, ?string $message = null): void
+    public static function assertEmailAttachmentNameSame(RawMessage $email, string $attachmentName, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
 
@@ -108,7 +125,7 @@ class MailerAssertions
         ));
     }
 
-    public function assertEmailAttachmentNameMatches(RawMessage $email, string $attachmentNamePattern, ?string $message = null): void
+    public static function assertEmailAttachmentNameMatches(RawMessage $email, string $attachmentNamePattern, ?string $message = null): void
     {
         Assert::isInstanceOf($email, Email::class);
 

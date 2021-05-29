@@ -12,7 +12,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailCount(int $count, ?string $transport = null): void
     {
-        $this->mailerAssertions->assertEmailCount($count, $transport);
+        $this->mailerAssertions::assertEmailCount($count, $transport);
     }
 
     /**
@@ -21,7 +21,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertQueuedEmailCount(int $count, ?string $transport = null): void
     {
-        $this->mailerAssertions->assertQueuedEmailCount($count, $transport);
+        $this->mailerAssertions::assertQueuedEmailCount($count, $transport);
     }
 
     /**
@@ -29,7 +29,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailIsQueued(): void
     {
-        $this->mailerAssertions->assertEmailIsQueued($this->getSelectedMessageEvent());
+        $this->mailerAssertions::assertEmailIsQueued($this->getSelectedMessageEvent());
     }
 
     /**
@@ -37,7 +37,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailIsNotQueued(): void
     {
-        $this->mailerAssertions->assertEmailIsNotQueued($this->getSelectedMessageEvent());
+        $this->mailerAssertions::assertEmailIsNotQueued($this->getSelectedMessageEvent());
     }
 
     /**
@@ -45,7 +45,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailAttachmentCount(int $count): void
     {
-        $this->mailerAssertions->assertEmailAttachmentCount($this->getSelectedMessageEvent()->getMessage(), $count);
+        $this->mailerAssertions::assertEmailAttachmentCount($this->getSelectedMessageEvent()->getMessage(), $count);
     }
 
     /**
@@ -53,7 +53,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailTextBodyContains(string $text): void
     {
-        $this->mailerAssertions->assertEmailTextBodyContains($this->getSelectedMessageEvent()->getMessage(), $text);
+        $this->mailerAssertions::assertEmailTextBodyContains($this->getSelectedMessageEvent()->getMessage(), $text);
     }
 
     /**
@@ -61,7 +61,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailTextBodyNotContains(string $text): void
     {
-        $this->mailerAssertions->assertEmailTextBodyNotContains($this->getSelectedMessageEvent()->getMessage(), $text);
+        $this->mailerAssertions::assertEmailTextBodyNotContains($this->getSelectedMessageEvent()->getMessage(), $text);
     }
 
     /**
@@ -69,7 +69,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailHtmlBodyContains(string $text): void
     {
-        $this->mailerAssertions->assertEmailHtmlBodyContains($this->getSelectedMessageEvent()->getMessage(), $text);
+        $this->mailerAssertions::assertEmailHtmlBodyContains($this->getSelectedMessageEvent()->getMessage(), $text);
     }
 
     /**
@@ -77,7 +77,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailHtmlBodyNotContains(string $text): void
     {
-        $this->mailerAssertions->assertEmailHtmlBodyNotContains($this->getSelectedMessageEvent()->getMessage(), $text);
+        $this->mailerAssertions::assertEmailHtmlBodyNotContains($this->getSelectedMessageEvent()->getMessage(), $text);
     }
 
     /**
@@ -85,7 +85,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailHasHeader(string $headerName): void
     {
-        $this->mailerAssertions->assertEmailHasHeader($this->getSelectedMessageEvent()->getMessage(), $headerName);
+        $this->mailerAssertions::assertEmailHasHeader($this->getSelectedMessageEvent()->getMessage(), $headerName);
     }
 
     /**
@@ -93,7 +93,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailNotHasHeader(string $headerName): void
     {
-        $this->mailerAssertions->assertEmailNotHasHeader($this->getSelectedMessageEvent()->getMessage(), $headerName);
+        $this->mailerAssertions::assertEmailNotHasHeader($this->getSelectedMessageEvent()->getMessage(), $headerName);
     }
 
     /**
@@ -101,7 +101,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailHeaderSame(string $headerName, string $value): void
     {
-        $this->mailerAssertions->assertEmailHeaderSame($this->getSelectedMessageEvent()->getMessage(), $headerName, $value);
+        $this->mailerAssertions::assertEmailHeaderSame($this->getSelectedMessageEvent()->getMessage(), $headerName, $value);
     }
 
     /**
@@ -109,7 +109,7 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailHeaderNotSame(string $headerName, string $value): void
     {
-        $this->mailerAssertions->assertEmailHeaderNotSame($this->getSelectedMessageEvent()->getMessage(), $headerName, $value);
+        $this->mailerAssertions::assertEmailHeaderNotSame($this->getSelectedMessageEvent()->getMessage(), $headerName, $value);
     }
 
     /**
@@ -117,6 +117,6 @@ trait SymfonyMailerContextTrait
      */
     public function assertEmailAddressContains(string $headerName, string $address): void
     {
-        $this->mailerAssertions->assertEmailAddressContains($this->getSelectedMessageEvent()->getMessage(), $headerName, $address);
+        $this->mailerAssertions::assertEmailAddressContains($this->getSelectedMessageEvent()->getMessage(), $headerName, $address);
     }
 }
