@@ -96,3 +96,22 @@ Feature: Testing emails
     And this email subject has value "Hello"
     And this email subject contains "Hell"
     And this email subject matches "/^[a-zA-Z]+$/"
+
+  Scenario: I can debug emails
+    When I send an email:
+      | from        | john@example.com                                      |
+      | to          | carla@example.com                                     |
+      | cc          | michel@example.com                                    |
+      | bcc         | alexandra@example.com                                 |
+      | subject     | Hello                                                 |
+      | text        | Hi Carla!                                             |
+      | attachments | [{"body": "My attachment", "name": "attachment.txt"}] |
+    And I send an email:
+      | from    | carla@example.com |
+      | to      | john@example.com  |
+      | subject | Re:Hello          |
+      | text    | Hi John! :)       |
+    Then I select email #0
+    And I debug this email
+    Then I select email #1
+    And I debug this email

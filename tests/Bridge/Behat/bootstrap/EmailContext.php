@@ -33,6 +33,14 @@ class EmailContext implements Context
             ->html($params['html'] ?? null)
         ;
 
+        if (array_key_exists('cc', $params)) {
+            $email->cc($params['cc']);
+        }
+
+        if (array_key_exists('bcc', $params)) {
+            $email->bcc($params['bcc']);
+        }
+
         if (array_key_exists('attachments', $params)) {
             foreach (json_decode($params['attachments'], true, 5, JSON_THROW_ON_ERROR) as $attachment) {
                 $email->attach($attachment['body'], $attachment['name'] ?? null, $attachment['contentType'] ?? null);
