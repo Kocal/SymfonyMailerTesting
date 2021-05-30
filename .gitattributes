@@ -1,13 +1,16 @@
 .github/                 export-ignore
+.husky                   export-ignore
+bin/                     export-ignore
 fixtures/                export-ignore
 spec/                    export-ignore
 tests/                   export-ignore
 .eslintignore            export-ignore
 .eslintrc.js             export-ignore
-.php_cs                  export-ignore
+.php-cs-fixer.php        export-ignore
 .prettierrc              export-ignore
 behat.yml.dist           export-ignore
 cypress.json             export-ignore
 list-staged.config.js    export-ignore
 phpstan.neon             export-ignore
 phpunit.xml.dist         export-ignore
+yarn.lock                export-ignore
