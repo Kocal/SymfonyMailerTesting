@@ -91,13 +91,13 @@ trait MailerContextTrait
         $io->listing($email->getPreparedHeaders()->toArray());
 
         $io->section('Text body');
-        $io->writeln($email->getTextBody() ?? '');
+        $io->writeln((string) $email->getTextBody() ?? '');
 
         $io->section('HTML body');
-        $io->writeln($email->getHtmlBody() ?? '');
+        $io->writeln((string) $email->getHtmlBody() ?? '');
 
         $io->section('Attachments');
-        $io->listing(array_map(function (DataPart $attachment) {
+        $io->listing(array_map(function (DataPart $attachment): string {
             return $attachment->asDebugString();
         }, $email->getAttachments()));
     }
