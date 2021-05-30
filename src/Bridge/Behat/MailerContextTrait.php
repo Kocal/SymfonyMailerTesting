@@ -8,7 +8,12 @@ use Kocal\SymfonyMailerTesting\MailerLogger;
 use Kocal\SymfonyMailerTesting\MailerLoggerAwareTrait;
 use Kocal\SymfonyMailerTesting\Test\MailerAssertions;
 use PHPUnit\Framework\Assert;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Mailer\Event\MessageEvent;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\DataPart;
 
 trait MailerContextTrait
 {
@@ -63,9 +68,44 @@ trait MailerContextTrait
     }
 
     /**
+     * @Then I debug this email
+     */
+    public function iDebugThisEmail(): void
+    {
+        $messageEvent = $this->getSelectedMessageEvent();
+        /** @var Email $email */
+        $email = $messageEvent->getMessage();
+
+        $io = new SymfonyStyle(new ArrayInput([]), new ConsoleOutput());
+        $io->block('Debugging selected email', null, 'fg=black;bg=magenta', ' ', true);
+        $io->section('Basic information');
+        $io->listing([
+            sprintf('Transport: %s', $messageEvent->getTransport()),
+            sprintf('State: %s', $messageEvent->isQueued() ? 'queued' : 'sent'),
+        ]);
+
+        $io->section('Headers');
+        $io->listing($email->getHeaders()->toArray());
+
+        $io->section('Headers (final)');
+        $io->listing($email->getPreparedHeaders()->toArray());
+
+        $io->section('Text body');
+        $io->writeln((string) $email->getTextBody() ?? '');
+
+        $io->section('HTML body');
+        $io->writeln((string) $email->getHtmlBody() ?? '');
+
+        $io->section('Attachments');
+        $io->listing(array_map(function (DataPart $attachment): string {
+            return $attachment->asDebugString();
+        }, $email->getAttachments()));
+    }
+
+    /**
      * @Then this email subject has value :text
      */
-    public function assertEmailSubjectSame(string $text): void
+    public function thisEmailSubjectSame(string $text): void
     {
         $this->mailerAssertions::assertEmailSubjectSame($this->getSelectedMessageEvent()->getMessage(), $text);
     }
@@ -73,7 +113,7 @@ trait MailerContextTrait
     /**
      * @Then this email subject contains :text
      */
-    public function assertEmailSubjectContains(string $text): void
+    public function thisEmailSubjectContains(string $text): void
     {
         $this->mailerAssertions::assertEmailSubjectContains($this->getSelectedMessageEvent()->getMessage(), $text);
     }
@@ -81,7 +121,7 @@ trait MailerContextTrait
     /**
      * @Then this email subject matches :regex
      */
-    public function assertEmailSubjectMatches(string $regex): void
+    public function thisEmailSubjectMatches(string $regex): void
     {
         $this->mailerAssertions::assertEmailSubjectMatches($this->getSelectedMessageEvent()->getMessage(), $regex);
     }
