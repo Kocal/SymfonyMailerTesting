@@ -7,8 +7,8 @@ namespace Kocal\SymfonyMailerTesting\Bridge\Behat;
 use Kocal\SymfonyMailerTesting\MailerLogger;
 use Kocal\SymfonyMailerTesting\MailerLoggerAwareTrait;
 use Kocal\SymfonyMailerTesting\Test\MailerAssertions;
+use PHPUnit\Framework\Assert;
 use Symfony\Component\Mailer\Event\MessageEvent;
-use Webmozart\Assert\Assert;
 
 trait MailerContextTrait
 {
@@ -53,7 +53,7 @@ trait MailerContextTrait
     {
         $messageEvent = $this->mailerAssertions::getMailerEvent($index, $transport);
 
-        Assert::notNull($messageEvent, sprintf(
+        Assert::assertNotNull($messageEvent, sprintf(
             'No email found at index "%d"%s.',
             $index,
             null !== $transport ? sprintf(' for transport "%s"', $transport) : ''

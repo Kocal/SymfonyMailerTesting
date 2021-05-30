@@ -6,6 +6,7 @@ namespace Kocal\SymfonyMailerTesting\Tests;
 
 use Kocal\SymfonyMailerTesting\MailerLogger;
 use Kocal\SymfonyMailerTesting\Test\MailerAssertions;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -121,7 +122,8 @@ class MailerAssertionsTest extends TestCase
 
     public function testAssertEmailSubjectSameFailing(): void
     {
-        $this->expectDeprecationMessage('Failed asserting that the Email subject with value same as "Goodbye world!". Got "Hello world!".');
+        static::expectException(ExpectationFailedException::class);
+        static::expectExceptionMessage('Failed asserting that the Email subject with value same as "Goodbye world!". Got "Hello world!".');
 
         $email = $this->createEmail()->subject('Hello world!');
 
@@ -139,7 +141,8 @@ class MailerAssertionsTest extends TestCase
 
     public function testAssertEmailSubjectContainsFailing(): void
     {
-        $this->expectDeprecationMessage('Failed asserting that the Email subject contains "Goodbye". Got "Hello world!".');
+        static::expectException(ExpectationFailedException::class);
+        static::expectDeprecationMessage('Failed asserting that the Email subject contains "Goodbye". Got "Hello world!".');
 
         $email = $this->createEmail()->subject('Hello world!');
 
@@ -157,7 +160,8 @@ class MailerAssertionsTest extends TestCase
 
     public function testAssertEmailSubjectMatchesFailing(): void
     {
-        $this->expectDeprecationMessage('Failed asserting that the Email subject matches pattern "/^[A-Z]oodbye/". Got "Hello world!".');
+        static::expectException(ExpectationFailedException::class);
+        static::expectDeprecationMessage('Failed asserting that the Email subject matches pattern "/^[A-Z]oodbye/". Got "Hello world!".');
 
         $email = $this->createEmail()->subject('Hello world!');
 
@@ -175,7 +179,8 @@ class MailerAssertionsTest extends TestCase
 
     public function testAssertEmailAttachmentNameSameFailing(): void
     {
-        $this->expectDeprecationMessage('Failed asserting that the Email has an attachment with name "not message.txt".');
+        static::expectException(ExpectationFailedException::class);
+        static::expectDeprecationMessage('Failed asserting that the Email has an attachment with name "not message.txt".');
 
         $email = $this->createEmail()->attach('Hello world!', 'message.txt');
 
@@ -193,7 +198,8 @@ class MailerAssertionsTest extends TestCase
 
     public function testAssertEmailAttachmentNameMatchesFailing(): void
     {
-        $this->expectDeprecationMessage('Failed asserting that the Email has an attachment with name matching pattern "/^not message/".');
+        static::expectException(ExpectationFailedException::class);
+        static::expectDeprecationMessage('Failed asserting that the Email has an attachment with name matching pattern "/^not message/".');
 
         $email = $this->createEmail()->attach('Hello world!', 'message.txt');
 
