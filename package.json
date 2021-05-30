@@ -2,18 +2,18 @@
   "private": true,
   "version": "0.0.0-development",
   "description": "Test your emails with Behat and Cypress, when using the Symfony Mailer component.",
-  "repository": "https://github.com/Kocal/MailtrapTesting.git",
-  "author": "Hugo Alliaume <kocal@live.fr>",
+  "repository": "https://github.com/Kocal/SymfonyMailerTesting",
+  "author": "Hugo Alliaume <hugo@alliau.me>",
   "license": "MIT",
   "scripts": {
     "eslint": "eslint *.js src tests --ext .js,.vue",
     "prettier": "prettier"
   },
   "peerDependencies": {
-    "cypress": "^4.0.0"
+    "cypress": ">=4.0.0"
   },
   "devDependencies": {
-    "cypress": "^4.5.0",
+    "cypress": "^7.4.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-config-prettier": "^6.11.0",
