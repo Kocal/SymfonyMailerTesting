@@ -39,7 +39,7 @@
   "require-dev": {
     "behat/behat": "^3.6",
     "friends-of-behat/symfony-extension": "^2.2",
-    "friendsofphp/php-cs-fixer": "^2.16",
+    "friendsofphp/php-cs-fixer": "^3.0",
     "phpspec/phpspec": "^6.1",
     "phpstan/phpstan": "^0.12.23",
     "phpstan/phpstan-phpunit": "^0.12.8",
