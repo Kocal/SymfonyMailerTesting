@@ -44,7 +44,7 @@ jobs:
 
             - run: yarn install --frozen-lockfile
 
-            - run: yarn eslint
+            - run: yarn lint
 
     test:
         runs-on: ubuntu-latest
