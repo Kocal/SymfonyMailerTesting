@@ -31,12 +31,9 @@ jobs:
               with:
                   node-version: ${{ env.NODE_VERSION }}
 
-            - run: composer install --prefer-dist --no-interaction --no-progress
-            - run: cp .github/psr_http_message_bridge.yaml fixtures/applications/Symfony/config/packages
-            - run: cp .github/nyholm_psr7.yaml fixtures/applications/Symfony/config/packages
-            - run: composer require symfony/psr7-pack # To make PHPStan and me happy, it prevent me to write stubs for PHPStan
-
             - run: composer validate --strict
+
+            - run: composer install --prefer-dist --no-interaction --no-progress
 
             - run: composer phpstan
 
@@ -99,6 +96,12 @@ jobs:
               if: matrix.config.SYMFONY_VERSION
               run: echo "SYMFONY_REQUIRE=${{ matrix.config.SYMFONY_VERSION }}" >> $GITHUB_ENV
 
+            # Remove PSR-7 related things which are only needed for Cypress.
+            - run: |
+                  rm fixtures/applications/Symfony/config/packages/nyholm_psr7.yaml
+                  rm fixtures/applications/Symfony/config/packages/psr_http_message_bridge.yaml
+                  composer remove --dev symfony/psr7-pack
+
             - name: Install composer dependencies
               run: composer update ${{ matrix.config.COMPOSER_FLAGS }} --prefer-dist --no-interaction --no-progress
 
@@ -131,9 +134,6 @@ jobs:
                   node-version: ${{ env.NODE_VERSION }}
 
             - run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-            - run: cp .github/psr_http_message_bridge.yaml fixtures/applications/Symfony/config/packages
-            - run: cp .github/nyholm_psr7.yaml fixtures/applications/Symfony/config/packages
-            - run: composer require symfony/psr7-pack
 
             - run: composer server-start
 
