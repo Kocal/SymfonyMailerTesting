@@ -69,11 +69,9 @@ jobs:
                       SYMFONY_VERSION: 4.4.* # Last 4.x version
                     - PHP_VERSION: 8.0
                       SYMFONY_VERSION: 5.* # Last 5.x version
-
-                    # Latest commit to master (disabled until GitHub Actions support allowed_failures)
-                    # - PHP_VERSION: 7.4
-                    #   STABILITY: dev
-                    #   ALLOWED_TO_FAIL: true
+                    - PHP_VERSION: 8.0
+                      STABILITY: dev
+                      SYMFONY_VERSION: 6.* # Last 6.x version
 
         steps:
             - uses: actions/checkout@v2

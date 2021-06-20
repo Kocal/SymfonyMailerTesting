@@ -24,9 +24,19 @@ class MailerAssertions
     public function __construct(MailerLogger $mailerLogger)
     {
         // By doing this, we can import and use methods from \Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait
-        static::$container  = new Container();
+        static::$container = new Container();
         static::$container->set('mailer.logger_message_listener', $mailerLogger); // Symfony <5.2
         static::$container->set('mailer.message_logger_listener', $mailerLogger); // Symfony >=5.2
+    }
+
+    /**
+     * For Symfony 5.3 and more, "static::getContainer()" is now called in MailerAssertionsTrait instead of "static::$container".
+     *
+     * @see https://github.com/symfony/symfony/pull/40366
+     */
+    public static function getContainer(): ContainerInterface
+    {
+        return static::$container;
     }
 
     /**
@@ -42,13 +52,15 @@ class MailerAssertions
     public static function assertEmailSubjectSame(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::assertInstanceOf(Email::class, $email);
-        Assert::assertSame($expected = $text, $actual = $email->getSubject() ?? '', sprintf($message ?? 'Failed asserting that the Email subject with value same as "%1$s". Got "%2$s".', $expected, $actual));
+        Assert::assertSame($expected = $text, $actual = $email->getSubject() ?? '',
+            sprintf($message ?? 'Failed asserting that the Email subject with value same as "%1$s". Got "%2$s".', $expected, $actual));
     }
 
     public static function assertEmailSubjectContains(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::assertInstanceOf(Email::class, $email);
-        Assert::assertStringContainsString($expected = $text, $actual = $email->getSubject() ?? '', sprintf($message ?? 'Failed asserting that the Email subject contains "%1$s". Got "%2$s".', $expected, $actual));
+        Assert::assertStringContainsString($expected = $text, $actual = $email->getSubject() ?? '',
+            sprintf($message ?? 'Failed asserting that the Email subject contains "%1$s". Got "%2$s".', $expected, $actual));
     }
 
     public static function assertEmailSubjectMatches(RawMessage $email, string $regex, ?string $message = null): void
