@@ -2,7 +2,7 @@
 
 ![Package version](https://img.shields.io/packagist/v/kocal/symfony-mailer-testing?include_prereleases)
 ![PHP supported versions](https://img.shields.io/packagist/php-v/kocal/symfony-mailer-testing)
-![Symfony supported version](https://img.shields.io/badge/Symfony-%5E4.4%20%7C%7C%20%5E5.0-blue)
+![Symfony supported version](https://img.shields.io/badge/Symfony-%5E4.4%20%7C%7C%20%5E5.0%20%7C%7C%20%5E6.0-blue)
 ![License](https://img.shields.io/packagist/l/kocal/symfony-mailer-testing)
 ![CI](https://github.com/Kocal/SymfonyMailerTesting/workflows/CI/badge.svg)
 
