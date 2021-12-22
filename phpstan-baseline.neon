@@ -1,0 +1,17 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method Kocal\\\\SymfonyMailerTesting\\\\Tests\\\\Bridge\\\\Behat\\\\EmailContext\\:\\:iSendAnEmail\\(\\) has parameter \\$table with no value type specified in iterable type Behat\\\\Gherkin\\\\Node\\\\TableNode\\.$#"
+			count: 1
+			path: tests/Bridge/Behat/bootstrap/EmailContext.php
+
+		-
+			message: "#^Access to an undefined static property static\\(Kocal\\\\SymfonyMailerTesting\\\\Tests\\\\Bridge\\\\Symfony\\\\EventListener\\\\MailerLoggerListenerTest\\)\\:\\:\\$container\\.$#"
+			count: 2
+			path: tests/Bridge/Symfony/EventListener/MailerLoggerListenerTest.php
+
+		-
+			message: "#^Call to function method_exists\\(\\) with \\$this\\(Kocal\\\\SymfonyMailerTesting\\\\Tests\\\\Bridge\\\\Symfony\\\\EventListener\\\\MailerLoggerListenerTest\\) and 'getContainer' will always evaluate to true\\.$#"
+			count: 2
+			path: tests/Bridge/Symfony/EventListener/MailerLoggerListenerTest.php
+

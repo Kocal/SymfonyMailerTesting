@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Kocal\SymfonyMailerTesting\Tests\Bridge\Symfony\EventListener;
 
+use Kocal\SymfonyMailerTesting\Bridge\Symfony\EventListener\MailerLoggerListener;
 use Kocal\SymfonyMailerTesting\Fixtures\Applications\Symfony\App\Kernel;
 use Kocal\SymfonyMailerTesting\MailerLogger;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Mailer\Envelope;
+use Symfony\Component\Mailer\Event\MessageEvent;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\RawMessage;
 
 class MailerLoggerListenerTest extends KernelTestCase
 {
@@ -19,6 +24,24 @@ class MailerLoggerListenerTest extends KernelTestCase
         static::bootKernel([
             'debug' => false,
         ]);
+    }
+
+    public function testSpec(): void
+    {
+        $messageEvent = new MessageEvent(
+            new RawMessage('message'),
+            new Envelope(new Address('from@example.com'), [new Address('to@example.com')]),
+            'acme_transport'
+        );
+
+        $mailerLogger = $this->createMock(MailerLogger::class);
+        $mailerLogger
+            ->expects(static::once())
+            ->method('add')
+            ->with($messageEvent);
+
+        $mailerLoggerListener = new MailerLoggerListener($mailerLogger);
+        $mailerLoggerListener->onMessageSend($messageEvent);
     }
 
     public function testOnMessageSend(): void
@@ -45,11 +68,15 @@ class MailerLoggerListenerTest extends KernelTestCase
 
     protected function getMailer(): MailerInterface
     {
-        return static::$container->get(MailerInterface::class);
+        return method_exists($this, 'getContainer')
+            ? static::getContainer()->get(MailerInterface::class)
+            : static::$container->get(MailerInterface::class);
     }
 
     protected function getMailerLogger(): MailerLogger
     {
-        return static::$container->get(MailerLogger::class);
+        return method_exists($this, 'getContainer')
+            ? static::getContainer()->get(MailerLogger::class)
+            : static::$container->get(MailerLogger::class);
     }
 }
