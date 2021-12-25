@@ -1,0 +1,9 @@
+{
+  "require": {
+    "phpstan/phpstan": "^0.12.23",
+    "phpstan/phpstan-phpunit": "^0.12.8",
+    "phpstan/phpstan-strict-rules": "^0.12.2",
+    "phpstan/phpstan-symfony": "^0.12.6",
+    "phpstan/phpstan-webmozart-assert": "^0.12.4"
+  }
+}
