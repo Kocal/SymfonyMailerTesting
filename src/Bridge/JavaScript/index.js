@@ -37,6 +37,8 @@ function filterHeader(messageEvent, { name } = {}) {
  */
 function isMessageEvent(messageEvent) {
   return (
+    typeof messageEvent === 'object' &&
+    messageEvent !== null &&
     Object.prototype.hasOwnProperty.call(messageEvent, 'message') &&
     Object.prototype.hasOwnProperty.call(messageEvent, 'transport') &&
     Object.prototype.hasOwnProperty.call(messageEvent, 'queued')

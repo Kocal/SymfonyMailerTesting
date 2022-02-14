@@ -11,6 +11,7 @@ tools/                   export-ignore
 .prettierrc              export-ignore
 behat.yml.dist           export-ignore
 cypress.json             export-ignore
+jest.config.js           export-ignore
 list-staged.config.js    export-ignore
 phpstan.neon             export-ignore
 phpstan-baseline.neon    export-ignore

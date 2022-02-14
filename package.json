@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "eslint *.js src tests --ext .js,.vue",
     "prettier": "prettier",
+    "test": "jest",
     "prepare": "husky install"
   },
   "peerDependencies": {
@@ -15,12 +16,15 @@
   },
   "devDependencies": {
     "@kocal/eslint-config-generator": "^2.0.3",
+    "@types/jest": "^27.4.0",
     "cypress": "^7.4.0",
     "eslint": "^7.27.0",
     "eslint-plugin-chai-friendly": "^0.7.1",
     "eslint-plugin-cypress": "^2.11.3",
+    "eslint-plugin-jest": "^26.1.0",
     "eslint-plugin-mocha": "^9.0.0",
     "husky": "^6.0.0",
+    "jest": "^27.5.1",
     "lint-staged": "^11.0.0",
     "prettier": "^2.0.5"
   }
