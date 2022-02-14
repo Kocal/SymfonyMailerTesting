@@ -42,6 +42,8 @@ jobs:
 
             - run: yarn lint
 
+            - run: yarn test
+
     test:
         runs-on: ubuntu-latest
         strategy:
