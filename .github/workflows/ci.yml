@@ -11,7 +11,7 @@ env:
     PHPUNIT_FLAGS: -v
     COMPOSER_MEMORY_LIMIT: -1
 
-    PHP_VERSION_DEFAULT: 8.0
+    PHP_VERSION_DEFAULT: 8.1
     NODE_VERSION: 14.x
 
 jobs:
@@ -51,33 +51,45 @@ jobs:
             matrix:
                 config:
                     # Minimum supported dependencies with the latest and oldest PHP version
-                    - PHP_VERSION: 7.4
+                    - PHP_VERSION: 8.1
                       COMPOSER_FLAGS: --prefer-stable --prefer-lowest
 
                     # Test the latest stable release
-                    - PHP_VERSION: 7.4
-                    - PHP_VERSION: 8.0
+                    - PHP_VERSION: 8.1
+                    - PHP_VERSION: 8.2
+                    - PHP_VERSION: 8.3
                       COVERAGE: true
                       PHPUNIT_FLAGS: -v --coverage-text
 
                     # Test specific Symfony versions
-                    - PHP_VERSION: 7.4
-                      SYMFONY_VERSION: 4.4.* # Last 4.x version
-                    - PHP_VERSION: 7.4
+                    - PHP_VERSION: 8.1
                       SYMFONY_VERSION: 5.* # Last 5.x version
-                    - PHP_VERSION: 8.0
-                      SYMFONY_VERSION: 4.4.* # Last 4.x version
-                    - PHP_VERSION: 8.0
+                    - PHP_VERSION: 8.2
                       SYMFONY_VERSION: 5.4.* # Last 5.4.x version
+                    - PHP_VERSION: 8.3
+                      SYMFONY_VERSION: 5.4.* # Last 5.4.x version
+
                     - PHP_VERSION: 8.1
                       SYMFONY_VERSION: 6.4.* # Last 6.1.x version
-                    - PHP_VERSION: 8.1
-                      SYMFONY_VERSION: 6.* # Last 6.x version
+                    - PHP_VERSION: 8.2
+                      SYMFONY_VERSION: 6.4.* # Last 6.1.x version
+                    - PHP_VERSION: 8.3
+                      SYMFONY_VERSION: 6.4.* # Last 6.1.x version
+
                     - PHP_VERSION: 8.2
                       SYMFONY_VERSION: 7.0.* # Last 7.0.x version
+                    - PHP_VERSION: 8.3
+                      SYMFONY_VERSION: 7.0.* # Last 7.0.x version
+
                     - PHP_VERSION: 8.2
+                      SYMFONY_VERSION: 7.1.* # Last 7.0.x version
+                    - PHP_VERSION: 8.3
+                      SYMFONY_VERSION: 7.1.* # Last 7.0.x version
+
+                    # Test the latest Symfony development version with the latest PHP version
+                    - PHP_VERSION: 8.3
+                      SYMFONY_VERSION: 7.* # Last 7.x version
                       STABILITY: dev
-                      SYMFONY_VERSION: 7.0.* # Last 7.x version
 
         steps:
             - uses: actions/checkout@v4
