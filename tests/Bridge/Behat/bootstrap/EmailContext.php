@@ -23,6 +23,18 @@ class EmailContext implements Context
      */
     public function iSendAnEmail(TableNode $table): void
     {
+        /**
+         * @var array{
+         *     from: string,
+         *     to: string,
+         *     subject: string,
+         *     text: string|null,
+         *     html: string|null,
+         *     cc?: string,
+         *     bcc?: string,
+         *     attachments?: string,
+         * } $params
+         */
         $params = $table->getRowsHash();
 
         $email = (new Email())
@@ -30,8 +42,7 @@ class EmailContext implements Context
             ->to($params['to'])
             ->subject($params['subject'])
             ->text($params['text'] ?? null)
-            ->html($params['html'] ?? null)
-        ;
+            ->html($params['html'] ?? null);
 
         if (array_key_exists('cc', $params)) {
             $email->cc($params['cc']);
@@ -42,7 +53,10 @@ class EmailContext implements Context
         }
 
         if (array_key_exists('attachments', $params)) {
-            foreach (json_decode($params['attachments'], true, 5, JSON_THROW_ON_ERROR) as $attachment) {
+            /** @var list<array{ body: string, name: string|null, contentType: string|null }> */
+            $attachments = json_decode($params['attachments'], true, 5, JSON_THROW_ON_ERROR);
+
+            foreach ($attachments as $attachment) {
                 $email->attach($attachment['body'], $attachment['name'] ?? null, $attachment['contentType'] ?? null);
             }
         }

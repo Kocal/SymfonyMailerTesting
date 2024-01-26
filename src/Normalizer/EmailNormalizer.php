@@ -29,16 +29,16 @@ class EmailNormalizer
     {
         return [
             'headers' => $this->headersNormalizer->normalize($email->getHeaders()),
-            'from' => array_map(function (Address $address): string {
+            'from' => array_map(static function (Address $address): string {
                 return $address->toString();
             }, $email->getFrom()),
-            'to' => array_map(function (Address $address): string {
+            'to' => array_map(static function (Address $address): string {
                 return $address->toString();
             }, $email->getTo()),
-            'cc' => array_map(function (Address $address): string {
+            'cc' => array_map(static function (Address $address): string {
                 return $address->toString();
             }, $email->getCc()),
-            'bcc' => array_map(function (Address $address): string {
+            'bcc' => array_map(static function (Address $address): string {
                 return $address->toString();
             }, $email->getBcc()),
             'subject' => $email->getSubject(),
@@ -50,7 +50,7 @@ class EmailNormalizer
                 'body' => $email->getHtmlBody(),
                 'charset' => $email->getHtmlCharset(),
             ],
-            'attachments' => array_map(function (DataPart $dataPart): string {
+            'attachments' => array_map(static function (DataPart $dataPart): string {
                 return $dataPart->asDebugString();
             }, $email->getAttachments()),
         ];

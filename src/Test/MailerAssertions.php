@@ -26,19 +26,19 @@ class MailerAssertions
     public function __construct(MailerLogger $mailerLogger)
     {
         // By doing this, we can import and use methods from \Symfony\Bundle\FrameworkBundle\Test\MailerAssertionsTrait
-        static::$container = new Container();
-        static::$container->set('mailer.logger_message_listener', $mailerLogger); // Symfony <5.2
-        static::$container->set('mailer.message_logger_listener', $mailerLogger); // Symfony >=5.2
+        self::$container = new Container();
+        self::$container->set('mailer.logger_message_listener', $mailerLogger); // Symfony <5.2
+        self::$container->set('mailer.message_logger_listener', $mailerLogger); // Symfony >=5.2
     }
 
     /**
-     * For Symfony 5.3 and more, "static::getContainer()" is now called in MailerAssertionsTrait instead of "static::$container".
+     * For Symfony 5.3 and more, "self::getContainer()" is now called in MailerAssertionsTrait instead of "self::$container".
      *
      * @see https://github.com/symfony/symfony/pull/40366
      */
     public static function getContainer(): ContainerInterface
     {
-        return static::$container;
+        return self::$container;
     }
 
     /**
@@ -129,7 +129,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
 
-        $matches = (function () use ($email, $attachmentName): bool {
+        $matches = (static function () use ($email, $attachmentName): bool {
             /** @var DataPart $attachment */
             foreach ($email->getAttachments() as $attachment) {
                 if ($attachmentName === $attachment->getPreparedHeaders()->getHeaderParameter('Content-Disposition', 'filename')) {
@@ -150,7 +150,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
 
-        $matches = (function () use ($email, $attachmentNamePattern): bool {
+        $matches = (static function () use ($email, $attachmentNamePattern): bool {
             /** @var DataPart $attachment */
             foreach ($email->getAttachments() as $attachment) {
                 if (1 === preg_match($attachmentNamePattern, $attachment->getPreparedHeaders()->getHeaderParameter('Content-Disposition', 'filename') ?? '')) {

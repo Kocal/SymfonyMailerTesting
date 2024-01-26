@@ -19,13 +19,13 @@ class HeadersNormalizer
 
         /** @var string $header */
         foreach ($headers->toArray() as $header) {
-            if (false === $i = strpos($header, static::DELIMITER)) {
+            if (false === $i = strpos($header, self::DELIMITER)) {
                 throw new \RuntimeException('Invalid header name/value delimiter, this should not happens.');
             }
 
             $ret[] = [
                 'name' => substr($header, 0, $i),
-                'body' => substr($header, $i + strlen(static::DELIMITER)),
+                'body' => substr($header, $i + strlen(self::DELIMITER)),
             ];
         }
 
