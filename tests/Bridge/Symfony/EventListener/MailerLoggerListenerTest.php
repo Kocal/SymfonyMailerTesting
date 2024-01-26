@@ -17,7 +17,10 @@ use Symfony\Component\Mime\RawMessage;
 
 class MailerLoggerListenerTest extends KernelTestCase
 {
-    protected static $class = Kernel::class;
+    protected static function getKernelClass(): string
+    {
+        return Kernel::class;
+    }
 
     protected function setUp(): void
     {
