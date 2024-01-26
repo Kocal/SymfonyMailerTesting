@@ -18,17 +18,25 @@ use Symfony\Component\Mime\RawMessage;
 
 class MailerAssertionsTest extends TestCase
 {
-    /** @var CacheItemPoolInterface */
+    /**
+     * @var CacheItemPoolInterface
+     */
     private $cache;
-    /** @var MailerLogger */
+
+    /**
+     * @var MailerLogger
+     */
     private $mailerLogger;
-    /** @var MailerAssertions */
+
+    /**
+     * @var MailerAssertions
+     */
     private $mailerAssertions;
 
     protected function setUp(): void
     {
-        $this->cache            = new ArrayAdapter();
-        $this->mailerLogger     = new MailerLogger($this->cache);
+        $this->cache = new ArrayAdapter();
+        $this->mailerLogger = new MailerLogger($this->cache);
         $this->mailerAssertions = new MailerAssertions($this->mailerLogger);
     }
 

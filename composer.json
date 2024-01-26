@@ -18,8 +18,8 @@
     "scripts": {
         "bin": "echo 'bin not installed'",
         "phpstan": "phpstan analyze --ansi",
-        "php-cs-fixer": "php-cs-fixer fix -v",
-        "php-cs-fixer@ci": "php-cs-fixer fix -v --diff --dry-run",
+        "ecs": "ecs --fix -v",
+        "ecs@ci": "ecs -v",
         "phpunit": "phpunit",
         "behat": "behat --colors",
         "server-start": "APP_ENV=test ./bin/symfony server:start --no-tls --dir fixtures/applications/Symfony --daemon",

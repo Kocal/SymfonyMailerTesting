@@ -18,7 +18,9 @@ class MailerAssertions
 {
     use MailerAssertionsTrait;
 
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     private static $container;
 
     public function __construct(MailerLogger $mailerLogger)
@@ -52,15 +54,21 @@ class MailerAssertions
     public static function assertEmailSubjectSame(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::assertInstanceOf(Email::class, $email);
-        Assert::assertSame($expected = $text, $actual = $email->getSubject() ?? '',
-            sprintf($message ?? 'Failed asserting that the Email subject with value same as "%1$s". Got "%2$s".', $expected, $actual));
+        Assert::assertSame(
+            $expected = $text,
+            $actual = $email->getSubject() ?? '',
+            sprintf($message ?? 'Failed asserting that the Email subject with value same as "%1$s". Got "%2$s".', $expected, $actual)
+        );
     }
 
     public static function assertEmailSubjectContains(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::assertInstanceOf(Email::class, $email);
-        Assert::assertStringContainsString($expected = $text, $actual = $email->getSubject() ?? '',
-            sprintf($message ?? 'Failed asserting that the Email subject contains "%1$s". Got "%2$s".', $expected, $actual));
+        Assert::assertStringContainsString(
+            $expected = $text,
+            $actual = $email->getSubject() ?? '',
+            sprintf($message ?? 'Failed asserting that the Email subject contains "%1$s". Got "%2$s".', $expected, $actual)
+        );
     }
 
     public static function assertEmailSubjectMatches(RawMessage $email, string $regex, ?string $message = null): void

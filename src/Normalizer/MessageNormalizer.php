@@ -27,9 +27,9 @@ class MessageNormalizer
     {
         return [
             'headers' => $this->headersNormalizer->normalize($message->getHeaders()),
-            'body'    => null === $message->getBody() ? null : [
+            'body' => null === $message->getBody() ? null : [
                 'headers' => $this->headersNormalizer->normalize($message->getBody()->getHeaders()),
-                'body'    => $message->getBody()->bodyToString(),
+                'body' => $message->getBody()->bodyToString(),
             ],
         ];
     }

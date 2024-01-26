@@ -16,12 +16,12 @@ class SymfonyMailerTestingExtension extends Extension
     {
         $loader = new YamlFileLoader(
             $container,
-            new FileLocator(__DIR__.'/../Resources/config')
+            new FileLocator(__DIR__ . '/../Resources/config')
         );
 
         $loader->load('services.yaml');
 
-        if (!interface_exists(\Psr\Http\Message\ResponseInterface::class)) {
+        if (! interface_exists(\Psr\Http\Message\ResponseInterface::class)) {
             $container->removeDefinition(MailerController::class);
         }
     }
