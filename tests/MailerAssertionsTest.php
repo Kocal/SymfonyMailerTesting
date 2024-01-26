@@ -150,7 +150,7 @@ class MailerAssertionsTest extends TestCase
     public function testAssertEmailSubjectContainsFailing(): void
     {
         static::expectException(ExpectationFailedException::class);
-        static::expectDeprecationMessage('Failed asserting that the Email subject contains "Goodbye". Got "Hello world!".');
+        static::expectExceptionMessage('Failed asserting that the Email subject contains "Goodbye". Got "Hello world!".');
 
         $email = $this->createEmail()->subject('Hello world!');
 
@@ -169,7 +169,7 @@ class MailerAssertionsTest extends TestCase
     public function testAssertEmailSubjectMatchesFailing(): void
     {
         static::expectException(ExpectationFailedException::class);
-        static::expectDeprecationMessage('Failed asserting that the Email subject matches pattern "/^[A-Z]oodbye/". Got "Hello world!".');
+        static::expectExceptionMessage('Failed asserting that the Email subject matches pattern "/^[A-Z]oodbye/". Got "Hello world!".');
 
         $email = $this->createEmail()->subject('Hello world!');
 
@@ -188,7 +188,7 @@ class MailerAssertionsTest extends TestCase
     public function testAssertEmailAttachmentNameSameFailing(): void
     {
         static::expectException(ExpectationFailedException::class);
-        static::expectDeprecationMessage('Failed asserting that the Email has an attachment with name "not message.txt".');
+        static::expectExceptionMessage('Failed asserting that the Email has an attachment with name "not message.txt".');
 
         $email = $this->createEmail()->attach('Hello world!', 'message.txt');
 
@@ -207,7 +207,7 @@ class MailerAssertionsTest extends TestCase
     public function testAssertEmailAttachmentNameMatchesFailing(): void
     {
         static::expectException(ExpectationFailedException::class);
-        static::expectDeprecationMessage('Failed asserting that the Email has an attachment with name matching pattern "/^not message/".');
+        static::expectExceptionMessage('Failed asserting that the Email has an attachment with name matching pattern "/^not message/".');
 
         $email = $this->createEmail()->attach('Hello world!', 'message.txt');
 
