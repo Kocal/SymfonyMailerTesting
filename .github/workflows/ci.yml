@@ -70,10 +70,14 @@ jobs:
                     - PHP_VERSION: 8.0
                       SYMFONY_VERSION: 5.4.* # Last 5.4.x version
                     - PHP_VERSION: 8.0
-                      SYMFONY_VERSION: 6.0.* # Last 6.1.x version
+                      SYMFONY_VERSION: 6.4.* # Last 6.1.x version
                     - PHP_VERSION: 8.0
-                      STABILITY: dev
                       SYMFONY_VERSION: 6.* # Last 6.x version
+                    - PHP_VERSION: 8.1
+                      SYMFONY_VERSION: 7.0.* # Last 7.0.x version
+                    - PHP_VERSION: 8.1
+                      STABILITY: dev
+                      SYMFONY_VERSION: 7.0.* # Last 7.x version
 
         steps:
             - uses: actions/checkout@v2
