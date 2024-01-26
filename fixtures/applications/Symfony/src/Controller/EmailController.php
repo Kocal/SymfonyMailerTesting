@@ -29,6 +29,8 @@ class EmailController extends AbstractController
 
         $mailer->send($email);
 
-        return $this->json(['success' => 'ok']);
+        return $this->json([
+            'success' => 'ok',
+        ]);
     }
 }

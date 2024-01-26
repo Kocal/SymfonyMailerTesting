@@ -9,13 +9,18 @@
         }
     ],
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true,
+            "php-http/discovery": true,
+            "ocramius/package-versions": true
+        }
     },
     "scripts": {
         "bin": "echo 'bin not installed'",
         "phpstan": "phpstan analyze --ansi",
-        "php-cs-fixer": "php-cs-fixer fix -v",
-        "php-cs-fixer@ci": "php-cs-fixer fix -v --diff --dry-run",
+        "ecs": "ecs --fix -v",
+        "ecs@ci": "ecs -v",
         "phpunit": "phpunit",
         "behat": "behat --colors",
         "server-start": "APP_ENV=test ./bin/symfony server:start --no-tls --dir fixtures/applications/Symfony --daemon",
@@ -35,14 +40,15 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "ext-json": "*",
-        "phpunit/phpunit": "^8.5 || ^9.0 || ^10.0",
+        "phpunit/phpunit": "^9.1 || ^10.0",
         "symfony/console": "^4.4 || ^5.0 || ^6.0 || ^7.0",
         "symfony/mailer": "^4.4 || ^5.0 || ^6.0 || ^7.0"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.4",
+        "bamarni/composer-bin-plugin": "^1.8",
         "behat/behat": "^3.6",
         "friends-of-behat/symfony-extension": "^2.2",
+        "nyholm/psr7": "^1.8",
         "symfony/framework-bundle": "^4.4.14 || ^5.0 || ^6.0 || ^7.0",
         "symfony/psr7-pack": "^1.0"
     },

@@ -27,7 +27,7 @@ class MessageEventsNormalizer
     public function normalize(MessageEvents $messageEvents)
     {
         return [
-            'events'     => array_map(function (MessageEvent $messageEvent): array {
+            'events' => array_map(function (MessageEvent $messageEvent): array {
                 return $this->messageEventNormalizer->normalize($messageEvent);
             }, $messageEvents->getEvents()),
             'transports' => $messageEvents->getTransports(),

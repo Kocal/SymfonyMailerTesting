@@ -24,6 +24,8 @@ class MailerLoggerListener implements EventSubscriberInterface
 
     public static function getSubscribedEvents(): array
     {
-        return [MessageEvent::class => ['onMessageSend', -255]];
+        return [
+            MessageEvent::class => ['onMessageSend', -255],
+        ];
     }
 }

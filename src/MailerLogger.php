@@ -12,12 +12,15 @@ use Symfony\Contracts\Service\ResetInterface;
 class MailerLogger implements ResetInterface
 {
     private $cache;
-    /** @var MessageEvents */
+
+    /**
+     * @var MessageEvents
+     */
     private $events;
 
     public function __construct(CacheItemPoolInterface $cache)
     {
-        $this->cache  = $cache;
+        $this->cache = $cache;
         $this->cacheGet();
     }
 

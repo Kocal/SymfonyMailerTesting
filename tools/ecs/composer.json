@@ -1,0 +1,5 @@
+{
+  "require": {
+    "symplify/easy-coding-standard": "^12.1"
+  }
+}

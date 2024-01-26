@@ -17,7 +17,7 @@ class MailerLoggerTest extends TestCase
 {
     public function testAddAndMessageEventsFromCache(): void
     {
-        $cache        = new ArrayAdapter();
+        $cache = new ArrayAdapter();
         $mailerLogger = new MailerLogger($cache);
 
         static::assertFalse($cache->hasItem('symfony_mailer_testing.message_events'));

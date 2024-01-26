@@ -13,11 +13,12 @@ use Psr\Http\Message\StreamFactoryInterface;
 class MailerController
 {
     private $mailerLogger;
+
     private $messageEventsNormalizer;
 
     public function __construct(MailerLogger $mailerLogger, MessageEventsNormalizer $messageEventsNormalizer)
     {
-        $this->mailerLogger            = $mailerLogger;
+        $this->mailerLogger = $mailerLogger;
         $this->messageEventsNormalizer = $messageEventsNormalizer;
     }
 
@@ -27,7 +28,9 @@ class MailerController
 
         return $responseFactory->createResponse()
             ->withHeader('Content-Type', 'application/json')
-            ->withBody($streamFactory->createStream(json_encode(['success' => true], JSON_THROW_ON_ERROR)));
+            ->withBody($streamFactory->createStream(json_encode([
+                'success' => true,
+            ], JSON_THROW_ON_ERROR)));
     }
 
     public function getEvents(ResponseFactoryInterface $responseFactory, StreamFactoryInterface $streamFactory): ResponseInterface

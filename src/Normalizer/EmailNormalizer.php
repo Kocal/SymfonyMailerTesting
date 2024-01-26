@@ -28,18 +28,26 @@ class EmailNormalizer
     public function normalize(Email $email): array
     {
         return [
-            'headers'     => $this->headersNormalizer->normalize($email->getHeaders()),
-            'from'        => array_map(function (Address $address): string { return $address->toString(); }, $email->getFrom()),
-            'to'          => array_map(function (Address $address): string { return $address->toString(); }, $email->getTo()),
-            'cc'          => array_map(function (Address $address): string { return $address->toString(); }, $email->getCc()),
-            'bcc'         => array_map(function (Address $address): string { return $address->toString(); }, $email->getBcc()),
-            'subject'     => $email->getSubject(),
-            'text'        => [
-                'body'    => $email->getTextBody(),
+            'headers' => $this->headersNormalizer->normalize($email->getHeaders()),
+            'from' => array_map(function (Address $address): string {
+                return $address->toString();
+            }, $email->getFrom()),
+            'to' => array_map(function (Address $address): string {
+                return $address->toString();
+            }, $email->getTo()),
+            'cc' => array_map(function (Address $address): string {
+                return $address->toString();
+            }, $email->getCc()),
+            'bcc' => array_map(function (Address $address): string {
+                return $address->toString();
+            }, $email->getBcc()),
+            'subject' => $email->getSubject(),
+            'text' => [
+                'body' => $email->getTextBody(),
                 'charset' => $email->getTextCharset(),
             ],
-            'html'        => [
-                'body'    => $email->getHtmlBody(),
+            'html' => [
+                'body' => $email->getHtmlBody(),
                 'charset' => $email->getHtmlCharset(),
             ],
             'attachments' => array_map(function (DataPart $dataPart): string {

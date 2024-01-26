@@ -16,14 +16,16 @@ use Symfony\Component\Mime\Message;
 class MessageEventNormalizer
 {
     private $rawMessageNormalizer;
+
     private $messageNormalizer;
+
     private $emailNormalizer;
 
     public function __construct(RawMessageNormalizer $rawMessageNormalizer, MessageNormalizer $messageNormalizer, EmailNormalizer $emailNormalizer)
     {
         $this->rawMessageNormalizer = $rawMessageNormalizer;
-        $this->messageNormalizer    = $messageNormalizer;
-        $this->emailNormalizer      = $emailNormalizer;
+        $this->messageNormalizer = $messageNormalizer;
+        $this->emailNormalizer = $emailNormalizer;
     }
 
     /**
@@ -40,9 +42,9 @@ class MessageEventNormalizer
         }
 
         return [
-            'message'   => $message,
+            'message' => $message,
             'transport' => $messageEvent->getTransport(),
-            'queued'    => $messageEvent->isQueued(),
+            'queued' => $messageEvent->isQueued(),
         ];
     }
 }

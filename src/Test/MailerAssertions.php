@@ -18,7 +18,9 @@ class MailerAssertions
 {
     use MailerAssertionsTrait;
 
-    /** @var ContainerInterface */
+    /**
+     * @var ContainerInterface
+     */
     private static $container;
 
     public function __construct(MailerLogger $mailerLogger)
@@ -52,21 +54,27 @@ class MailerAssertions
     public static function assertEmailSubjectSame(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::assertInstanceOf(Email::class, $email);
-        Assert::assertSame($expected = $text, $actual = $email->getSubject() ?? '',
-            sprintf($message ?? 'Failed asserting that the Email subject with value same as "%1$s". Got "%2$s".', $expected, $actual));
+        Assert::assertSame(
+            $expected = $text,
+            $actual = $email->getSubject() ?? '',
+            sprintf($message ?? 'Failed asserting that the Email subject with value same as "%1$s". Got "%2$s".', $expected, $actual)
+        );
     }
 
     public static function assertEmailSubjectContains(RawMessage $email, string $text, ?string $message = null): void
     {
         Assert::assertInstanceOf(Email::class, $email);
-        Assert::assertStringContainsString($expected = $text, $actual = $email->getSubject() ?? '',
-            sprintf($message ?? 'Failed asserting that the Email subject contains "%1$s". Got "%2$s".', $expected, $actual));
+        Assert::assertStringContainsString(
+            $expected = $text,
+            $actual = $email->getSubject() ?? '',
+            sprintf($message ?? 'Failed asserting that the Email subject contains "%1$s". Got "%2$s".', $expected, $actual)
+        );
     }
 
     public static function assertEmailSubjectMatches(RawMessage $email, string $regex, ?string $message = null): void
     {
         Assert::assertInstanceOf(Email::class, $email);
-        Assert::assertRegExp($expected = $regex, $actual = $email->getSubject() ?? '', sprintf(
+        Assert::assertMatchesRegularExpression($expected = $regex, $actual = $email->getSubject() ?? '', sprintf(
             $message ?? 'Failed asserting that the Email subject matches pattern "%1$s". Got "%2$s".',
             $expected,
             $actual
@@ -77,7 +85,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
         Assert::assertThat($email->getTextBody(), Assert::logicalOr(Assert::isNull(), Assert::isType('string')));
-        Assert::assertRegExp($expected = $regex, $actual = (string) $email->getTextBody() ?? '', sprintf(
+        Assert::assertMatchesRegularExpression($expected = $regex, $actual = (string) $email->getTextBody() ?? '', sprintf(
             $message ?? 'Failed asserting that the Email text body matches pattern "%1$s". Got "%2$s".',
             $expected,
             $actual
@@ -88,7 +96,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
         Assert::assertThat($email->getTextBody(), Assert::logicalOr(Assert::isNull(), Assert::isType('string')));
-        Assert::assertNotRegExp($expected = $regex, $actual = (string) $email->getTextBody() ?? '', sprintf(
+        Assert::assertDoesNotMatchRegularExpression($expected = $regex, $actual = (string) $email->getTextBody() ?? '', sprintf(
             $message ?? 'Failed asserting that the Email text body not matches pattern "%1$s". Got "%2$s".',
             $expected,
             $actual
@@ -99,7 +107,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
         Assert::assertThat($email->getHtmlBody(), Assert::logicalOr(Assert::isNull(), Assert::isType('string')));
-        Assert::assertRegExp($expected = $regex, $actual = (string) $email->getHtmlBody() ?? '', sprintf(
+        Assert::assertMatchesRegularExpression($expected = $regex, $actual = (string) $email->getHtmlBody() ?? '', sprintf(
             $message ?? 'Failed asserting that the Email HTML body matches pattern "%1$s". Got "%2$s".',
             $expected,
             $actual
@@ -110,7 +118,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
         Assert::assertThat($email->getHtmlBody(), Assert::logicalOr(Assert::isNull(), Assert::isType('string')));
-        Assert::assertNotRegExp($expected = $regex, $actual = (string) $email->getTextBody() ?? '', sprintf(
+        Assert::assertDoesNotMatchRegularExpression($expected = $regex, $actual = (string) $email->getTextBody() ?? '', sprintf(
             $message ?? 'Failed asserting that the Email HTML body not matches pattern "%1$s". Got "%2$s".',
             $expected,
             $actual

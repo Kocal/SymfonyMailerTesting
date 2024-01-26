@@ -3,8 +3,6 @@
 /node_modules
 yarn-error.log
 
-# PHP-CS-Fixer
-.php-cs-fixer.cache
-
 # PHPUnit
 .phpunit.result.cache
+.phpunit.cache/

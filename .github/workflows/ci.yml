@@ -18,7 +18,7 @@ jobs:
     static_analysis:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Install PHP
               uses: shivammathur/setup-php@v2
@@ -26,7 +26,7 @@ jobs:
                   php-version: ${{ env.PHP_VERSION_DEFAULT }}
 
             - name: Install Node.js
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ env.NODE_VERSION }}
 
@@ -36,7 +36,7 @@ jobs:
 
             - run: composer phpstan
 
-            - run: composer php-cs-fixer@ci
+            - run: composer ecs@ci
 
             - run: yarn install --frozen-lockfile
 
@@ -69,14 +69,18 @@ jobs:
                       SYMFONY_VERSION: 4.4.* # Last 4.x version
                     - PHP_VERSION: 8.0
                       SYMFONY_VERSION: 5.4.* # Last 5.4.x version
-                    - PHP_VERSION: 8.0
-                      SYMFONY_VERSION: 6.0.* # Last 6.1.x version
-                    - PHP_VERSION: 8.0
-                      STABILITY: dev
+                    - PHP_VERSION: 8.1
+                      SYMFONY_VERSION: 6.4.* # Last 6.1.x version
+                    - PHP_VERSION: 8.1
                       SYMFONY_VERSION: 6.* # Last 6.x version
+                    - PHP_VERSION: 8.2
+                      SYMFONY_VERSION: 7.0.* # Last 7.0.x version
+                    - PHP_VERSION: 8.2
+                      STABILITY: dev
+                      SYMFONY_VERSION: 7.0.* # Last 7.x version
 
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Install PHP
               uses: shivammathur/setup-php@v2
@@ -86,6 +90,9 @@ jobs:
 
             - name: Install globally Symfony Flex
               run: composer global require --no-progress --no-scripts --no-plugins symfony/flex
+
+            - name: Enable Symfony Flex plugin
+              run: composer global config --no-plugins allow-plugins.symfony/flex true
 
             - name: Configure Composer minimum stability
               if: matrix.config.STABILITY
@@ -124,13 +131,13 @@ jobs:
                   extensions: ctype, iconv, intl
 
             - name: Install Node.js
-              uses: actions/setup-node@v2
+              uses: actions/setup-node@v4
               with:
                   node-version: ${{ env.NODE_VERSION }}
 
             - run: composer install --no-progress --prefer-dist --optimize-autoloader
 
             - name: Run Cypress
-              uses: cypress-io/github-action@v2
+              uses: cypress-io/github-action@v6
               with:
                   start: composer server-start

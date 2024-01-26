@@ -63,27 +63,42 @@ class MessageEventsNormalizerTest extends TestCase
         ));
 
         static::assertSame([
-            'events'     => [
+            'events' => [
                 [
-                    'message'   => [
-                        'headers'     => [
-                            ['name' => 'Subject', 'body' => 'message 1'],
-                            ['name' => 'From', 'body' => 'john@example.com'],
-                            ['name' => 'To', 'body' => 'jeanne@example.com'],
-                            ['name' => 'Cc', 'body' => 'jack@example.com'],
-                            ['name' => 'Bcc', 'body' => 'jennifer@example.com'],
+                    'message' => [
+                        'headers' => [
+                            [
+                                'name' => 'Subject',
+                                'body' => 'message 1',
+                            ],
+                            [
+                                'name' => 'From',
+                                'body' => 'john@example.com',
+                            ],
+                            [
+                                'name' => 'To',
+                                'body' => 'jeanne@example.com',
+                            ],
+                            [
+                                'name' => 'Cc',
+                                'body' => 'jack@example.com',
+                            ],
+                            [
+                                'name' => 'Bcc',
+                                'body' => 'jennifer@example.com',
+                            ],
                         ],
-                        'from'        => ['john@example.com'],
-                        'to'          => ['jeanne@example.com'],
-                        'cc'          => ['jack@example.com'],
-                        'bcc'         => ['jennifer@example.com'],
-                        'subject'     => 'message 1',
-                        'text'        => [
-                            'body'    => 'Text content',
+                        'from' => ['john@example.com'],
+                        'to' => ['jeanne@example.com'],
+                        'cc' => ['jack@example.com'],
+                        'bcc' => ['jennifer@example.com'],
+                        'subject' => 'message 1',
+                        'text' => [
+                            'body' => 'Text content',
                             'charset' => 'utf-8',
                         ],
-                        'html'        => [
-                            'body'    => '<b>HTML content</b>',
+                        'html' => [
+                            'body' => '<b>HTML content</b>',
                             'charset' => 'utf-8',
                         ],
                         'attachments' => [
@@ -91,28 +106,43 @@ class MessageEventsNormalizerTest extends TestCase
                         ],
                     ],
                     'transport' => 'null://',
-                    'queued'    => false,
+                    'queued' => false,
                 ],
                 [
-                    'message'   => [
-                        'headers'     => [
-                            ['name' => 'Subject', 'body' => 'message 2 : test'],
-                            ['name' => 'From', 'body' => 'leo@example.com'],
-                            ['name' => 'To', 'body' => 'lea@example.com, luna@example.com'],
-                            ['name' => 'Cc', 'body' => 'lionel@example.com'],
-                            ['name' => 'Bcc', 'body' => 'lilou@example.com'],
+                    'message' => [
+                        'headers' => [
+                            [
+                                'name' => 'Subject',
+                                'body' => 'message 2 : test',
+                            ],
+                            [
+                                'name' => 'From',
+                                'body' => 'leo@example.com',
+                            ],
+                            [
+                                'name' => 'To',
+                                'body' => 'lea@example.com, luna@example.com',
+                            ],
+                            [
+                                'name' => 'Cc',
+                                'body' => 'lionel@example.com',
+                            ],
+                            [
+                                'name' => 'Bcc',
+                                'body' => 'lilou@example.com',
+                            ],
                         ],
-                        'from'        => ['leo@example.com'],
-                        'to'          => ['lea@example.com', 'luna@example.com'],
-                        'cc'          => ['lionel@example.com'],
-                        'bcc'         => ['lilou@example.com'],
-                        'subject'     => 'message 2 : test',
-                        'text'        => [
-                            'body'    => 'Text content',
+                        'from' => ['leo@example.com'],
+                        'to' => ['lea@example.com', 'luna@example.com'],
+                        'cc' => ['lionel@example.com'],
+                        'bcc' => ['lilou@example.com'],
+                        'subject' => 'message 2 : test',
+                        'text' => [
+                            'body' => 'Text content',
                             'charset' => 'utf-8',
                         ],
-                        'html'        => [
-                            'body'    => '<b>HTML content</b>',
+                        'html' => [
+                            'body' => '<b>HTML content</b>',
                             'charset' => 'utf-8',
                         ],
                         'attachments' => [
@@ -121,7 +151,7 @@ class MessageEventsNormalizerTest extends TestCase
                         ],
                     ],
                     'transport' => 'null://',
-                    'queued'    => true,
+                    'queued' => true,
                 ],
             ],
             'transports' => ['null://'],

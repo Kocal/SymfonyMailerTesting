@@ -6,7 +6,9 @@ namespace Kocal\SymfonyMailerTesting;
 
 trait MailerLoggerAwareTrait
 {
-    /** @var MailerLogger */
+    /**
+     * @var MailerLogger
+     */
     private $mailerLogger;
 
     public function setMailerLogger(MailerLogger $mailerLogger): void
