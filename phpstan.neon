@@ -14,7 +14,7 @@ parameters:
         - src
         - tests
 
-    excludes_analyse:
+    excludePaths:
         - fixtures/applications/Symfony
 
     symfony:

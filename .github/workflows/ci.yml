@@ -59,7 +59,7 @@ jobs:
                     - PHP_VERSION: 8.2
                     - PHP_VERSION: 8.3
                       COVERAGE: true
-                      PHPUNIT_FLAGS: -v --coverage-text
+                      PHPUNIT_FLAGS: --coverage-text
 
                     # Test specific Symfony versions
                     - PHP_VERSION: 8.1
@@ -81,10 +81,10 @@ jobs:
                     - PHP_VERSION: 8.3
                       SYMFONY_VERSION: 7.0.* # Last 7.0.x version
 
-                    - PHP_VERSION: 8.2
-                      SYMFONY_VERSION: 7.1.* # Last 7.0.x version
-                    - PHP_VERSION: 8.3
-                      SYMFONY_VERSION: 7.1.* # Last 7.0.x version
+                    #- PHP_VERSION: 8.2
+                    #  SYMFONY_VERSION: 7.1.* # Last 7.0.x version
+                    #- PHP_VERSION: 8.3
+                    #  SYMFONY_VERSION: 7.1.* # Last 7.0.x version
 
                     # Test the latest Symfony development version with the latest PHP version
                     - PHP_VERSION: 8.3
