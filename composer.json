@@ -19,6 +19,8 @@
     "scripts": {
         "bin": "echo 'bin not installed'",
         "phpstan": "phpstan analyze --ansi",
+        "rector": "rector",
+        "rector@ci": "rector --dry-run",
         "ecs": "ecs --fix -v",
         "ecs@ci": "ecs -v",
         "phpunit": "phpunit",

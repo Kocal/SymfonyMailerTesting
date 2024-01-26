@@ -129,7 +129,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
 
-        $matches = (function () use ($email, $attachmentName): bool {
+        $matches = (static function () use ($email, $attachmentName): bool {
             /** @var DataPart $attachment */
             foreach ($email->getAttachments() as $attachment) {
                 if ($attachmentName === $attachment->getPreparedHeaders()->getHeaderParameter('Content-Disposition', 'filename')) {
@@ -150,7 +150,7 @@ class MailerAssertions
     {
         Assert::assertInstanceOf(Email::class, $email);
 
-        $matches = (function () use ($email, $attachmentNamePattern): bool {
+        $matches = (static function () use ($email, $attachmentNamePattern): bool {
             /** @var DataPart $attachment */
             foreach ($email->getAttachments() as $attachment) {
                 if (1 === preg_match($attachmentNamePattern, $attachment->getPreparedHeaders()->getHeaderParameter('Content-Disposition', 'filename') ?? '')) {

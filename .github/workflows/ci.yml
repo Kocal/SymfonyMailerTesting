@@ -34,9 +34,11 @@ jobs:
 
             - run: composer install --prefer-dist --no-interaction --no-progress
 
+            - run: composer ecs@ci
+
             - run: composer phpstan
 
-            - run: composer ecs@ci
+            - run: composer rector@ci
 
             - run: yarn install --frozen-lockfile
 

@@ -101,7 +101,7 @@ trait MailerContextTrait
         $io->writeln((string) $email->getHtmlBody() ?? '');
 
         $io->section('Attachments');
-        $io->listing(array_map(function (DataPart $attachment): string {
+        $io->listing(array_map(static function (DataPart $attachment): string {
             return $attachment->asDebugString();
         }, $email->getAttachments()));
     }

@@ -14,7 +14,7 @@ class MailerLogger implements ResetInterface
     private MessageEvents $events;
 
     public function __construct(
-        private CacheItemPoolInterface $cache
+        private readonly CacheItemPoolInterface $cache
     ) {
         $this->cacheGet();
     }

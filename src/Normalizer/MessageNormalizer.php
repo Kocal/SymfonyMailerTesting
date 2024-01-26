@@ -27,10 +27,10 @@ class MessageNormalizer
     {
         return [
             'headers' => $this->headersNormalizer->normalize($message->getHeaders()),
-            'body' => null === $message->getBody() ? null : [
+            'body' => $message->getBody() instanceof \Symfony\Component\Mime\Part\AbstractPart ? [
                 'headers' => $this->headersNormalizer->normalize($message->getBody()->getHeaders()),
                 'body' => $message->getBody()->bodyToString(),
-            ],
+            ] : null,
         ];
     }
 }
