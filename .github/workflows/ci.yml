@@ -12,7 +12,7 @@ env:
     COMPOSER_MEMORY_LIMIT: -1
 
     PHP_VERSION_DEFAULT: 8.1
-    NODE_VERSION: 14.x
+    NODE_VERSION: 20.x
 
 jobs:
     static_analysis:
@@ -30,6 +30,8 @@ jobs:
               with:
                   node-version: ${{ env.NODE_VERSION }}
 
+            - uses: pnpm/action-setup@v2
+
             - run: composer validate --strict
 
             - run: composer install --prefer-dist --no-interaction --no-progress
@@ -40,11 +42,13 @@ jobs:
 
             - run: composer rector@ci
 
-            - run: yarn install --frozen-lockfile
+            - run: pnpm install --frozen-lockfile
 
-            - run: yarn lint
+            - run: pnpm lint:check
 
-            - run: yarn test
+            - run: pnpm format:check
+
+            - run: pnpm test
 
     test:
         runs-on: ubuntu-latest
@@ -148,6 +152,8 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: ${{ env.NODE_VERSION }}
+
+            - uses: pnpm/action-setup@v2
 
             - run: composer install --no-progress --prefer-dist --optimize-autoloader
 
