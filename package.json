@@ -14,8 +14,7 @@
     "lint": "eslint --fix *.js src tests --ext .js,.vue",
     "format:check": "prettier . --check",
     "format": "prettier . --write",
-    "test": "jest",
-    "prepare": "husky install"
+    "test": "jest"
   },
   "peerDependencies": {
     "cypress": ">=4.0.0"
