@@ -1,6 +1,6 @@
 {
-  "extends": ["plugin:jest/all"],
-  "rules": {
-    "jest/no-hooks": "off"
-  }
+    "extends": ["plugin:jest/all"],
+    "rules": {
+        "jest/no-hooks": "off"
+    }
 }
