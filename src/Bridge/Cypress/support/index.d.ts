@@ -3,8 +3,8 @@
 
 declare namespace Cypress {
   interface Chainable<Subject> {
-    resetMessageEvents(): Chainable<Subject>
+    resetMessageEvents(): Chainable<Subject>;
 
-    getMessageEvents(): Promise<SymfonyMailerTesting.MessageEvents>
+    getMessageEvents(): Promise<SymfonyMailerTesting.MessageEvents>;
   }
 }

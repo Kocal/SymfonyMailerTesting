@@ -18,7 +18,7 @@ function assertions(_chai, utils) {
     this.assert(
       messageEvent.queued === false,
       'expected email to be sent, but is queued',
-      'expected email to not be sent, but is sent'
+      'expected email to not be sent, but is sent',
     );
   });
 
@@ -29,7 +29,7 @@ function assertions(_chai, utils) {
     this.assert(
       messageEvent.queued === true,
       'expected email to be queued, but is not queued',
-      'expected email to not be queued, but is queued'
+      'expected email to not be queued, but is queued',
     );
   });
 
@@ -41,7 +41,7 @@ function assertions(_chai, utils) {
       filterMessageEvents(utils.flag(this, 'object'), {
         transport: utils.flag(this, 'transport'),
         queued: false,
-      })
+      }),
     );
   });
 
@@ -53,7 +53,7 @@ function assertions(_chai, utils) {
       filterMessageEvents(utils.flag(this, 'object'), {
         transport: utils.flag(this, 'transport'),
         queued: true,
-      })
+      }),
     );
   });
 
@@ -80,7 +80,7 @@ function assertions(_chai, utils) {
     this.assert(
       headerFiltered,
       `expected email to have header "${name}"`,
-      `expected email to not have header "${name}"`
+      `expected email to not have header "${name}"`,
     );
   });
 
@@ -95,7 +95,7 @@ function assertions(_chai, utils) {
     this.assert(
       headerFiltered,
       `expected email to have address "${headerName}"`,
-      `expected email to not have address "${headerName}"`
+      `expected email to not have address "${headerName}"`,
     );
   });
 
@@ -124,7 +124,7 @@ function assertions(_chai, utils) {
           `${msg} to have ${verb} #{exp} emails, but got #{act}`,
           `${msg} to not have ${verb} #{exp} emails, but got #{act}`,
           n, // expected,
-          filteredMessageEvents.length // actual
+          filteredMessageEvents.length, // actual
         );
         return;
       }
@@ -140,7 +140,7 @@ function assertions(_chai, utils) {
           `expected email to have #{exp} attachment(s)${name ? ` named "${name}"` : ''}, but got #{act}`,
           `expected email to not have #{exp} attachments(s)${name ? ` named "${name}"` : ''}, but got #{act}`,
           n, // expected,
-          filteredAttachments.length // actual
+          filteredAttachments.length, // actual
         );
       }
     };
@@ -176,7 +176,7 @@ function assertions(_chai, utils) {
           `expected email subject to equal #{exp}, but got #{act}`,
           `expected email subject to not equal #{exp}, but got #{act}`,
           value, // expected
-          messageEvent.message.subject // actual
+          messageEvent.message.subject, // actual
         );
         return;
       }
@@ -189,7 +189,7 @@ function assertions(_chai, utils) {
           `expected email ${body} body to equal #{exp}, but got #{act}`,
           `expected email ${body} body to not equal #{exp}, but got #{act}`,
           value, // expected
-          bodyContent // actual
+          bodyContent, // actual
         );
         return;
       }
@@ -210,7 +210,7 @@ function assertions(_chai, utils) {
           messageSuccess,
           messageFailure,
           value, // expected
-          headerFiltered.body // actual
+          headerFiltered.body, // actual
         );
       }
     };
@@ -241,7 +241,7 @@ function assertions(_chai, utils) {
           `expected email subject to contains #{exp}, but got #{act}`,
           `expected email subject to not contains #{exp}, but got #{act}`,
           value, // expected
-          messageEvent.message.subject // actual
+          messageEvent.message.subject, // actual
         );
         return;
       }
@@ -254,7 +254,7 @@ function assertions(_chai, utils) {
           `expected email ${body} body to contains #{exp}, but got #{act}`,
           `expected email ${body} body to not contains #{exp}, but got #{act}`,
           value, // expected
-          bodyContent // actual
+          bodyContent, // actual
         );
         return;
       }
@@ -275,7 +275,7 @@ function assertions(_chai, utils) {
           messageSuccess,
           messageFailure,
           value, // expected
-          headerFiltered.body // actual
+          headerFiltered.body, // actual
         );
       }
     };
@@ -311,7 +311,7 @@ function assertions(_chai, utils) {
         this.assert(
           regex.exec(messageEvent.message.subject),
           `expected email subject to match ${regex}`,
-          `expected email subject to not match ${regex}`
+          `expected email subject to not match ${regex}`,
         );
         return;
       }
@@ -322,7 +322,7 @@ function assertions(_chai, utils) {
         this.assert(
           regex.exec(bodyContent || ''),
           `expected email ${body} body to match ${regex}`,
-          `expected email ${body} body to not match ${regex}`
+          `expected email ${body} body to not match ${regex}`,
         );
         return;
       }

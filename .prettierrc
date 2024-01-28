@@ -7,6 +7,12 @@
       "options": {
         "tabWidth": 4
       }
+    },
+    {
+      "files": ["composer.json"],
+      "options": {
+        "tabWidth": 4
+      }
     }
   ]
 }

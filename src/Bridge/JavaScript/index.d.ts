@@ -1,4 +1,7 @@
-declare function filterMessageEvents(messageEvents: SymfonyMailerTesting.MessageEvents, { transport: string, queued: bool });
+declare function filterMessageEvents(
+  messageEvents: SymfonyMailerTesting.MessageEvents,
+  { transport: string, queued: bool },
+);
 
 declare function filterAttachments(messageEvent: SymfonyMailerTesting.MessageEvent, { name: string });
 
@@ -16,7 +19,7 @@ declare namespace SymfonyMailerTesting {
 
   interface MessageEvents {
     events: Array<MessageEvent>;
-    transports: Array<Transport>
+    transports: Array<Transport>;
   }
 
   interface MessageEvent {
@@ -54,7 +57,7 @@ declare namespace SymfonyMailerTesting {
       body: string;
       charset: string;
     };
-    attachments: string[]
+    attachments: string[];
   }
 
   interface Header {

@@ -1,8 +1,8 @@
 const { isMessageEvent } = require('../../../src/Bridge/JavaScript');
 
-describe('javaScript bridge', function() {
-  describe('isMessageEvent()', function() {
-    it('checks if passed argument is not a valid MessageEvent', function() {
+describe('javaScript bridge', function () {
+  describe('isMessageEvent()', function () {
+    it('checks if passed argument is not a valid MessageEvent', function () {
       expect.assertions(6);
 
       expect(isMessageEvent()).toBeFalsy();
@@ -12,7 +12,7 @@ describe('javaScript bridge', function() {
       expect(isMessageEvent({})).toBeFalsy();
     });
 
-    it('checks if passed argument is a valid MessageEvent', function() {
+    it('checks if passed argument is a valid MessageEvent', function () {
       expect.assertions(1);
 
       expect(
@@ -20,7 +20,7 @@ describe('javaScript bridge', function() {
           message: null,
           transport: null,
           queued: null,
-        })
+        }),
       ).toBeTruthy();
     });
   });
