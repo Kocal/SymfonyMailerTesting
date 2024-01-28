@@ -1,4 +1,0 @@
-{
-  "pluginsFile": "tests/Bridge/Cypress/plugins/index.js",
-  "baseUrl": "http://127.0.0.1:8000/"
-}
