@@ -14,12 +14,12 @@ function sendEmail({ subject, from, to, attachments, text, html } = {}) {
   });
 }
 
-describe('I test an email', function () {
-  beforeEach(function () {
+describe('I test an email', () => {
+  beforeEach(() => {
     cy.resetMessageEvents();
   });
 
-  specify('I can test how many emails have been sent', function () {
+  specify('I can test how many emails have been sent', () => {
     cy.getMessageEvents().then((messageEvents) => {
       expect(messageEvents).to.have.sentEmails.lengthOf(0);
       expect(messageEvents).to.have.queuedEmails.lengthOf(0);
@@ -37,7 +37,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify('I can test if email has been sent or queued', function () {
+  specify('I can test if email has been sent or queued', () => {
     sendEmail({ subject: 'Hello world!' });
 
     cy.getMessageEvents().then((messageEvents) => {
@@ -46,7 +46,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify('I can test email attachments', function () {
+  specify('I can test email attachments', () => {
     sendEmail({
       subject: 'Hello world!',
       attachments: [{ body: 'My attachment', name: 'attachment.txt' }],
@@ -59,7 +59,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify('I can test email subject', function () {
+  specify('I can test email subject', () => {
     sendEmail({ subject: 'Hello world!' });
 
     cy.getMessageEvents().then((messageEvents) => {
@@ -74,7 +74,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify('I can test email text and html body', function () {
+  specify('I can test email text and html body', () => {
     sendEmail({
       subject: 'Hello world!',
       text: 'My text',
@@ -98,7 +98,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify('I can test email headers', function () {
+  specify('I can test email headers', () => {
     sendEmail({ subject: 'Hello world!' });
 
     cy.getMessageEvents().then((messageEvents) => {
@@ -117,7 +117,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify('I can test email addresses', function () {
+  specify('I can test email addresses', () => {
     sendEmail({ subject: 'Hello world!', to: 'John <john@example.com>' });
 
     cy.getMessageEvents().then((messageEvents) => {
@@ -130,7 +130,7 @@ describe('I test an email', function () {
     });
   });
 
-  specify('I can test multiples emails', function () {
+  specify('I can test multiples emails', () => {
     const subject1 = `Email #1 sent from Cypress at ${new Date().toUTCString()}`;
     const subject2 = `Email #2 sent from Cypress at ${new Date().toUTCString()}`;
 
