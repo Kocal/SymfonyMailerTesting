@@ -173,8 +173,8 @@ function assertions(_chai, utils) {
       if (subject) {
         this.assert(
           messageEvent.message.subject === value,
-          `expected email subject to equal #{exp}, but got #{act}`,
-          `expected email subject to not equal #{exp}, but got #{act}`,
+          'expected email subject to equal #{exp}, but got #{act}',
+          'expected email subject to not equal #{exp}, but got #{act}',
           value, // expected
           messageEvent.message.subject, // actual
         );
@@ -238,8 +238,8 @@ function assertions(_chai, utils) {
       if (subject) {
         this.assert(
           messageEvent.message.subject.includes(value),
-          `expected email subject to contains #{exp}, but got #{act}`,
-          `expected email subject to not contains #{exp}, but got #{act}`,
+          'expected email subject to contains #{exp}, but got #{act}',
+          'expected email subject to not contains #{exp}, but got #{act}',
           value, // expected
           messageEvent.message.subject, // actual
         );
@@ -271,7 +271,7 @@ function assertions(_chai, utils) {
         }
 
         this.assert(
-          headerFiltered && headerFiltered.body.includes(value),
+          headerFiltered?.body.includes(value),
           messageSuccess,
           messageFailure,
           value, // expected

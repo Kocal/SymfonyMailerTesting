@@ -27,17 +27,9 @@
         "behat": "behat --colors",
         "server-start": "APP_ENV=test ./bin/symfony server:start --no-tls --dir fixtures/applications/Symfony --daemon",
         "server-stop": "APP_ENV=test ./bin/symfony server:stop --dir fixtures/applications/Symfony",
-        "auto": [
-            "cd fixtures/applications/Symfony && APP_ENV=test bin/console cache:clear"
-        ],
-        "post-install-cmd": [
-            "@composer bin all install --ansi",
-            "@auto"
-        ],
-        "post-update-cmd": [
-            "@composer bin all update --ansi",
-            "@auto"
-        ]
+        "auto": ["cd fixtures/applications/Symfony && APP_ENV=test bin/console cache:clear"],
+        "post-install-cmd": ["@composer bin all install --ansi", "@auto"],
+        "post-update-cmd": ["@composer bin all update --ansi", "@auto"]
     },
     "require": {
         "php": "~8.1.0 || ~8.2.0 || ~8.3.0",

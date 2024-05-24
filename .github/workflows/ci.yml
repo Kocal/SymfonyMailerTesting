@@ -44,9 +44,7 @@ jobs:
 
             - run: pnpm install --frozen-lockfile
 
-            - run: pnpm lint:check
-
-            - run: pnpm format:check
+            - run: pnpm biome:ci
 
             - run: pnpm test
 
