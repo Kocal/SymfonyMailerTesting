@@ -103,9 +103,16 @@ jobs:
                     - PHP_VERSION: 8.4
                       SYMFONY_VERSION: 7.2.* # Last 7.2.x version
 
+                    - PHP_VERSION: 8.2
+                      SYMFONY_VERSION: 7.3.* # Last 7.2.x version
+                    - PHP_VERSION: 8.3
+                      SYMFONY_VERSION: 7.3.* # Last 7.2.x version
+                    - PHP_VERSION: 8.4
+                      SYMFONY_VERSION: 7.3.* # Last 7.2.x version
+
                     # Test the latest Symfony development version with the latest PHP version
                     - PHP_VERSION: 8.4
-                      SYMFONY_VERSION: 7.* # Last 7.x version
+                      SYMFONY_VERSION: 8.* # Last 8.x version
                       STABILITY: dev
 
         steps:
